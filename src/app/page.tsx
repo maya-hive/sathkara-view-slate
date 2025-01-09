@@ -59,25 +59,21 @@ export default async function Home() {
               dangerouslySetInnerHTML={{ __html: homeData.itinerary_content }}
             />
           )}
-          <div className="mt-4 grid grid-cols-4">
-            {itineraryDetails.length > 0 && (
-              <ul className="border rounded p-4">
-                {itineraryDetails.map((itinerary) => (
-                  <li key={itinerary.id}>
-                    <Image
-                      className="w-full"
-                      src={itinerary.featured_image}
-                      alt={"Featured image"}
-                      width={500}
-                      height={100}
-                    />
-                    <h2>{itinerary.name}</h2>
-                    <p>{itinerary.short_description}</p>
-                    <p>Price: {itinerary.price}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="mt-4 grid grid-cols-4 gap-5">
+            {itineraryDetails?.map((itinerary) => (
+              <li key={itinerary.id} className="border rounded p-4 list-none">
+                <Image
+                  className="rounded w-full h-[200px] object-cover"
+                  src={itinerary.featured_image}
+                  alt={"Featured image"}
+                  width={500}
+                  height={100}
+                />
+                <h2 className="font-semibold mt-2">{itinerary.name}</h2>
+                <p>{itinerary.short_description}</p>
+                <p>Price: {itinerary.price}</p>
+              </li>
+            ))}
           </div>
         </div>
       </section>
