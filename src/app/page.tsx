@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 export default async function Home() {
-  const homeRes = await fetch(`${process.env.API_URL}/settings/pages/home`, {
+  const homeRes = await fetch(`${process.env.API_URL}/settings/page_home`, {
     cache: "no-store",
   });
 
   if (!homeRes.ok) {
-    throw new Error("Failed to fetch home settings");
+    throw new Error("Failed to fetch");
   }
 
   const { data: homeData }: { data: PageHomeSettings } = await homeRes.json();
@@ -19,7 +19,7 @@ export default async function Home() {
     );
 
     if (!itineraryRes.ok) {
-      throw new Error("Failed to fetch itinerary items");
+      throw new Error("Failed to fetch");
     }
 
     const { data: itineraryData }: { data: Itinerary[] } =
@@ -53,30 +53,32 @@ export default async function Home() {
         </div>
       </section>
       <section className="mt-8 p-8">
-        {homeData.itinerary_content && (
-          <span
-            dangerouslySetInnerHTML={{ __html: homeData.itinerary_content }}
-          />
-        )}
-        <div className="mt-4 grid grid-cols-4">
-          {itineraryDetails.length > 0 && (
-            <ul className="border rounded p-4">
-              {itineraryDetails.map((itinerary) => (
-                <li key={itinerary.id}>
-                  <Image
-                    className="w-full"
-                    src={itinerary.featured_image}
-                    alt={"Featured image"}
-                    width={500}
-                    height={100}
-                  />
-                  <h2>{itinerary.name}</h2>
-                  <p>{itinerary.short_description}</p>
-                  <p>Price: {itinerary.price}</p>
-                </li>
-              ))}
-            </ul>
+        <div className="container mx-auto">
+          {homeData.itinerary_content && (
+            <span
+              dangerouslySetInnerHTML={{ __html: homeData.itinerary_content }}
+            />
           )}
+          <div className="mt-4 grid grid-cols-4">
+            {itineraryDetails.length > 0 && (
+              <ul className="border rounded p-4">
+                {itineraryDetails.map((itinerary) => (
+                  <li key={itinerary.id}>
+                    <Image
+                      className="w-full"
+                      src={itinerary.featured_image}
+                      alt={"Featured image"}
+                      width={500}
+                      height={100}
+                    />
+                    <h2>{itinerary.name}</h2>
+                    <p>{itinerary.short_description}</p>
+                    <p>Price: {itinerary.price}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </section>
     </article>
