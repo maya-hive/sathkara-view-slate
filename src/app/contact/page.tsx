@@ -1,10 +1,9 @@
 import queryString from "query-string";
 
 import type { ApiResponse } from "@/types/ApiResponse.types";
-import Itineraries from "@/components/Itineraries";
 import { Banner } from "@/components/Banner";
 
-export default async function Home() {
+export default async function Contact() {
   const { data } = await fetchSettings();
 
   if (!data) {
@@ -14,10 +13,6 @@ export default async function Home() {
   return (
     <article>
       <Banner image={data.banner_image} content={data.banner_content} />
-      <Itineraries
-        content={data.itinerary_content}
-        items={data.itinerary_items}
-      />
     </article>
   );
 }
@@ -25,18 +20,13 @@ export default async function Home() {
 const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
   const query = queryString.stringify(
     {
-      fields: [
-        "banner_content",
-        "banner_image",
-        "itinerary_content",
-        "itinerary_items",
-      ],
+      fields: ["banner_content", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_home?${query}`,
+    `${process.env.API_URL}/settings/page_contact?${query}`,
     {
       cache: "no-store",
     }
@@ -53,6 +43,4 @@ const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
 type Settings = {
   banner_content?: string;
   banner_image?: string;
-  itinerary_content?: string;
-  itinerary_items?: Array<string>;
 };
