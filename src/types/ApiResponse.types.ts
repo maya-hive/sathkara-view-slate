@@ -12,6 +12,7 @@ export type LinkFrame = {
 export type Link = {
   type: string;
   title: string;
-  link: string;
+  link: string | null;
   target: string;
+  value: string;
 };

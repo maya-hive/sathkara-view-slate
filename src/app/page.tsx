@@ -1,11 +1,11 @@
 import queryString from "query-string";
+import { z } from "zod";
 
-import type { ApiResponse } from "@/types/ApiResponse.types";
-import Itineraries from "@/components/Itineraries";
+import { ItienraryCategorySlider } from "@/components/Itinerary/CategorySlider";
 import { Banner } from "@/components/Banner";
 
 export default async function Home() {
-  const { data } = await fetchSettings();
+  const { data } = await fetchData();
 
   if (!data) {
     return <p className="text-center text-red-500">No data available.</p>;
@@ -13,24 +13,16 @@ export default async function Home() {
 
   return (
     <article>
-      <Banner image={data.banner_image} content={data.banner_content} />
-      <Itineraries
-        content={data.itinerary_content}
-        items={data.itinerary_items}
-      />
+      <Banner image={data.hero_image} content={data.hero_content} />
+      <ItienraryCategorySlider items={data.home_itineraries} />
     </article>
   );
 }
 
-const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
+const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: [
-        "banner_content",
-        "banner_image",
-        "itinerary_content",
-        "itinerary_items",
-      ],
+      fields: ["hero_content", "hero_image", "home_itineraries"],
     },
     { arrayFormat: "bracket" }
   );
@@ -47,12 +39,34 @@ const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
     throw new Error(errorMessage);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  try {
+    return ApiResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.log(error.errors);
+
+      throw new Error("API Response validation failed: " + error.message);
+    }
+    throw error;
+  }
 };
 
-type Settings = {
-  banner_content?: string;
-  banner_image?: string;
-  itinerary_content?: string;
-  itinerary_items?: Array<string>;
-};
+const ApiResponseSchema = z.object({
+  data: z.object({
+    hero_content: z.string().nullable(),
+    hero_image: z.string().nullable(),
+    home_itineraries: z
+      .array(
+        z
+          .object({
+            category: z.string(),
+            itineraries: z.array(z.string()).nullable(),
+            content: z.string().nullable(),
+          })
+          .nullable()
+      )
+      .nullable(),
+  }),
+});

@@ -2,39 +2,50 @@ import Image from "next/image";
 import queryString from "query-string";
 import { z } from "zod";
 
-export default async function Itinerary({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const slug = (await params).slug;
+interface Props {
+  slug: string;
+}
+
+export const ItineraryCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <p className="text-center text-red-500">No data available.</p>;
+    return null;
   }
 
   return (
-    <article className="container mx-auto">
+    <a href={"/itineraries/" + slug} className="p-8 border">
       <Image
-        className="rounded w-full h-[400px] object-cover"
+        className="rounded w-full h-[200px] object-cover"
         src={data.featured_image}
         alt={"Featured image"}
-        width={1200}
-        height={800}
+        width={500}
+        height={100}
       />
-      <h1 className="font-semibold mt-2">{data.name}</h1>
+      <h2 className="font-semibold mt-2">{data.name}</h2>
       <p>{data.short_description}</p>
       <p>Price: {data.price}</p>
-    </article>
+    </a>
   );
-}
+};
 
 const fetchData = async (
   slug: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
-    { fields: ["id", "name", "featured_image", "short_description", "price"] },
+    {
+      fields: [
+        "id",
+        "name",
+        "status",
+        "slug",
+        "sale_price",
+        "featured_image",
+        "short_description",
+        "duration",
+        "price",
+      ],
+    },
     { arrayFormat: "bracket" }
   );
 
@@ -64,14 +75,16 @@ const fetchData = async (
   }
 };
 
-const Schema = z.object({
-  id: z.number(),
-  name: z.string(),
-  price: z.string(),
-  short_description: z.string(),
-  featured_image: z.string(),
-});
-
 const ApiResponseSchema = z.object({
-  data: Schema,
+  data: z.object({
+    id: z.number(),
+    status: z.number(),
+    name: z.string(),
+    slug: z.string(),
+    short_description: z.string(),
+    price: z.string(),
+    featured_image: z.string(),
+    sale_price: z.string().nullable(),
+    duration: z.string().nullable(),
+  }),
 });

@@ -11,13 +11,11 @@ export const Navigation = async () => {
 
   return (
     <nav className="py-4 flex justify-end gap-5">
-      {data.header_primary?.map(({ value }, i) => {
-        return (
-          <Link key={i} href={value.link}>
-            {value.title}
-          </Link>
-        );
-      })}
+      {data.header_primary?.map(({ value }, index) => (
+        <Link key={index} href={value.value}>
+          {value.title}
+        </Link>
+      ))}
     </nav>
   );
 };

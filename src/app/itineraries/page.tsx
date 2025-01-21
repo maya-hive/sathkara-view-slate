@@ -2,7 +2,7 @@ import Image from "next/image";
 import queryString from "query-string";
 import { z } from "zod";
 
-export default async function Itinerary({
+export default async function ItinearyIndex({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -11,7 +11,7 @@ export default async function Itinerary({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <p className="text-center text-red-500">No data available.</p>;
+    return null;
   }
 
   return (
