@@ -23,7 +23,7 @@ export const ItinerarySlide = async ({
 
   return (
     <div className="mx-5 flex border gap-5">
-      <div className="flex items-end relative">
+      <div className="flex items-end relative max-w-[450px]">
         <div className="bg-gradient-to-b from-transparent to-black">
           <Image
             className="absolute -z-10 w-full h-full left-0 top-0 object-cover"
@@ -50,8 +50,8 @@ export const ItinerarySlide = async ({
           </div>
         </div>
       </div>
-      <div className="p-8">
-        <div className="flex gap-5">
+      <div className="p-8 w-full">
+        <div className="grid grid-cols-2 gap-5">
           {itineraries.map((itinerary, index: number) => {
             return itinerary && <ItineraryCard key={index} slug={itinerary} />;
           })}

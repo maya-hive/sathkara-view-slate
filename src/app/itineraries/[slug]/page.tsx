@@ -16,16 +16,18 @@ export default async function Itinerary({
 
   return (
     <article className="container mx-auto">
-      <Image
-        className="rounded w-full h-[400px] object-cover"
-        src={data.featured_image}
-        alt={"Featured image"}
-        width={1200}
-        height={800}
-      />
-      <h1 className="font-semibold mt-2">{data.name}</h1>
-      <p>{data.short_description}</p>
-      <p>Price: {data.price}</p>
+      <div className="mt-12">
+        <Image
+          className="rounded w-full h-[400px] object-cover"
+          src={data.featured_image}
+          alt={"Featured image"}
+          width={1200}
+          height={800}
+        />
+        <h1 className="font-semibold mt-2">{data.name}</h1>
+        <p>{data.short_description}</p>
+        <p>Price: {data.price}</p>
+      </div>
     </article>
   );
 }

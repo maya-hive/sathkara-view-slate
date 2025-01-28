@@ -18,7 +18,7 @@ export const ItineraryCard = async ({ slug }: Props) => {
       <Image
         className="rounded w-full h-[200px] object-cover"
         src={data.featured_image}
-        alt={"Featured image"}
+        alt={data.name}
         width={500}
         height={100}
       />
