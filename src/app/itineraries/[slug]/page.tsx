@@ -1,5 +1,6 @@
 import Image from "next/image";
 import queryString from "query-string";
+import { Suspense } from "react";
 import { z } from "zod";
 
 export default async function Itinerary({
@@ -17,13 +18,16 @@ export default async function Itinerary({
   return (
     <article className="container mx-auto">
       <div className="mt-12">
-        <Image
-          className="rounded w-full h-[400px] object-cover"
-          src={data.featured_image}
-          alt={"Featured image"}
-          width={1200}
-          height={800}
-        />
+        <Suspense fallback={<span>Loading...</span>}>
+          <Image
+            className="rounded w-full h-[400px] object-cover"
+            src={data.featured_image}
+            alt={"Featured image"}
+            width={1200}
+            height={800}
+            priority={true}
+          />
+        </Suspense>
         <h1 className="font-semibold mt-2">{data.name}</h1>
         <p>{data.short_description}</p>
         <p>Price: {data.price}</p>
