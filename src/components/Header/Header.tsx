@@ -28,6 +28,7 @@ export const Header = async () => {
               alt={data.site_name ?? "logo"}
               width={140}
               height={70}
+              priority={true}
             />
           )}
         </Link>
