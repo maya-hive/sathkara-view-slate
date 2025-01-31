@@ -26,10 +26,7 @@ const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_contact?${query}`,
-    {
-      cache: "no-store",
-    }
+    `${process.env.API_URL}/settings/page_contact?${query}`
   );
 
   if (!response.ok) {
