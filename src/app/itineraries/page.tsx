@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -13,7 +14,7 @@ export default async function ItinearyIndex() {
     <article className="container mx-auto">
       <div className="mt-12 grid grid-cols-4 gap-5">
         {data.map((item, index) => (
-          <a key={index} href={"/itineraries/" + item.slug}>
+          <Link key={index} href={"/itineraries/" + item.slug}>
             <Image
               className="rounded w-full h-[400px] object-cover"
               src={item.featured_image}
@@ -24,7 +25,7 @@ export default async function ItinearyIndex() {
             <h1 className="font-semibold mt-2">{item.name}</h1>
             <p>{item.short_description}</p>
             <p>Price: {item.price}</p>
-          </a>
+          </Link>
         ))}
       </div>
     </article>
