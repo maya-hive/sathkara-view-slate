@@ -84,10 +84,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/navigation?${query}`,
-    {
-      cache: "no-store",
-    }
+    `${process.env.API_URL}/settings/navigation?${query}`
   );
 
   if (!response.ok) {

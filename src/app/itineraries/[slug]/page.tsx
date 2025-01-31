@@ -41,10 +41,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itinerary/${slug}?${query}`,
-    {
-      cache: "no-store",
-    }
+    `${process.env.API_URL}/modules/itinerary/${slug}?${query}`
   );
 
   if (!response.ok) {
