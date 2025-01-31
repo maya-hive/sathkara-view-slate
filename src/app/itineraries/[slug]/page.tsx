@@ -36,6 +36,28 @@ export default async function Itinerary({
   );
 }
 
+export async function generateStaticParams() {
+  const query = queryString.stringify(
+    { fields: ["slug"] },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/modules/itinerary/index?${query}`
+  );
+
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
+  }
+
+  const { data } = await response.json();
+
+  return data.map(({ slug }: { slug: string }) => ({
+    slug: slug,
+  }));
+}
+
 const fetchData = async (
   slug: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
