@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -14,7 +15,7 @@ export const ItineraryCard = async ({ slug }: Props) => {
   }
 
   return (
-    <a href={"/itineraries/" + slug} className="p-8 border">
+    <Link href={"/itineraries/" + slug} className="p-8 border">
       <Image
         className="rounded w-full h-[200px] object-cover"
         src={data.featured_image}
@@ -25,7 +26,7 @@ export const ItineraryCard = async ({ slug }: Props) => {
       <h2 className="font-semibold mt-2">{data.name}</h2>
       <p>{data.short_description}</p>
       <p>Price: {data.price}</p>
-    </a>
+    </Link>
   );
 };
 
