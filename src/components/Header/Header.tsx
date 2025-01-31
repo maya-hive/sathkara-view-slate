@@ -14,11 +14,16 @@ export const Header = async () => {
 
   return (
     <header className="border-b">
-      <div className="container mx-auto flex justify-between items-center">
+      <Navigation
+        phone={{
+          title: data.header_contact_title,
+          value: data.header_contact_number,
+        }}
+      >
         <Link href="/">
           {data.site_logo && (
             <Image
-              className="rounded w-full h-[70px] my-2 object-cover"
+              className="rounded w-full h-[60px] object-cover"
               src={data.site_logo}
               alt={data.site_name ?? "logo"}
               width={140}
@@ -26,17 +31,21 @@ export const Header = async () => {
             />
           )}
         </Link>
-        <Navigation />
-      </div>
+      </Navigation>
     </header>
   );
 };
 
-type ApiResponse = z.infer<typeof ApiResponseSchema>;
-
-const fetchData = async (): Promise<ApiResponse> => {
+const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
-    { fields: ["site_name", "site_logo"] },
+    {
+      fields: [
+        "site_name",
+        "site_logo",
+        "header_contact_title",
+        "header_contact_number",
+      ],
+    },
     { arrayFormat: "bracket" }
   );
 
@@ -66,11 +75,11 @@ const fetchData = async (): Promise<ApiResponse> => {
   }
 };
 
-const Schema = z.object({
-  site_name: z.string().nullable(),
-  site_logo: z.string().nullable(),
-});
-
 const ApiResponseSchema = z.object({
-  data: Schema,
+  data: z.object({
+    site_name: z.string().nullable(),
+    site_logo: z.string().nullable(),
+    header_contact_title: z.string().nullable(),
+    header_contact_number: z.string().nullable(),
+  }),
 });
