@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import queryString from "query-string";
+import { Suspense } from "react";
 import { z } from "zod";
 
 export default async function ItinearyPage({
@@ -23,20 +24,22 @@ export default async function ItinearyPage({
         </div>
       </div>
       <div className="mt-12 grid grid-cols-3 gap-5">
-        {data.map((item, index) => (
-          <Link key={index} href={"/itineraries/" + item.slug}>
-            <Image
-              className="rounded w-full h-[400px] object-cover"
-              src={item.featured_image}
-              alt={"Featured image"}
-              width={1200}
-              height={800}
-            />
-            <h1 className="font-semibold mt-2">{item.name}</h1>
-            <p>{item.short_description}</p>
-            <p>Price: {item.price}</p>
-          </Link>
-        ))}
+        <Suspense fallback={<span>Loading</span>}>
+          {data.map((item, index) => (
+            <Link key={index} href={"/itineraries/" + item.slug}>
+              <Image
+                className="rounded w-full h-[400px] object-cover"
+                src={item.featured_image}
+                alt={"Featured image"}
+                width={500}
+                height={400}
+              />
+              <h1 className="font-semibold mt-2">{item.name}</h1>
+              <p>{item.short_description}</p>
+              <p>Price: {item.price}</p>
+            </Link>
+          ))}
+        </Suspense>
       </div>
       <div className="mt-8 w-full flex justify-center gap-4">
         <Link
