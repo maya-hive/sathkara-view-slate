@@ -4,6 +4,9 @@ import queryString from "query-string";
 import { Suspense } from "react";
 import { z } from "zod";
 
+import { toBase64 } from "@/utils/base64";
+import { shimmer } from "@/components/Shimmer";
+
 export default async function ItinearyIndex() {
   const { data } = await fetchData();
 
@@ -30,8 +33,12 @@ export default async function ItinearyIndex() {
             <Link key={index} href={"/itineraries/" + item.slug}>
               <Image
                 className="rounded w-full h-[400px] object-cover"
-                src={item.featured_image}
                 alt={"Featured image"}
+                src={item.featured_image}
+                priority={false}
+                placeholder={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+                )}`}
                 width={500}
                 height={400}
               />
