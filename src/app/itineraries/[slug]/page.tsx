@@ -98,5 +98,5 @@ const Schema = z.object({
 });
 
 const ApiResponseSchema = z.object({
-  data: Schema,
+  data: Schema.nullable(),
 });

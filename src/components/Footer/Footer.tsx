@@ -9,7 +9,7 @@ export const Footer = async () => {
   }
 
   return (
-    <div className="border-t py-4">
+    <div className="border-t mt-8 py-4">
       <div className="container mx-auto">
         <div className="flex justify-between">
           <p>

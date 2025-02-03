@@ -3,16 +3,15 @@ import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
-export default async function ItinearyIndex() {
-  const { data } = await fetchData();
+export default async function ItinearyPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+  const { data } = await fetchData(id);
 
-  if (!data || !Array.isArray(data) || data.length === 0) {
-    return null;
-  }
-
-  const items = data.filter((item) => item);
-
-  if (items.length === 0) {
+  if (!data) {
     return null;
   }
 
@@ -41,7 +40,13 @@ export default async function ItinearyIndex() {
       </div>
       <div className="mt-8 w-full flex justify-center gap-4">
         <Link
-          href="/itineraries/page/2"
+          href={`/itineraries/page/${parseInt(id) - 1}`}
+          className="block bg-slate-900 text-white text-center min-w-[120px] p-4 text-sm"
+        >
+          Previous
+        </Link>
+        <Link
+          href={`/itineraries/page/${parseInt(id) + 1}`}
           className="block bg-slate-900 text-white text-center min-w-[120px] p-4 text-sm"
         >
           Next
@@ -51,7 +56,9 @@ export default async function ItinearyIndex() {
   );
 }
 
-const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
+const fetchData = async (
+  id: string
+): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: [
@@ -67,7 +74,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itinerary/index?${query}`
+    `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`
   );
 
   if (!response.ok) {
