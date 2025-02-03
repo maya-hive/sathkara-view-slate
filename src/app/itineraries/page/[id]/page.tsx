@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { toBase64 } from "@/utils/base64";
 import { shimmer } from "@/components/Shimmer";
+import { redirect } from "next/navigation";
 
 export default async function ItinearyPage({
   params,
@@ -13,6 +14,11 @@ export default async function ItinearyPage({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
+
+  if (id <= "1") {
+    return redirect("/itineraries");
+  }
+
   const { data } = await fetchData(id);
 
   if (!data) {
@@ -64,6 +70,30 @@ export default async function ItinearyPage({
       </div>
     </article>
   );
+}
+
+export async function generateStaticParams() {
+  const query = queryString.stringify(
+    { fields: ["id"] },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/modules/itinerary/index?${query}`
+  );
+
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+
+  const pages = new Array(data.last_page).fill(0).map((_, i) => ++i);
+
+  return pages.map((id) => ({
+    id: id.toString(),
+  }));
 }
 
 const fetchData = async (
