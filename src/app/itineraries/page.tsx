@@ -1,14 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
 import queryString from "query-string";
-import { Suspense } from "react";
 import { z } from "zod";
 
-import { toBase64 } from "@/utils/base64";
-import { shimmer } from "@/components/Shimmer";
+import { ItineraryPageLayout } from "./page/[id]/page";
 
 export default async function ItinearyIndex() {
-  const { data } = await fetchData();
+  const { data, links } = await fetchData();
 
   if (!data || !Array.isArray(data) || data.length === 0) {
     return null;
@@ -20,45 +16,7 @@ export default async function ItinearyIndex() {
     return null;
   }
 
-  return (
-    <article className="container mx-auto">
-      <div className="my-8">
-        <div className="bg-slate-100 py-12">
-          <h1 className="text-center text-2xl">Itineraries</h1>
-        </div>
-      </div>
-      <div className="mt-12 grid grid-cols-3 gap-5">
-        <Suspense fallback={<span>Loading</span>}>
-          {data.map((item, index) => (
-            <Link key={index} href={"/itineraries/" + item.slug}>
-              <Image
-                className="rounded w-full h-[400px] object-cover"
-                alt={"Featured image"}
-                src={item.featured_image}
-                priority={false}
-                placeholder={`data:image/svg+xml;base64,${toBase64(
-                  shimmer(700, 475)
-                )}`}
-                width={500}
-                height={400}
-              />
-              <h1 className="font-semibold mt-2">{item.name}</h1>
-              <p>{item.short_description}</p>
-              <p>Price: {item.price}</p>
-            </Link>
-          ))}
-        </Suspense>
-      </div>
-      <div className="mt-8 w-full flex justify-center gap-4">
-        <Link
-          href="/itineraries/page/2"
-          className="block bg-slate-900 text-white text-center min-w-[120px] p-4 text-sm"
-        >
-          Next
-        </Link>
-      </div>
-    </article>
-  );
+  return <ItineraryPageLayout data={data} links={links} />;
 }
 
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
@@ -110,4 +68,13 @@ const Schema = z.object({
 
 const ApiResponseSchema = z.object({
   data: z.array(Schema).nullable(),
+  links: z
+    .array(
+      z.object({
+        url: z.string().nullable(),
+        label: z.string(),
+        active: z.boolean(),
+      })
+    )
+    .nullable(),
 });
