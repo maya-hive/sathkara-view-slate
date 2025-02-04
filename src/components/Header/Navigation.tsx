@@ -44,46 +44,48 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto">
-        <div className="py-4 w-full flex items-center justify-center gap-5">
-          <div className="flex gap-10 w-full justify-start items-center">
-            {data.header_primary_left?.map(({ value }, index) => (
-              <Link
-                key={index}
-                href={value.slug ?? value.value}
-                className="font-medium"
-              >
-                {value.title}
-              </Link>
-            ))}
-            {data.header_primary_left_call_to_action_url && (
-              <Link
-                href={data.header_primary_left_call_to_action_url}
-                className="font-medium bg-orange-500 text-white py-2 px-4"
-              >
-                {data.header_primary_right_call_to_action_title}
-              </Link>
-            )}
-          </div>
-          <div className="min-w-[150px]">{children}</div>
-          <div className="flex gap-10 w-full justify-end items-center">
-            {data.header_primary_right?.map(({ value }, index) => (
-              <Link
-                key={index}
-                href={value.slug ?? value.value}
-                className="font-medium"
-              >
-                {value.title}
-              </Link>
-            ))}
-            {data.header_primary_right_call_to_action_url && (
-              <Link
-                href={data.header_primary_right_call_to_action_url}
-                className="font-medium bg-orange-500 text-white py-2 px-4"
-              >
-                {data.header_primary_right_call_to_action_title}
-              </Link>
-            )}
+      <div className="bg-white">
+        <div className="container mx-auto text-black">
+          <div className="py-4 w-full flex items-center justify-center gap-5">
+            <div className="flex gap-10 w-full justify-start items-center">
+              {data.header_primary_left?.map(({ value }, index) => (
+                <Link
+                  key={index}
+                  href={value.slug ?? value.value}
+                  className="font-medium"
+                >
+                  {value.title}
+                </Link>
+              ))}
+              {data.header_primary_left_call_to_action_url && (
+                <Link
+                  href={data.header_primary_left_call_to_action_url}
+                  className="font-medium bg-orange-500 text-white py-2 px-4"
+                >
+                  {data.header_primary_right_call_to_action_title}
+                </Link>
+              )}
+            </div>
+            <div className="min-w-[150px]">{children}</div>
+            <div className="flex gap-10 w-full justify-end items-center">
+              {data.header_primary_right?.map(({ value }, index) => (
+                <Link
+                  key={index}
+                  href={value.slug ?? value.value}
+                  className="font-medium"
+                >
+                  {value.title}
+                </Link>
+              ))}
+              {data.header_primary_right_call_to_action_url && (
+                <Link
+                  href={data.header_primary_right_call_to_action_url}
+                  className="font-medium bg-orange-500 text-white py-2 px-4"
+                >
+                  {data.header_primary_right_call_to_action_title}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
