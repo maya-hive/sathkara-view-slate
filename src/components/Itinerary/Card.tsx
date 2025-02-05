@@ -1,34 +1,58 @@
+import { toBase64 } from "@/utils/base64";
 import Image from "next/image";
 import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
+import { shimmer } from "../Shimmer";
 
 interface Props {
-  slug: string;
+  slug?: string;
+  data?: Itinerary;
 }
 
-export const ItineraryCard = async ({ slug }: Props) => {
-  const { data } = await fetchData(slug);
+type Itinerary = {
+  id: number;
+  status: number;
+  name: string;
+  slug: string;
+  short_description: string;
+  price: string;
+  featured_image: string;
+  sale_price?: string | null;
+  duration?: string | null;
+};
 
-  if (!data) {
-    return null;
+export const ItineraryCard = async ({ slug, data }: Props) => {
+  if (slug) {
+    const { data } = await fetchData(slug);
+
+    if (!data) {
+      return null;
+    }
+
+    return <CardLayout data={data} />;
   }
 
-  return (
-    <Link href={"/itineraries/" + slug} className="p-8 border">
+  return <CardLayout data={data} />;
+};
+
+const CardLayout = ({ data }: Props) =>
+  data && (
+    <Link href={"/itineraries/" + data.slug}>
       <Image
-        className="rounded w-full h-[200px] object-cover"
+        className="rounded w-full h-[400px] object-cover"
+        alt={"Featured image"}
         src={data.featured_image}
-        alt={data.name}
+        priority={false}
+        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
         width={500}
-        height={100}
+        height={400}
       />
-      <h2 className="font-semibold mt-2">{data.name}</h2>
+      <h1 className="font-semibold mt-2">{data.name}</h1>
       <p>{data.short_description}</p>
       <p>Price: {data.price}</p>
     </Link>
   );
-};
 
 const fetchData = async (
   slug: string
