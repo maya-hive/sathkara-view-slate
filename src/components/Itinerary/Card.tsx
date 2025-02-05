@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { z } from "zod";
 
 import { shimmer } from "../Shimmer";
@@ -73,29 +72,19 @@ const CardLayout = ({ data }: Props) =>
         <div className="">
           <h3 className="mt-2 pb-2 font-semibold text-2xl">{data.name}</h3>
           <div className="border-y py-3">
-            <div className="flex align-center gap-2">
-              <div className="flex align-center gap-2">
-                <FontAwesomeIcon
-                  icon={faMapMarkerAlt}
-                  className="max-w-5"
-                  size="xs"
-                />
-                <p className="text-sm">
-                  Wilpattu, Yala, Kandy, Polonnaruwa and More
-                </p>
-              </div>
-              <span className="border h-fit bg-slate-100 py-1 px-3 flex gap-2 text-sm">
-                <FontAwesomeIcon
-                  icon={faCalendar}
-                  className="max-w-5"
-                  size="xs"
-                />
-                10 Days
-              </span>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                className="max-w-5"
+                size="xs"
+              />
+              <p className="text-sm">
+                Wilpattu, Yala, Kandy, Polonnaruwa and More
+              </p>
             </div>
           </div>
           <div className="border-y py-3">
-            <p>{data.short_description}</p>
+            <p className="">{data.short_description}</p>
             <div className="mt-3 flex gap-3">
               <span className="border rounded border-blue-400 bg-blue-100 py-1 px-3 text-sm">
                 Wildlife
