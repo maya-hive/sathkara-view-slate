@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 
 import "./globals.css";
 import "swiper/css";
@@ -8,14 +8,10 @@ import "swiper/css/pagination";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const geistSans = Poppins({
+  variable: "--font-poppins-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "400",
 });
 
 export default async function RootLayout({
@@ -25,9 +21,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body className={`${geistSans.variable} antialiased`}>
         <Header />
         {children}
         <Footer />

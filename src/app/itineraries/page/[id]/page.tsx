@@ -39,29 +39,38 @@ export const ItineraryPageLayout = ({
         <h1 className="text-center text-2xl">Itineraries</h1>
       </div>
     </div>
-    <div className="mt-12 grid grid-cols-3 gap-5">
-      <Suspense fallback={<span>Loading</span>}>
-        {data?.map((item) => (
-          <ItineraryCard key={item.id} data={item} />
-        ))}
-      </Suspense>
-    </div>
-    <div className="mt-8 w-full flex justify-center gap-4">
-      {links?.map(
-        ({ url, label, active }) =>
-          url && (
-            <Link
-              key={label}
-              href={url}
-              className={cn(
-                "block text-center min-w-[100px] py-2 text-sm",
-                active ? "bg-blue-600 text-white" : "bg-slate-600 text-white"
-              )}
-            >
-              <span dangerouslySetInnerHTML={{ __html: label }} />
-            </Link>
-          )
-      )}
+    <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
+      <div>
+        <div className="rounded bg-slate-100 h-full"></div>
+      </div>
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Suspense fallback={<span>Loading</span>}>
+            {data?.map((item) => (
+              <ItineraryCard key={item.id} data={item} />
+            ))}
+          </Suspense>
+        </div>
+        <div className="mt-8 w-full flex justify-center gap-4">
+          {links?.map(
+            ({ url, label, active }) =>
+              url && (
+                <Link
+                  key={label}
+                  href={url}
+                  className={cn(
+                    "block text-center min-w-[100px] py-2 text-sm",
+                    active
+                      ? "bg-blue-600 text-white"
+                      : "bg-slate-600 text-white"
+                  )}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: label }} />
+                </Link>
+              )
+          )}
+        </div>
+      </div>
     </div>
   </article>
 );
@@ -91,6 +100,7 @@ export const fetchData = cache(
           "duration",
           "price",
         ],
+        relations: ["destination"],
       },
       { arrayFormat: "bracket" }
     );
@@ -129,6 +139,11 @@ const Schema = z.object({
   featured_image: z.string(),
   sale_price: z.string().nullable(),
   duration: z.string().nullable(),
+  destination: z
+    .object({
+      name: z.string(),
+    })
+    .nullable(),
 });
 
 const ApiResponseSchema = z.object({
