@@ -3,7 +3,7 @@ import queryString from "query-string";
 import { Suspense } from "react";
 import { z } from "zod";
 
-export default async function Itinerary({
+export default async function Page({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -38,7 +38,7 @@ export default async function Itinerary({
 
 export async function generateStaticParams() {
   const query = queryString.stringify(
-    { fields: ["slug"] },
+    { fields: ["slug"], limit: "1000" },
     { arrayFormat: "bracket" }
   );
 
@@ -62,7 +62,9 @@ const fetchData = async (
   slug: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
-    { fields: ["id", "name", "featured_image", "short_description", "price"] },
+    {
+      fields: ["id", "name", "featured_image", "short_description", "price"],
+    },
     { arrayFormat: "bracket" }
   );
 
