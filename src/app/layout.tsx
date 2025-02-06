@@ -11,7 +11,7 @@ import { Footer } from "@/components/Footer/Footer";
 const geistSans = Poppins({
   variable: "--font-poppins-sans",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export default async function RootLayout({
@@ -24,7 +24,9 @@ export default async function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={`${geistSans.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} antialiased font-primary text-gray-700`}
+      >
         <Header />
         {children}
         <Footer />

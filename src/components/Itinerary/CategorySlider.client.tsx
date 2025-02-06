@@ -41,8 +41,9 @@ export const ItienraryCategorySliderClient = ({ items, children }: Props) => {
             className="absolute z-10 left-0 top-0 bottom-0"
           >
             <FontAwesomeIcon
-              className="rounded-full bg-slate-300 p-3"
+              className="rounded-full bg-orange-500 text-white p-3"
               icon={faArrowLeft}
+              size="lg"
             />
           </button>
           {Children.map(children, (child, index) => (
@@ -53,8 +54,9 @@ export const ItienraryCategorySliderClient = ({ items, children }: Props) => {
             className="absolute z-10 right-0 top-0 bottom-0"
           >
             <FontAwesomeIcon
-              className="rounded-full bg-slate-300 p-3"
+              className="rounded-full bg-orange-500 text-white p-3"
               icon={faArrowRight}
+              size="lg"
             />
           </button>
         </Swiper>

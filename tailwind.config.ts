@@ -12,6 +12,14 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        primary: ["var(--font-poppins-sans)", "sans-serif"],
+      },
+      fontSize: {
+        xs: "11px",
+        sm: "12px",
+        md: "14px",
+      },
     },
   },
   plugins: [],

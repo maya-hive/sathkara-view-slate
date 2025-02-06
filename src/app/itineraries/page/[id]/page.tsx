@@ -21,7 +21,7 @@ export default async function Page({ params }: Args) {
   const data = await fetchData(id);
 
   if (!data) {
-    return null;
+    return redirect("/");
   }
 
   return <ItineraryListing {...data} />;

@@ -3,12 +3,13 @@ import { z } from "zod";
 
 import { ItienraryCategorySlider } from "@/components/Itinerary/CategorySlider";
 import { Banner } from "@/components/Banner";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const { data } = await fetchData();
 
   if (!data) {
-    return <p className="text-center text-red-500">No data available.</p>;
+    return redirect("/");
   }
 
   return (

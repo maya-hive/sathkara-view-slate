@@ -2,12 +2,13 @@ import queryString from "query-string";
 
 import type { ApiResponse } from "@/types/ApiResponse.types";
 import { Banner } from "@/components/Banner";
+import { redirect } from "next/navigation";
 
 export default async function Contact() {
   const { data } = await fetchSettings();
 
   if (!data) {
-    return <p className="text-center text-red-500">No data available.</p>;
+    return redirect("/");
   }
 
   return (

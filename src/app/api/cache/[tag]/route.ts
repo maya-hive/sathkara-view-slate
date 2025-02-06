@@ -7,6 +7,8 @@ const requestSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  // Implement authentication via a bearer token.
+
   try {
     const body = await req.json();
     const parsedData = requestSchema.parse(body);

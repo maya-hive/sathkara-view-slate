@@ -22,7 +22,7 @@ export const ItinerarySlide = async ({
   const { data } = await fetchData(category);
 
   return (
-    <div className="mx-5 flex border gap-5">
+    <div className="mx-5 flex border rounded-2xl overflow-hidden gap-5">
       <div className="flex items-end relative max-w-[450px]">
         <div className="bg-gradient-to-b from-transparent to-black">
           <Image
@@ -32,10 +32,10 @@ export const ItinerarySlide = async ({
             width={200}
             height={400}
           />
-          <div className="p-8">
+          <div className="p-10">
             {content && (
               <span
-                className="text-white [&>h4]:text-xl"
+                className="text-white [&>h3]:mt-1 [&>h3]:text-5xl [&>h3]:font-semibold [&>h4]:text-xl [&>h4]:font-semibold [&>p]:mt-2 [&>p]:font-medium"
                 dangerouslySetInnerHTML={{
                   __html: content,
                 }}
@@ -43,7 +43,7 @@ export const ItinerarySlide = async ({
             )}
             <Link
               href="/itineraries"
-              className="block w-fit mt-5 bg-slate-100 px-10 py-2 text-center"
+              className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
             >
               Plan Your Trip
             </Link>
@@ -58,7 +58,7 @@ export const ItinerarySlide = async ({
         </div>
         <Link
           href="/itineraries"
-          className="mt-5 py-2 block bg-slate-900 text-slate-50 text-center"
+          className="mt-6 rounded-md p-4 block bg-slate-800 text-slate-50 text-center text-sm font-semibold uppercase"
         >
           View All Itineraries
         </Link>

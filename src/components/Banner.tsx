@@ -7,22 +7,22 @@ interface Props {
 
 export const Banner = async ({ image, content }: Props) => {
   return (
-    <section className="relative h-[400px]">
+    <section className="relative">
       <div className="absolute bottom-0 left-0 h-[100px] w-full bg-gradient-to-b from-transparent to-black"></div>
       <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
         {image && (
           <Image
-            className="absolute w-full h-full object-cover -z-10"
+            className="absolute top-0 left-0 w-full h-full object-cover -z-10"
             src={image}
             alt={"Banner image"}
             width={1600}
             height={800}
           />
         )}
-        <div className="text-center text-white">
+        <div className="text-center text-white pt-[480px] pb-[50px] z-10">
           {content && (
             <span
-              className="[&>h1]:text-4xl"
+              className="[&>h1]:text-7xl [&>h1]:font-bold"
               dangerouslySetInnerHTML={{ __html: content }}
             />
           )}

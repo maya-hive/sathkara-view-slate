@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { SocialMediaIcons, SocialMediaLinks } from "../SocialMediaIcons";
+import { redirect } from "next/navigation";
 
 interface Props {
   children: ReactNode[] | ReactNode;
@@ -15,18 +16,18 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
   const { data } = await fetchData();
 
   if (!data) {
-    return null;
+    return redirect("/");
   }
 
   return (
     <nav className="w-full">
-      <div className="border-b bg-slate-900 text-white py-2 w-full flex items-center justify-between gap-5">
-        <div className="container mx-auto flex justify-between">
+      <div className="border-b bg-blue-950 text-white py-2 w-full flex items-center justify-between gap-5">
+        <div className="container mx-auto flex justify-between text-blue-400 text-sm font-medium">
           <div className="flex gap-5">
             {phone.value && (
               <a href={"tel:" + phone.value.replace(/\s/g, "")}>
                 {phone.title}{" "}
-                <span className="text-orange-400 font-bold">{phone.value}</span>
+                <span className="text-yellow-400">{phone.value}</span>
               </a>
             )}
           </div>
@@ -46,7 +47,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
       </div>
       <div className="bg-white">
         <div className="container mx-auto text-black">
-          <div className="py-4 w-full flex items-center justify-center gap-5">
+          <div className="py-2 w-full flex items-center justify-center gap-5 text-md">
             <div className="flex gap-10 w-full justify-start items-center">
               {data.header_primary_left?.map(({ value }, index) => (
                 <Link
@@ -59,8 +60,8 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               ))}
               {data.header_primary_left_call_to_action_url && (
                 <Link
+                  className="rounded bg-yellow-400 py-2 px-6 text-yellow-800 font-semibold"
                   href={data.header_primary_left_call_to_action_url}
-                  className="font-medium bg-orange-500 text-white py-2 px-4"
                 >
                   {data.header_primary_right_call_to_action_title}
                 </Link>
@@ -79,8 +80,8 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               ))}
               {data.header_primary_right_call_to_action_url && (
                 <Link
+                  className="rounded bg-yellow-400 py-2 px-6 text-yellow-800 font-semibold"
                   href={data.header_primary_right_call_to_action_url}
-                  className="font-medium bg-orange-500 text-white py-2 px-4"
                 >
                   {data.header_primary_right_call_to_action_title}
                 </Link>

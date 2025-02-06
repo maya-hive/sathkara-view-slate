@@ -1,67 +1,67 @@
 import queryString from "query-string";
-import { cache } from "react";
 import { z } from "zod";
 
 import { ItineraryListing } from "@/components/Itinerary/Listing";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
-    return null;
+    return redirect("/");
   }
 
   return <ItineraryListing {...data} />;
 }
 
-const fetchData = cache(
-  async (id: string): Promise<z.infer<typeof ApiResponseSchema>> => {
-    const query = queryString.stringify(
-      {
-        fields: [
-          "id",
-          "name",
-          "status",
-          "slug",
-          "sale_price",
-          "featured_image",
-          "short_description",
-          "duration",
-          "price",
-        ],
-        relations: ["destination"],
+const fetchData = async (
+  id: string
+): Promise<z.infer<typeof ApiResponseSchema>> => {
+  const query = queryString.stringify(
+    {
+      fields: [
+        "id",
+        "name",
+        "status",
+        "slug",
+        "sale_price",
+        "featured_image",
+        "short_description",
+        "duration",
+        "price",
+      ],
+      relations: ["destination"],
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
+    {
+      next: {
+        tags: ["global"],
       },
-      { arrayFormat: "bracket" }
-    );
-
-    const response = await fetch(
-      `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
-      {
-        next: {
-          tags: ["global"],
-        },
-      }
-    );
-
-    if (!response.ok) {
-      const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
-      throw new Error(errorMessage);
     }
+  );
 
-    const data = await response.json();
-
-    try {
-      return ApiResponseSchema.parse(data);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.log(error.errors);
-
-        throw new Error("API Response validation failed: " + error.message);
-      }
-      throw error;
-    }
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
   }
-);
+
+  const data = await response.json();
+
+  try {
+    return ApiResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.log(error.errors);
+
+      throw new Error("API Response validation failed: " + error.message);
+    }
+    throw error;
+  }
+};
 
 const Schema = z.object({
   id: z.number(),

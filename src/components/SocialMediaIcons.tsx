@@ -24,7 +24,7 @@ export type SocialMediaLinks = {
 };
 
 export const SocialMediaIcons = ({ links, size = "lg" }: Props) => (
-  <div className="flex space-x-4">
+  <div className="flex space-x-4 text-white">
     {links?.facebook && (
       <a href={links.facebook} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faFacebook} size={size} />

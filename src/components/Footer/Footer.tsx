@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -5,7 +6,7 @@ export const Footer = async () => {
   const { data } = await fetchData();
 
   if (!data) {
-    return null;
+    return redirect("/");
   }
 
   return (
