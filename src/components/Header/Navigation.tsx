@@ -111,7 +111,12 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/navigation?${query}`
+    `${process.env.API_URL}/settings/navigation?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
   );
 
   if (!response.ok) {

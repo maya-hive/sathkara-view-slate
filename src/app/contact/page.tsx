@@ -26,7 +26,12 @@ const fetchSettings = async (): Promise<ApiResponse<Settings>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_contact?${query}`
+    `${process.env.API_URL}/settings/page_contact?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
   );
 
   if (!response.ok) {

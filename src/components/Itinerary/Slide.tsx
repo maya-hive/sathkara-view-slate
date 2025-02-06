@@ -76,7 +76,12 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itineraryCategory/${slug}?${query}`
+    `${process.env.API_URL}/modules/itineraryCategory/${slug}?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
   );
 
   if (!response.ok) {

@@ -35,7 +35,12 @@ const fetchData = cache(
     );
 
     const response = await fetch(
-      `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`
+      `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
+      {
+        next: {
+          tags: ["global"],
+        },
+      }
     );
 
     if (!response.ok) {

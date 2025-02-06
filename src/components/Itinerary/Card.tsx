@@ -147,7 +147,12 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itinerary/${slug}?${query}`
+    `${process.env.API_URL}/modules/itinerary/${slug}?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
   );
 
   if (!response.ok) {
