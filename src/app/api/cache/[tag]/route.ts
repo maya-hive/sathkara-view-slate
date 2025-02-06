@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     parsedData.tags.forEach((tag) => revalidateTag(tag));
 
     return NextResponse.json(
-      { message: `Cache purged for tags: ${parsedData.tags.join(", ")}` },
+      { message: `Cache invalidated for tags: ${parsedData.tags.join(", ")}` },
       { status: 200 }
     );
   } catch (error) {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       console.log(error.errors);
 
       return NextResponse.json(
-        { message: "Failed to purge cache", error: error.message },
+        { message: "Failed to invalidate cache", error: error.message },
         { status: 400 }
       );
     }
