@@ -1,3 +1,4 @@
+import { cn } from "@/app/lib/utils";
 import {
   faFacebook,
   faInstagram,
@@ -12,6 +13,7 @@ import {
 
 export interface Props {
   size: FontAwesomeIconProps["size"];
+  color?: string;
   links?: SocialMediaLinks | null;
 }
 
@@ -23,8 +25,12 @@ export type SocialMediaLinks = {
   youtube?: string | null;
 };
 
-export const SocialMediaIcons = ({ links, size = "lg" }: Props) => (
-  <div className="flex space-x-4 text-white">
+export const SocialMediaIcons = ({
+  links,
+  color = "text-white",
+  size = "lg",
+}: Props) => (
+  <div className={cn(color, "flex space-x-4")}>
     {links?.facebook && (
       <a href={links.facebook} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faFacebook} size={size} />

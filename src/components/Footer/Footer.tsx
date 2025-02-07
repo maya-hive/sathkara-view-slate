@@ -1,6 +1,10 @@
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
+import { SocialMediaIcons } from "../SocialMediaIcons";
+import { Navigation } from "./Navigation";
 
 export const Footer = async () => {
   const { data } = await fetchData();
@@ -10,18 +14,102 @@ export const Footer = async () => {
   }
 
   return (
-    <div className="border-t mt-8 py-4 bg-white text-black">
-      <div className="container mx-auto">
-        <div className="flex justify-between">
+    <div className="relative border-t mt-8 py-4 bg-sky-950 text-black">
+      <div className="container mx-auto relative z-10 text-white">
+        <div className="py-8 flex justify-between">
+          {data.footer_top_content && (
+            <span
+              dangerouslySetInnerHTML={{ __html: data.footer_top_content }}
+              className="[&>h2]:text-4xl [&>h2]:font-semibold [&>p]:mt-2"
+            />
+          )}
+          {data.footer_top_link?.url && (
+            <Link
+              href={data.footer_top_link.url}
+              className="block rounded w-fit mt-5 bg-yellow-300 text-cyan-950 px-16 py-4 text-center text-md font-semibold uppercase"
+            >
+              {data.footer_top_link?.title}
+            </Link>
+          )}
+        </div>
+        <div className="border-y border-sky-800 flex justify-between py-10 text-md">
+          <div className="text-3xl font-extralight">
+            <p className="max-w-[300px]">{data.footer_contact_title}</p>
+            {data.footer_contact_number && (
+              <a
+                href={"tel:" + data.footer_contact_number.replace(/\s/g, "")}
+                className="block mt-3"
+              >
+                <span>{data.footer_contact_number}</span>
+              </a>
+            )}
+            <div className="mt-6">
+              <SocialMediaIcons
+                color="text-sky-400"
+                links={{
+                  facebook: data.facebook,
+                  twitter: data.twitter_x,
+                  instagram: data.instagram,
+                  linkedin: data.linkedin,
+                  youtube: data.youtube,
+                }}
+                size="sm"
+              />
+            </div>
+          </div>
+          <div>
+            <Navigation />
+          </div>
+          <div>
+            <div>
+              <span className="uppercase">Contact Us</span>
+              <p className="mt-4 whitespace-pre-line">{data.address}</p>
+            </div>
+            {data.phone_numbers?.length && (
+              <div className="mt-4 flex gap-2">
+                {data.phone_numbers?.map(({ number }, idx, arr) => (
+                  <a key={idx} href={`tel:${number}`} className="block">
+                    {number}
+                    {idx < arr.length - 1 ? ", " : ""}
+                  </a>
+                ))}
+              </div>
+            )}
+            <div className="mt-4 flex flex-col gap-2">
+              {data.email_address?.map(({ email }, idx) => (
+                <a key={idx} href={`mailto:${email}`} className="block">
+                  {email}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="py-6 flex justify-between">
           <p>
             {data.footer_copyrights?.replace(
               "[year]",
               new Date().getFullYear().toString()
             )}
           </p>
-          <p>Maya Hive</p>
+          <Image
+            src="/maya-logo.webp"
+            alt="Maya Hive"
+            height={20}
+            width={65}
+            className="object-contain"
+          />
         </div>
       </div>
+      {data.footer_bg_image && (
+        <Image
+          className="w-full h-full object-cover absolute top-0 left-0 opacity-10"
+          src={data.footer_bg_image}
+          alt="Footer background"
+          priority={false}
+          width={1200}
+          height={400}
+        />
+      )}
     </div>
   );
 };
@@ -29,7 +117,23 @@ export const Footer = async () => {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["footer_copyrights"],
+      fields: [
+        "footer_bg_image",
+        "footer_top_content",
+        "footer_top_link",
+        "footer_contact_title",
+        "footer_contact_number",
+        "footer_copyrights",
+        "phone_numbers",
+        "email_address",
+        "address",
+        "facebook",
+        "instagram",
+        "twitter_x",
+        "tiktok",
+        "youtube",
+        "linkedin",
+      ],
     },
     { arrayFormat: "bracket" }
   );
@@ -64,6 +168,32 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 
 const ApiResponseSchema = z.object({
   data: z.object({
-    footer_copyrights: z.string().nullable(),
+    footer_bg_image: z.string().nullable().optional(),
+    footer_top_content: z.string().nullable().optional(),
+    footer_top_link: z
+      .object({
+        title: z.string().nullable().optional(),
+        url: z.string().nullable().optional(),
+      })
+      .nullable()
+      .optional(),
+    footer_contact_title: z.string().nullable().optional(),
+    footer_contact_number: z.string().nullable().optional(),
+    footer_copyrights: z.string().nullable().optional(),
+    facebook: z.string().nullable(),
+    instagram: z.string().nullable(),
+    twitter_x: z.string().nullable(),
+    tiktok: z.string().nullable(),
+    youtube: z.string().nullable(),
+    linkedin: z.string().nullable(),
+    phone_numbers: z
+      .array(z.object({ number: z.string().nullable() }))
+      .nullable()
+      .optional(),
+    email_address: z
+      .array(z.object({ email: z.string().nullable() }))
+      .nullable()
+      .optional(),
+    address: z.string().nullable().optional(),
   }),
 });
