@@ -14,31 +14,31 @@ export const Footer = async () => {
   }
 
   return (
-    <div className="relative border-t mt-8 py-4 bg-sky-950 text-black">
+    <div className="relative border-t mt-8 pt-8 bg-sky-950 text-black">
       <div className="container mx-auto relative z-10 text-white">
-        <div className="py-8 flex justify-between">
+        <div className="py-12 flex gap-5 flex-col lg:flex-row justify-between">
           {data.footer_top_content && (
             <span
               dangerouslySetInnerHTML={{ __html: data.footer_top_content }}
-              className="[&>h2]:text-4xl [&>h2]:font-semibold [&>p]:mt-2"
+              className="[&>h2]:text-4xl [&>h2]:font-semibold [&>p]:mt-2 [&>p]:font-medium"
             />
           )}
           {data.footer_top_link?.url && (
             <Link
               href={data.footer_top_link.url}
-              className="block rounded w-fit mt-5 bg-yellow-300 text-cyan-950 px-16 py-4 text-center text-md font-semibold uppercase"
+              className="h-fit rounded w-fit bg-yellow-300 text-cyan-950 px-16 py-4 text-center text-md font-semibold uppercase"
             >
               {data.footer_top_link?.title}
             </Link>
           )}
         </div>
-        <div className="border-y border-sky-800 flex justify-between py-10 text-md">
+        <div className="border-y border-sky-800 flex flex-col lg:flex-row justify-between pt-12 pb-20 text-md">
           <div className="text-3xl font-extralight">
-            <p className="max-w-[300px]">{data.footer_contact_title}</p>
+            <p className="max-w-[300px] mb-4">{data.footer_contact_title}</p>
             {data.footer_contact_number && (
               <a
                 href={"tel:" + data.footer_contact_number.replace(/\s/g, "")}
-                className="block mt-3"
+                className="mt-3"
               >
                 <span>{data.footer_contact_number}</span>
               </a>
@@ -57,16 +57,18 @@ export const Footer = async () => {
               />
             </div>
           </div>
-          <div>
+          <div className="text-[15px]">
             <Navigation />
           </div>
-          <div>
+          <div className="font-medium">
             <div>
-              <span className="uppercase">Contact Us</span>
+              <span className="text-[16px] font-semibold uppercase">
+                Contact Us
+              </span>
               <p className="mt-4 whitespace-pre-line">{data.address}</p>
             </div>
             {data.phone_numbers?.length && (
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex gap-2 text-[15px] ">
                 {data.phone_numbers?.map(({ number }, idx, arr) => (
                   <a key={idx} href={`tel:${number}`} className="block">
                     {number}
@@ -75,7 +77,7 @@ export const Footer = async () => {
                 ))}
               </div>
             )}
-            <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-4 flex flex-col gap-2 text-[15px] ">
               {data.email_address?.map(({ email }, idx) => (
                 <a key={idx} href={`mailto:${email}`} className="block">
                   {email}
@@ -84,21 +86,24 @@ export const Footer = async () => {
             </div>
           </div>
         </div>
-        <div className="py-6 flex justify-between">
+        <small className="py-6 flex gap-4 flex-col lg:flex-row justify-between items-center text-sm font-medium">
           <p>
             {data.footer_copyrights?.replace(
               "[year]",
               new Date().getFullYear().toString()
             )}
           </p>
-          <Image
-            src="/maya-logo.webp"
-            alt="Maya Hive"
-            height={20}
-            width={65}
-            className="object-contain"
-          />
-        </div>
+          <div className="flex items-center gap-1.5">
+            <span>Website By</span>
+            <Image
+              src="/maya-logo.webp"
+              alt="Maya Hive"
+              height={20}
+              width={65}
+              className="object-contain"
+            />
+          </div>
+        </small>
       </div>
       {data.footer_bg_image && (
         <Image

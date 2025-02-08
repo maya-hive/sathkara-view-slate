@@ -52,7 +52,7 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
       <div className="p-4">
         {data.destination && (
           <div className="absolute bottom-0 right-5 z-10">
-            <h4 className="rounded bg-orange-400 text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
+            <h4 className="rounded-t bg-orange-400 text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
               {data.destination.name}
             </h4>
           </div>

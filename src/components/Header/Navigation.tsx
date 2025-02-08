@@ -41,7 +41,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
                 {value.title}
               </Link>
             ))}
-            {socials && <SocialMediaIcons links={socials} size="sm" />}
+            {socials && <SocialMediaIcons links={socials} size="lg" />}
           </div>
         </div>
       </div>

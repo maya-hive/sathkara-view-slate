@@ -13,11 +13,13 @@ export const Navigation = async () => {
 
   return (
     <nav className="w-full">
-      <div className="flex gap-20">
+      <div className="flex gap-10 lg:gap-40 flex-col lg:flex-row">
         {data.footer_one && (
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <NavList title={data.footer_one_title} items={data.footer_one} />
-          </div>
+          <NavList
+            title={data.footer_one_title}
+            items={data.footer_one}
+            columns={2}
+          />
         )}
         {data.footer_two && (
           <div>
@@ -32,20 +34,21 @@ export const Navigation = async () => {
 type NavListProps = {
   title?: string | null;
   items: z.infer<typeof NavFrame>;
+  columns?: number;
 };
 
-const NavList = ({ title, items }: NavListProps) => (
+const NavList = ({ title, items, columns = 1 }: NavListProps) => (
   <div className="flex flex-col gap-5">
-    <h4 className="text-[16px] font-medium uppercase">{title}</h4>
-    {items?.map(({ value }, index) => (
-      <Link
-        key={index}
-        href={value.slug ?? value.value}
-        className="font-medium"
-      >
-        {value.title}
-      </Link>
-    ))}
+    <h4 className="text-[16px] font-semibold uppercase">{title}</h4>
+    <ul className={`grid gap-y-2 gap-x-10 grid-cols-1 md:grid-cols-${columns}`}>
+      {items?.map(({ value }, index) => (
+        <li key={index}>
+          <Link href={value.slug ?? value.value} className="font-medium">
+            {value.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
   </div>
 );
 
