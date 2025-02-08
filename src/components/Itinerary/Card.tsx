@@ -40,15 +40,19 @@ export const ItineraryCard = async ({ slug }: Props) => {
 const CardLayout = ({ data }: { data: Itinerary }) => (
   <div className="border rounded-lg overflow-hidden flex flex-col justify-between">
     <div className="relative pt-[260px]">
-      <Image
-        className="w-full h-full object-cover absolute top-0 left-0"
-        src={data.listing_image ?? data.featured_image}
-        alt={data.name}
-        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-        priority={false}
-        width={500}
-        height={400}
-      />
+      <Link href={"/itineraries/" + data.slug}>
+        <Image
+          className="w-full h-full object-cover absolute top-0 left-0"
+          src={data.listing_image ?? data.featured_image}
+          alt={data.name}
+          placeholder={`data:image/svg+xml;base64,${toBase64(
+            shimmer(700, 475)
+          )}`}
+          priority={false}
+          width={500}
+          height={400}
+        />
+      </Link>
       <div className="p-4">
         {data.destination && (
           <div className="absolute bottom-0 right-5 z-10">
@@ -92,7 +96,7 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
           </div>
           <div className="flex border-l border-yellow-500 px-3">
             <div>
-              <p className="text-3xl">$ {data.price}</p>
+              <p className="text-3xl">$ {data.price.replace(".00", "")}</p>
               <p className="text-xs">
                 Includes Return International Flights & Cruise
               </p>
