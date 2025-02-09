@@ -31,7 +31,7 @@ export const SocialMediaIcons = ({
   size = "lg",
   links,
 }: Props) => (
-  <div className={cn(color, "flex space-x-4")}>
+  <div className={cn(color, "flex justify-center lg:justify-start space-x-4")}>
     {links?.facebook && (
       <Link href={links.facebook} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faFacebook} size={size} />

@@ -17,7 +17,7 @@ export const Footer = async () => {
   return (
     <div className="relative border-t mt-8 pt-8 bg-sky-950 text-black">
       <div className="container mx-auto relative z-10 text-white">
-        <div className="py-12 flex gap-5 flex-col lg:flex-row justify-between">
+        <div className="py-6 lg:py-12 flex gap-5 flex-col lg:flex-row justify-between items-center lg:items-start text-center lg:text-start">
           {data.footer_top_content && (
             <span
               dangerouslySetInnerHTML={{ __html: data.footer_top_content }}
@@ -33,7 +33,7 @@ export const Footer = async () => {
             </Link>
           )}
         </div>
-        <div className="border-y border-sky-800 flex flex-col lg:flex-row justify-between pt-12 pb-20 text-md">
+        <div className="border-y border-sky-800 flex flex-col lg:flex-row items-center lg:items-start justify-between py-8 lg:pt-12 lg:pb-20 text-center lg:text-start text-md">
           <div className="text-3xl font-extralight">
             <p className="max-w-[300px] mb-4">{data.footer_contact_title}</p>
             {data.footer_contact_number && (
@@ -58,10 +58,10 @@ export const Footer = async () => {
               />
             </div>
           </div>
-          <div className="text-[15px]">
+          <div className="mt-8 lg:mt-0 text-[15px]">
             <Navigation />
           </div>
-          <div className="font-medium">
+          <div className="mt-8 lg:mt-0 font-medium">
             <div>
               <span className="text-[16px] font-semibold uppercase">
                 Contact Us
