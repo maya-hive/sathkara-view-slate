@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { SocialMediaIcons, SocialMediaLinks } from "../SocialMediaIcons";
 import { redirect } from "next/navigation";
+import { Menu } from "./Menu";
 
 interface Props {
   children: ReactNode[] | ReactNode;
@@ -21,34 +22,11 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
 
   return (
     <nav className="w-full">
-      <div className="border-b bg-blue-950 text-white py-2 w-full flex items-center justify-between gap-5">
-        <div className="container mx-auto flex justify-between text-blue-400 text-sm font-medium">
-          <div className="flex gap-5">
-            {phone.value && (
-              <a href={"tel:" + phone.value.replace(/\s/g, "")}>
-                {phone.title}{" "}
-                <span className="text-yellow-400">{phone.value}</span>
-              </a>
-            )}
-          </div>
-          <div className="flex gap-7">
-            {data.header_quick_links?.map(({ value }, index) => (
-              <Link
-                key={index}
-                href={value.slug ?? value.value}
-                className="font-medium"
-              >
-                {value.title}
-              </Link>
-            ))}
-            {socials && <SocialMediaIcons links={socials} size="lg" />}
-          </div>
-        </div>
-      </div>
-      <div className="bg-white">
-        <div className="container mx-auto text-black">
-          <div className="py-2 w-full flex items-center justify-center gap-5 text-md">
-            <div className="flex gap-10 w-full justify-start items-center">
+      <TopBar links={data.header_quick_links} phone={phone} socials={socials} />
+      <div className="bg-white relative">
+        <div className="container mx-auto text-black flex md:flex-none items-center px-4 md:px-0">
+          <div className="flex py-2 w-full items-center md:justify-center gap-5 text-md">
+            <div className="hidden md:flex gap-10 w-full justify-start items-center">
               {data.header_primary_left?.map(({ value }, index) => (
                 <Link
                   key={index}
@@ -68,7 +46,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               )}
             </div>
             <div className="min-w-[150px]">{children}</div>
-            <div className="flex gap-10 w-full justify-end items-center">
+            <div className="hidden md:flex gap-10 w-full justify-end items-center">
               {data.header_primary_right?.map(({ value }, index) => (
                 <Link
                   key={index}
@@ -88,11 +66,44 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               )}
             </div>
           </div>
+          <Menu links={data.header_mobile} />
         </div>
       </div>
     </nav>
   );
 };
+
+type TopBarProps = {
+  phone: { value: string | null; title: string | null };
+  socials?: SocialMediaLinks;
+  links: z.infer<typeof NavFrame>;
+};
+
+const TopBar = ({ phone, links, socials }: TopBarProps) => (
+  <small className="border-b bg-blue-950 text-white py-2 w-full flex items-center justify-between gap-5">
+    <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-blue-400 text-sm font-medium">
+      <div className="flex gap-5">
+        {phone.value && (
+          <a href={"tel:" + phone.value.replace(/\s/g, "")}>
+            {phone.title} <span className="text-yellow-400">{phone.value}</span>
+          </a>
+        )}
+      </div>
+      <div className="hidden md:flex gap-7">
+        {links?.map(({ value }, index) => (
+          <Link
+            key={index}
+            href={value.slug ?? value.value}
+            className="font-medium"
+          >
+            {value.title}
+          </Link>
+        ))}
+        {socials && <SocialMediaIcons links={socials} size="lg" />}
+      </div>
+    </div>
+  </small>
+);
 
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
