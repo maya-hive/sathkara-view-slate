@@ -6,6 +6,8 @@ import { z } from "zod";
 import { SocialMediaIcons, SocialMediaLinks } from "../SocialMediaIcons";
 import { redirect } from "next/navigation";
 import { Menu } from "./Menu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   children: ReactNode[] | ReactNode;
@@ -27,14 +29,10 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
         <div className="container mx-auto text-black flex md:flex-none items-center px-4 md:px-0">
           <div className="flex py-2 w-full items-center md:justify-center gap-5 text-md">
             <div className="hidden md:flex gap-10 w-full justify-start items-center">
-              {data.header_primary_left?.map(({ value }, index) => (
-                <Link
-                  key={index}
-                  href={value.slug ?? value.value}
-                  className="font-medium"
-                >
-                  {value.title}
-                </Link>
+              {data.header_primary_left?.map(({ value, children }, idx) => (
+                <NavLink key={idx} value={value}>
+                  {children}
+                </NavLink>
               ))}
               {data.header_primary_left_call_to_action_url && (
                 <Link
@@ -47,14 +45,10 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
             </div>
             <div className="min-w-[150px]">{children}</div>
             <div className="hidden md:flex gap-10 w-full justify-end items-center">
-              {data.header_primary_right?.map(({ value }, index) => (
-                <Link
-                  key={index}
-                  href={value.slug ?? value.value}
-                  className="font-medium"
-                >
-                  {value.title}
-                </Link>
+              {data.header_primary_right?.map(({ value, children }, idx) => (
+                <NavLink key={idx} value={value}>
+                  {children}
+                </NavLink>
               ))}
               {data.header_primary_right_call_to_action_url && (
                 <Link
@@ -76,7 +70,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
 type TopBarProps = {
   phone: { value: string | null; title: string | null };
   socials?: SocialMediaLinks;
-  links: z.infer<typeof NavFrame>;
+  links: z.infer<typeof navFrames>;
 };
 
 const TopBar = ({ phone, links, socials }: TopBarProps) => (
@@ -90,19 +84,56 @@ const TopBar = ({ phone, links, socials }: TopBarProps) => (
         )}
       </div>
       <div className="hidden md:flex gap-7">
-        {links?.map(({ value }, index) => (
-          <Link
-            key={index}
-            href={value.slug ?? value.value}
-            className="font-medium"
-          >
-            {value.title}
-          </Link>
+        {links?.map(({ value, children }, idx) => (
+          <NavLink key={idx} value={value}>
+            {children}
+          </NavLink>
         ))}
         {socials && <SocialMediaIcons links={socials} size="lg" />}
       </div>
     </div>
   </small>
+);
+
+type NavLinkProps = {
+  value: {
+    title: string;
+    value?: string | null;
+    link?: string | null;
+    target?: string | null;
+    slug?: string | null;
+  };
+  children?: NavFrameType[];
+};
+
+const NavLink = ({ value, children }: NavLinkProps) => (
+  <>
+    <div className="relative">
+      <div className="peer flex gap-3 items-center">
+        <Link href={value.value ?? ""} className="font-medium">
+          {value.title}
+        </Link>
+        {children && <FontAwesomeIcon icon={faChevronDown} />}
+      </div>
+
+      {children && children.length > 0 && (
+        <div className="absolute top-full left-0 min-w-[250px] bg-slate-200 z-50 flex flex-col gap-2 p-4 opacity-0 invisible peer-hover:opacity-100 peer-hover:visible hover:opacity-100 hover:visible transition-opacity duration-200 shadow-lg">
+          {children.map(
+            ({ value }, idx) =>
+              value && (
+                <Link
+                  key={idx}
+                  href={value.slug ?? ""}
+                  className="block hover:bg-slate-300 p-2 rounded"
+                >
+                  {value.title}
+                </Link>
+              )
+          )}
+        </div>
+      )}
+    </div>
+  </>
 );
 
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
@@ -150,30 +181,37 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   }
 };
 
-const LinkFrame = z.object({
+const linkFrame = z.object({
   type: z.string(),
   title: z.string(),
-  value: z.string(),
+  value: z.string().optional(),
   link: z.string().nullable().optional(),
   target: z.string().nullable().optional(),
   slug: z.string().nullable().optional(),
 });
 
-const NavFrame = z.array(
-  z.object({
-    id: z.string(),
-    order: z.string(),
-    children: LinkFrame.nullable().optional(),
-    value: LinkFrame,
-  })
-);
+const navFrameBase = z.object({
+  id: z.string(),
+  order: z.string(),
+  value: linkFrame,
+});
+
+export type NavFrameType = z.infer<typeof navFrameBase> & {
+  children?: NavFrameType[];
+};
+
+const navFrame: z.ZodType<NavFrameType> = navFrameBase.extend({
+  children: z.lazy(() => navFrame.array().optional()).optional(),
+});
+
+const navFrames = z.array(navFrame);
 
 const ApiResponseSchema = z.object({
   data: z.object({
-    header_primary_left: NavFrame,
-    header_primary_right: NavFrame,
-    header_quick_links: NavFrame,
-    header_mobile: NavFrame,
+    header_primary_left: navFrames,
+    header_primary_right: navFrames,
+    header_quick_links: navFrames,
+    header_mobile: navFrames,
     header_primary_left_call_to_action_title: z.string().nullable().optional(),
     header_primary_left_call_to_action_url: z.string().nullable().optional(),
     header_primary_right_call_to_action_title: z.string().nullable().optional(),

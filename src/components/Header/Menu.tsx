@@ -5,25 +5,21 @@ import { useEffect, useState } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation";
+import { NavFrameType } from "./Navigation";
 
 interface Props {
-  links: NavFrame[];
+  links: LinkFrame[];
 }
 
 type LinkFrame = {
-  type: string;
-  title: string;
-  value: string;
-  link?: string | null;
-  target?: string | null;
-  slug?: string | null;
-};
-
-type NavFrame = {
-  id: string;
-  order: string;
-  children?: LinkFrame | null;
-  value: LinkFrame;
+  value: {
+    title: string;
+    value?: string | null;
+    link?: string | null;
+    target?: string | null;
+    slug?: string | null;
+  };
+  children?: NavFrameType[];
 };
 
 export const Menu = ({ links }: Props) => {
@@ -49,7 +45,7 @@ export const Menu = ({ links }: Props) => {
               key={idx}
               className="block [&:not(:last-child)]:border-b [&:not(:last-child)]:border-b-slate-300 py-1"
             >
-              <Link href={value.link ?? value.value}>{value.title}</Link>
+              <Link href={value.value ?? ""}>{value.title}</Link>
             </li>
           ))}
         </ul>

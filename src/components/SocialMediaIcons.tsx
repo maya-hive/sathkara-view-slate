@@ -10,6 +10,7 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 export interface Props {
   size: FontAwesomeIconProps["size"];
@@ -26,35 +27,35 @@ export type SocialMediaLinks = {
 };
 
 export const SocialMediaIcons = ({
-  links,
   color = "text-white",
   size = "lg",
+  links,
 }: Props) => (
   <div className={cn(color, "flex space-x-4")}>
     {links?.facebook && (
-      <a href={links.facebook} target="_blank" rel="noopener noreferrer">
+      <Link href={links.facebook} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faFacebook} size={size} />
-      </a>
+      </Link>
     )}
     {links?.instagram && (
-      <a href={links.instagram} target="_blank" rel="noopener noreferrer">
+      <Link href={links.instagram} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faInstagram} size={size} />
-      </a>
+      </Link>
     )}
     {links?.twitter && (
-      <a href={links.twitter} target="_blank" rel="noopener noreferrer">
+      <Link href={links.twitter} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faTwitter} size={size} />
-      </a>
+      </Link>
     )}
     {links?.linkedin && (
-      <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
+      <Link href={links.linkedin} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faLinkedin} size={size} />
-      </a>
+      </Link>
     )}
     {links?.youtube && (
-      <a href={links.youtube} target="_blank" rel="noopener noreferrer">
+      <Link href={links.youtube} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faYoutube} size={size} />
-      </a>
+      </Link>
     )}
   </div>
 );

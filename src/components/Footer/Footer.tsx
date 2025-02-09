@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
+
 import { SocialMediaIcons } from "../SocialMediaIcons";
 import { Navigation } from "./Navigation";
 
@@ -93,16 +94,21 @@ export const Footer = async () => {
               new Date().getFullYear().toString()
             )}
           </p>
-          <div className="flex items-center gap-1.5">
+          <Link
+            className="flex items-center gap-1.5"
+            href="https://mayahive.com"
+            target="_blank"
+          >
             <span>Website By</span>
             <Image
+              className="object-contain"
               src="/maya-logo.webp"
               alt="Maya Hive"
               height={20}
               width={65}
-              className="object-contain"
+              priority={false}
             />
-          </div>
+          </Link>
         </small>
       </div>
       {data.footer_bg_image && (
