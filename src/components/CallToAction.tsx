@@ -12,7 +12,7 @@ type Link = {
   url: string | null;
 };
 
-export const CallToActin = ({ content, link, image }: Props) => (
+export const CallToAction = ({ content, link, image }: Props) => (
   <section className="my-8">
     <div className="container mx-auto">
       <div className="relative sm:rounded-xl overflow-hidden grid md:grid-cols-2 justify-end py-20 px-8">

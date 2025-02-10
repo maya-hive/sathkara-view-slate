@@ -29,7 +29,7 @@ export const ItineraryDestinationSlider = async ({
           {content && <span dangerouslySetInnerHTML={{ __html: content }} />}
         </div>
         <Tabs defaultValue={data[0].slug}>
-          <div className="mb-8 flex items-center justify-center gap-4">
+          <div className="mb-8 flex flex-col md:flex-row items-center justify-center gap-4">
             <span className="font-semibold">Sort by Destination :</span>
             <span className="flex gap-3">
               <TabsList>

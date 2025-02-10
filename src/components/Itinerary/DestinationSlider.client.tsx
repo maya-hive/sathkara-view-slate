@@ -30,6 +30,10 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
         modules={[Navigation, A11y]}
         spaceBetween={18}
         slidesPerView={3}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          768: { slidesPerView: 3 },
+        }}
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}

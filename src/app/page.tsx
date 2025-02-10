@@ -6,7 +6,7 @@ import { Banner } from "@/components/Banner";
 import { DestinationSection } from "@/components/Destination/Section";
 import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
-import { CallToActin } from "@/components/CallToAction";
+import { CallToAction } from "@/components/CallToAction";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -31,7 +31,7 @@ export default async function Home() {
         content={data.itineraries_by_destination_title}
       />
       <ItineraryCategorySlider items={data.itineraries} />
-      <CallToActin
+      <CallToAction
         content={data.banner_content_1}
         link={data.banner_link_1}
         image={data.banner_image_1}
