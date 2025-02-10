@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ItienraryCategorySlider } from "@/components/Itinerary/CategorySlider";
 import { Banner } from "@/components/Banner";
 import { redirect } from "next/navigation";
+import { DestinationSection } from "@/components/Destination/Section";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -15,6 +16,10 @@ export default async function Home() {
   return (
     <article>
       <Banner image={data.hero_image} content={data.hero_content} />
+      <DestinationSection
+        items={data.destination_items}
+        content={"<h2>Our Destinations</h2>"}
+      />
       <ItienraryCategorySlider items={data.home_itineraries} />
     </article>
   );
@@ -23,7 +28,12 @@ export default async function Home() {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["hero_content", "hero_image", "home_itineraries"],
+      fields: [
+        "hero_content",
+        "hero_image",
+        "home_itineraries",
+        "destination_items",
+      ],
     },
     { arrayFormat: "bracket" }
   );
@@ -71,5 +81,6 @@ const ApiResponseSchema = z.object({
           .nullable()
       )
       .nullable(),
+    destination_items: z.array(z.string()).nullable(),
   }),
 });
