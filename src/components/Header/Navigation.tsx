@@ -117,14 +117,14 @@ const NavLink = ({ value, children }: NavLinkProps) => (
       </div>
 
       {children && children.length > 0 && (
-        <div className="absolute top-full left-0 min-w-[250px] bg-slate-200 z-50 flex flex-col gap-2 p-4 opacity-0 invisible peer-hover:opacity-100 peer-hover:visible hover:opacity-100 hover:visible transition-opacity duration-200 shadow-lg">
+        <div className="absolute top-full left-0 min-w-[250px] rounded bg-slate-200 z-50 flex flex-col gap-2 p-2 opacity-0 invisible peer-hover:opacity-100 peer-hover:visible hover:opacity-100 hover:visible transition-opacity duration-200 shadow-lg">
           {children.map(
             ({ value }, idx) =>
               value && (
                 <Link
                   key={idx}
                   href={value.slug ?? ""}
-                  className="block hover:bg-slate-300 p-2 rounded"
+                  className="block hover:bg-slate-300 py-1 px-2 rounded"
                 >
                   {value.title}
                 </Link>
