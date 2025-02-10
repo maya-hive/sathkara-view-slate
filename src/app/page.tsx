@@ -1,17 +1,17 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { ItienraryCategorySlider } from "@/components/Itinerary/CategorySlider";
+import { ItineraryCategorySlider } from "@/components/Itinerary/CategorySlider";
 import { Banner } from "@/components/Banner";
-import { redirect } from "next/navigation";
 import { DestinationSection } from "@/components/Destination/Section";
 import { ItinerarySection } from "@/components/Itinerary/Section";
+import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
 
 export default async function Home() {
   const { data } = await fetchData();
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return (
@@ -19,13 +19,17 @@ export default async function Home() {
       <Banner image={data.hero_image} content={data.hero_content} />
       <DestinationSection
         items={data.destination_items}
-        content={"<h2>Our Destinations</h2>"}
+        content={data.destination_title}
       />
       <ItinerarySection
         items={data.featured_itineraries}
         content={data.itinerary_content}
       />
-      <ItienraryCategorySlider items={data.home_itineraries} />
+      <ItineraryDestinationSlider
+        destinations={data.itineraries_by_destination_items}
+        content={data.itineraries_by_destination_title}
+      />
+      <ItineraryCategorySlider items={data.itineraries} />
     </article>
   );
 }
@@ -36,10 +40,13 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
       fields: [
         "hero_content",
         "hero_image",
-        "home_itineraries",
-        "featured_itineraries",
+        "itineraries",
         "itinerary_content",
+        "featured_itineraries",
+        "destination_title",
         "destination_items",
+        "itineraries_by_destination_title",
+        "itineraries_by_destination_items",
       ],
     },
     { arrayFormat: "bracket" }
@@ -77,7 +84,7 @@ const ApiResponseSchema = z.object({
   data: z.object({
     hero_content: z.string().nullable(),
     hero_image: z.string().nullable(),
-    home_itineraries: z
+    itineraries: z
       .array(
         z
           .object({
@@ -88,8 +95,11 @@ const ApiResponseSchema = z.object({
           .nullable()
       )
       .nullable(),
+    destination_title: z.string().nullable(),
     destination_items: z.array(z.string()).nullable(),
     featured_itineraries: z.array(z.string()).nullable(),
     itinerary_content: z.string().nullable(),
+    itineraries_by_destination_title: z.string().nullable(),
+    itineraries_by_destination_items: z.array(z.string()).nullable(),
   }),
 });

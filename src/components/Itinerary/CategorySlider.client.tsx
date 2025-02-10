@@ -8,22 +8,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 
 interface Props {
-  items?: Item[] | null;
   children: ReactNode[] | ReactNode;
 }
 
-type Item = {
-  category: string | null;
-  content: string | null;
-  itineraries: string[] | null;
-} | null;
-
-export const ItienraryCategorySliderClient = ({ items, children }: Props) => {
+export const ItineraryCategorySliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
-
-  if (!items) {
-    return null;
-  }
 
   return (
     <section className="mt-8 p-8">

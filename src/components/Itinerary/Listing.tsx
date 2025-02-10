@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ItineraryCard } from "./Card";
 import Link from "next/link";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: Itinerary[] | null;

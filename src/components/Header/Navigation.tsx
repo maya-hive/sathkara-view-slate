@@ -184,7 +184,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const linkFrame = z.object({
   type: z.string(),
   title: z.string(),
-  value: z.string().optional(),
+  value: z.string().nullable().optional(),
   link: z.string().nullable().optional(),
   target: z.string().nullable().optional(),
   slug: z.string().nullable().optional(),

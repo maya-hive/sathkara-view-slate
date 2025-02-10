@@ -1,5 +1,5 @@
-import { ItienraryCategorySliderClient as SliderClient } from "./CategorySlider.client";
-import { ItinerarySlide as Slide } from "./Slide";
+import { ItineraryCategorySliderClient as SliderClient } from "./CategorySlider.client";
+import { ItineraryCategorySlide as Slide } from "./CategorySlide";
 
 interface Props {
   items?: Item[] | null;
@@ -11,9 +11,9 @@ type Item = {
   itineraries: string[] | null;
 } | null;
 
-export const ItienraryCategorySlider = ({ items }: Props) => {
+export const ItineraryCategorySlider = ({ items }: Props) => {
   return (
-    <SliderClient items={items}>
+    <SliderClient>
       {items?.map((section: Item, index) => {
         return (
           section?.itineraries && (

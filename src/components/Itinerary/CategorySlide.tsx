@@ -12,7 +12,7 @@ interface Props {
   content?: string | null;
 }
 
-export const ItinerarySlide = async ({
+export const ItineraryCategorySlide = async ({
   category,
   itineraries,
   content,
@@ -29,8 +29,8 @@ export const ItinerarySlide = async ({
             className="absolute -z-10 w-full h-full left-0 top-0 object-cover"
             src={data.featured_image}
             alt={data.name}
-            width={200}
-            height={400}
+            width={1200}
+            height={1400}
           />
           <div className="p-10">
             {content && (
