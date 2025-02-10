@@ -5,7 +5,6 @@ import Link from "next/link";
 import { z } from "zod";
 
 import { shimmer } from "../Shimmer";
-import { redirect } from "next/navigation";
 
 interface Props {
   slug: string;
@@ -25,7 +24,7 @@ export const DestinationCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return <CardLayout data={data} />;

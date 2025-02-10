@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { Suspense } from "react";
 import { z } from "zod";
@@ -13,7 +12,7 @@ export default async function Page({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return (

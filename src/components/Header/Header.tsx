@@ -4,13 +4,12 @@ import Image from "next/image";
 
 import { Navigation } from "./Navigation";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 
 export const Header = async () => {
   const { data } = await fetchData();
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return (

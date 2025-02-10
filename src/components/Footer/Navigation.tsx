@@ -2,13 +2,11 @@ import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
-import { redirect } from "next/navigation";
-
 export const Navigation = async () => {
   const { data } = await fetchData();
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return (

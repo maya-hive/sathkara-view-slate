@@ -4,7 +4,6 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { SocialMediaIcons, SocialMediaLinks } from "../SocialMediaIcons";
-import { redirect } from "next/navigation";
 import { Menu } from "./Menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +18,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
   const { data } = await fetchData();
 
   if (!data) {
-    return redirect("/");
+    return <></>;
   }
 
   return (
