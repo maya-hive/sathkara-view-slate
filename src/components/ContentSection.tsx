@@ -13,7 +13,7 @@ type Link = {
 };
 
 export const ContentSection = ({ content, link, image }: Props) => (
-  <section className="relative overflow-x-clip mt-16 mb-24">
+  <section className="relative overflow-x-clip mt-16 mb-32">
     <div className="container mx-auto mb-20">
       <div className="grid md:grid-cols-2 px-8 py-20 md:px-0 md:pt-12">
         <div />
