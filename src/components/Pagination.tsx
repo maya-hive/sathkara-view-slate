@@ -1,35 +1,33 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Pagination as PaginationRoot,
+  PaginationContent,
+  PaginationItem,
+} from "@/components/ui/pagination";
 
 interface Props {
-  links: Link[] | null;
+  links: PaginationLink[] | null;
 }
 
-export type Link = {
+export type PaginationLink = {
   url: string | null;
   label: string;
   active: boolean;
 };
 
 export const Pagination = ({ links }: Props) => (
-  <nav className="mt-8 w-full">
-    <ul className="flex justify-center gap-4 list-none ">
-      {links?.map(
-        ({ url, label, active }) =>
-          url && (
-            <li key={label}>
-              <Link
-                href={url}
-                className={cn(
-                  "block text-center min-w-[100px] py-2 text-sm",
-                  active ? "bg-blue-600 text-white" : "bg-slate-600 text-white"
-                )}
-              >
-                <span dangerouslySetInnerHTML={{ __html: label }} />
-              </Link>
-            </li>
-          )
+  <PaginationRoot className="mt-8 w-full flex justify-center">
+    <PaginationContent>
+      {links?.map(({ url, label, active }) =>
+        url ? (
+          <PaginationItem key={label}>
+            <Button asChild variant={active ? "default" : "outline"}>
+              <Link href={url} dangerouslySetInnerHTML={{ __html: label }} />
+            </Button>
+          </PaginationItem>
+        ) : null
       )}
-    </ul>
-  </nav>
+    </PaginationContent>
+  </PaginationRoot>
 );

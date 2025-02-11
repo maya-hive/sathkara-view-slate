@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import { ItineraryCard } from "./Card";
-import { type Link, Pagination } from "../Pagination";
+import { type PaginationLink, Pagination } from "../Pagination";
 
 interface Props {
   data: Itinerary[] | null;
   current_page: number | null;
   last_page: number | null;
-  links: Link[] | null;
+  links: PaginationLink[] | null;
 }
 
 type Destination = {
