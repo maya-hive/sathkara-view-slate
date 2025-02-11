@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { ItineraryCard } from "./Card";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { type Link, Pagination } from "../Pagination";
 
 interface Props {
   data: Itinerary[] | null;
@@ -9,12 +8,6 @@ interface Props {
   last_page: number | null;
   links: Link[] | null;
 }
-
-type Link = {
-  url: string | null;
-  label: string;
-  active: boolean;
-};
 
 type Destination = {
   name: string;
@@ -47,25 +40,7 @@ export const ItineraryListing = ({ data, links }: Props) => (
             ))}
           </Suspense>
         </div>
-        <div className="mt-8 w-full flex justify-center gap-4">
-          {links?.map(
-            ({ url, label, active }) =>
-              url && (
-                <Link
-                  key={label}
-                  href={url}
-                  className={cn(
-                    "block text-center min-w-[100px] py-2 text-sm",
-                    active
-                      ? "bg-blue-600 text-white"
-                      : "bg-slate-600 text-white"
-                  )}
-                >
-                  <span dangerouslySetInnerHTML={{ __html: label }} />
-                </Link>
-              )
-          )}
-        </div>
+        <Pagination links={links} />
       </div>
     </div>
   </article>
