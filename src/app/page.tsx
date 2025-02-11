@@ -8,6 +8,7 @@ import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
 import { CallToAction } from "@/components/CallToAction";
 import { ContentSection } from "@/components/ContentSection";
+import { AudienceSlider } from "@/components/Audience/Slider";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -37,6 +38,10 @@ export default async function Home() {
         link={data.banner_link_1}
         image={data.banner_image_1}
       />
+      <AudienceSlider
+        items={data.audience_items}
+        content={data.audience_title}
+      />
       <ContentSection
         content={data.content_section_content_1}
         image={data.content_section_image_1}
@@ -65,6 +70,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "content_section_image_1",
         "content_section_content_1",
         "content_section_link_1",
+        "audience_items",
+        "audience_title",
       ],
     },
     { arrayFormat: "bracket" }
@@ -131,5 +138,17 @@ const ApiResponseSchema = z.object({
       title: z.string().nullable(),
       url: z.string().nullable(),
     }),
+    audience_title: z.string().nullable(),
+    audience_items: z
+      .array(
+        z.object({
+          image: z.string().nullable(),
+          audience: z.string().nullable(),
+          title: z.string().nullable(),
+          description: z.string().nullable(),
+          testimonial: z.string().nullable(),
+        })
+      )
+      .nullable(),
   }),
 });

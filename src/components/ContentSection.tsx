@@ -13,20 +13,20 @@ type Link = {
 };
 
 export const ContentSection = ({ content, link, image }: Props) => (
-  <section className="relative overflow-x-clip my-24">
+  <section className="relative overflow-x-clip mt-16 mb-24">
     <div className="container mx-auto mb-20">
-      <div className="grid md:grid-cols-2 py-20 md:pt-12">
+      <div className="grid md:grid-cols-2 px-8 py-20 md:px-0 md:pt-12">
         <div />
         {image && (
           <Image
-            className="absolute w-[100vw] h-full top-0 left-0 md:-left-[50%] object-cover md:rounded-tr-2xl"
+            className="absolute w-[100vw] h-full top-0 left-0 md:-left-[46%] object-cover md:rounded-tr-2xl"
             src={image}
             alt={"content image"}
             width={1200}
             height={800}
           />
         )}
-        <div className="rounded-xl md:rounded-none py-24 pr-16 md:pr-0 pl-16 bg-sky-100 z-10">
+        <div className="rounded-xl md:rounded-none py-16 md:pb-0 md:pt-24 pr-16 pl-16 md:pr-0 md:pl-40 bg-sky-100 md:bg-transparent z-10">
           {content && (
             <span
               dangerouslySetInnerHTML={{ __html: content }}
@@ -41,7 +41,7 @@ export const ContentSection = ({ content, link, image }: Props) => (
               {link.title}
             </Link>
           )}
-          <div className="absolute left-[50%] top-0 bg-sky-100 w-[100vw] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
+          <div className="absolute left-[54%] top-0 bg-sky-100 w-[100vw] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
         </div>
       </div>
     </div>
