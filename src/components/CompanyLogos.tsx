@@ -12,7 +12,7 @@ type Item = {
 };
 
 export const CompnayLogos = ({ content, logos }: Props) => (
-  <section className="my-20">
+  <section className="my-32">
     <div className="container mx-auto">
       <div className="text-center text-2xl font-semibold">{content}</div>
       <div className="mt-6 grid md:grid-cols-3 xl:grid-cols-5 gap-5">

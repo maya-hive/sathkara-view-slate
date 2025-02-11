@@ -19,9 +19,9 @@ export const CallToAction = ({ content, link, image }: Props) => (
         <div />
         <div className="text-white z-10">
           {content && (
-            <span
+            <div
               dangerouslySetInnerHTML={{ __html: content }}
-              className="[&>h2]:text-4xl [&>p]:mt-2 font-semibold"
+              className="[&>h2]:text-5xl [&>h2]:font-bold [&>p]:mt-6 [&>p]:font-semibold"
             />
           )}
           {link?.url && (
