@@ -49,10 +49,10 @@ const fetchData = cache(
           "sale_price",
           "featured_image",
           "short_description",
+          "destination",
           "duration",
           "price",
         ],
-        relations: ["destination"],
       },
       { arrayFormat: "bracket" }
     );

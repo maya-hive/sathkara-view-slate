@@ -28,8 +28,8 @@ const fetchData = async (
         "short_description",
         "duration",
         "price",
+        "destination",
       ],
-      relations: ["destination"],
     },
     { arrayFormat: "bracket" }
   );
