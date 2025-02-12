@@ -8,6 +8,7 @@ import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard
 import { CityCompactCard } from "@/components/City/CompactCard";
 import { shimmer } from "@/components/Shimmer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default async function Page({
   params,
@@ -231,7 +232,7 @@ const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
     <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
-          <p className="text-md">/Home/Itineraries/[slug]</p>
+          <Breadcrumb />
           <h1 className="text-3xl text-white">{data?.name}</h1>
         </div>
         <div className="border-l border-l-slate-600 px-4">
