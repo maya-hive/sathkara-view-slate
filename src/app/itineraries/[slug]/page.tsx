@@ -9,6 +9,7 @@ import { CityCompactCard } from "@/components/City/CompactCard";
 import { shimmer } from "@/components/Shimmer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { Gallery } from "@/components/Gallery";
 
 export default async function Page({
   params,
@@ -31,9 +32,9 @@ export default async function Page({
       />
       <TopBar data={data} />
       <div className="container mx-auto">
-        <Tabs defaultValue={"overview"}>
-          <div className="grid grid-cols-1 md:grid-cols-[auto_380px] gap-12 md:pt-12">
-            <div>
+        <Tabs defaultValue={tabs[0].name}>
+          <div className="flex flex-col md:flex-row gap-12 md:pt-12">
+            <div className="md:min-w-[calc(100%-380px)] md:w-[calc(100%-380px)]">
               <div className="mt-8">
                 <TabsList className="p-0 flex-wrap gap-2">
                   {tabs.map(({ name, title }, idx) => (
@@ -55,7 +56,9 @@ export default async function Page({
                 ))}
               </div>
             </div>
-            <Aside data={data} />
+            <div className="md:w-[380px]">
+              <Aside data={data} />
+            </div>
           </div>
         </Tabs>
       </div>
@@ -134,7 +137,7 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
     <div className="mt-12">
       {data?.featured_accommodations &&
         data?.featured_accommodations?.length > 0 && (
-          <div className="mt-12 col-span-4">
+          <div className="mt-12">
             <h3 className="text-lg font-semibold mb-4">
               Featured Accommodations
             </h3>
@@ -146,6 +149,31 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           </div>
         )}
     </div>
+    {data?.gallery && data?.gallery?.length > 0 && (
+      <div className="mt-12">
+        <h3 className="text-lg font-semibold mb-4">Gallery</h3>
+        <div className="mt-6">
+          <Gallery>
+            {data.gallery.map((image, idx) => (
+              <Image
+                key={idx}
+                src={
+                  image ??
+                  `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+                }
+                placeholder={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+                )}`}
+                alt={`Gallery image ${idx}`}
+                width={800}
+                height={500}
+                priority={false}
+              />
+            ))}
+          </Gallery>
+        </div>
+      </div>
+    )}
   </div>
 );
 
@@ -296,6 +324,7 @@ const fetchData = async (
         "duration",
         "featured_image",
         "featured_image_mobile",
+        "gallery",
         "days_count_html",
         "map",
         "is_sale_active",
@@ -372,6 +401,7 @@ const Schema = z.object({
   featured_image: z.string(),
   featured_image_mobile: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
+  gallery: z.array(z.string()).nullable().optional(),
   tags: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
   destination: z
     .object({

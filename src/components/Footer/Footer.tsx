@@ -101,11 +101,11 @@ export const Footer = async () => {
               >
                 <span>Website By</span>
                 <Image
-                  className="object-contain"
+                  className="object-contain h-auto w-auto"
                   src="/maya-logo.webp"
                   alt="Maya Hive"
                   height={20}
-                  width={65}
+                  width={55}
                   priority={false}
                 />
               </Link>
