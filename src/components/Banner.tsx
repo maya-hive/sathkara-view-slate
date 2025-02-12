@@ -6,38 +6,44 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { shimmer } from "@/components/Shimmer";
 
 interface Props {
-  image: string;
+  image?: string | null;
   thumbnail?: string | null;
   content?: string | null;
 }
 
-export const Banner = ({ image, thumbnail, content }: Props) => (
-  <div>
-    <div className="relative pt-[400px]">
-      <Image
-        className="xs:block absolute left-0 top-0 w-full h-full object-cover"
-        alt={"Banner image"}
-        src={image ?? placeholder}
-        placeholder={placeholder}
-        width={1400}
-        height={800}
-        priority={true}
-      />
-      {thumbnail && (
+export const Banner = ({ image, thumbnail, content }: Props) => {
+  if (!image) {
+    return null;
+  }
+
+  return (
+    <div>
+      <div className="relative pt-[400px]">
         <Image
-          className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
+          className="xs:block absolute left-0 top-0 w-full h-full object-cover"
           alt={"Banner image"}
-          src={thumbnail ?? placeholder}
+          src={image ?? placeholder}
           placeholder={placeholder}
-          width={400}
-          height={600}
+          width={1400}
+          height={800}
           priority={true}
         />
-      )}
+        {thumbnail && (
+          <Image
+            className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
+            alt={"Banner image"}
+            src={thumbnail ?? placeholder}
+            placeholder={placeholder}
+            width={400}
+            height={600}
+            priority={true}
+          />
+        )}
+      </div>
+      {content && <MetaBar content={content} />}
     </div>
-    {content && <MetaBar content={content} />}
-  </div>
-);
+  );
+};
 
 const MetaBar = ({ content }: { content: string }) => (
   <div className="bg-primary">
