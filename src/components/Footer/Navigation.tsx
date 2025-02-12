@@ -110,10 +110,12 @@ const NavFrame = z.array(
 );
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    footer_one: NavFrame,
-    footer_two: NavFrame,
-    footer_one_title: z.string().nullable().optional(),
-    footer_two_title: z.string().nullable().optional(),
-  }),
+  data: z
+    .object({
+      footer_one: NavFrame,
+      footer_two: NavFrame,
+      footer_one_title: z.string().nullable().optional(),
+      footer_two_title: z.string().nullable().optional(),
+    })
+    .nullable(),
 });

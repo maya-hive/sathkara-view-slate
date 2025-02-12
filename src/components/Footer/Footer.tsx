@@ -186,39 +186,41 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 };
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    footer_bg_image: z.string().nullable().optional(),
-    footer_top_content: z.string().nullable().optional(),
-    footer_top_link: z
-      .object({
-        title: z.string().nullable().optional(),
-        url: z.string().nullable().optional(),
-      })
-      .nullable()
-      .optional(),
-    footer_contact_title: z.string().nullable().optional(),
-    footer_contact_number: z.string().nullable().optional(),
-    footer_copyrights: z.string().nullable().optional(),
-    facebook: z.string().nullable(),
-    instagram: z.string().nullable(),
-    twitter_x: z.string().nullable(),
-    tiktok: z.string().nullable(),
-    youtube: z.string().nullable(),
-    linkedin: z.string().nullable(),
-    phone_numbers: z
-      .array(z.object({ number: z.string().nullable() }))
-      .nullable()
-      .optional(),
-    email_address: z
-      .array(z.object({ email: z.string().nullable() }))
-      .nullable()
-      .optional(),
-    address: z.string().nullable().optional(),
-    collaborations_title: z.string().nullable(),
-    itinerary_collaborations: z
-      .array(
-        z.object({ icon: z.string().nullable(), link: z.string().nullable() })
-      )
-      .nullable(),
-  }),
+  data: z
+    .object({
+      footer_bg_image: z.string().nullable().optional(),
+      footer_top_content: z.string().nullable().optional(),
+      footer_top_link: z
+        .object({
+          title: z.string().nullable().optional(),
+          url: z.string().nullable().optional(),
+        })
+        .nullable()
+        .optional(),
+      footer_contact_title: z.string().nullable().optional(),
+      footer_contact_number: z.string().nullable().optional(),
+      footer_copyrights: z.string().nullable().optional(),
+      facebook: z.string().nullable(),
+      instagram: z.string().nullable(),
+      twitter_x: z.string().nullable(),
+      tiktok: z.string().nullable(),
+      youtube: z.string().nullable(),
+      linkedin: z.string().nullable(),
+      phone_numbers: z
+        .array(z.object({ number: z.string().nullable() }))
+        .nullable()
+        .optional(),
+      email_address: z
+        .array(z.object({ email: z.string().nullable() }))
+        .nullable()
+        .optional(),
+      address: z.string().nullable().optional(),
+      collaborations_title: z.string().nullable(),
+      itinerary_collaborations: z
+        .array(
+          z.object({ icon: z.string().nullable(), link: z.string().nullable() })
+        )
+        .nullable(),
+    })
+    .nullable(),
 });

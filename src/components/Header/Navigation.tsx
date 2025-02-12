@@ -206,14 +206,22 @@ const navFrame: z.ZodType<NavFrameType> = navFrameBase.extend({
 const navFrames = z.array(navFrame);
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    header_primary_left: navFrames,
-    header_primary_right: navFrames,
-    header_quick_links: navFrames,
-    header_mobile: navFrames,
-    header_primary_left_call_to_action_title: z.string().nullable().optional(),
-    header_primary_left_call_to_action_url: z.string().nullable().optional(),
-    header_primary_right_call_to_action_title: z.string().nullable().optional(),
-    header_primary_right_call_to_action_url: z.string().nullable().optional(),
-  }),
+  data: z
+    .object({
+      header_primary_left: navFrames,
+      header_primary_right: navFrames,
+      header_quick_links: navFrames,
+      header_mobile: navFrames,
+      header_primary_left_call_to_action_title: z
+        .string()
+        .nullable()
+        .optional(),
+      header_primary_left_call_to_action_url: z.string().nullable().optional(),
+      header_primary_right_call_to_action_title: z
+        .string()
+        .nullable()
+        .optional(),
+      header_primary_right_call_to_action_url: z.string().nullable().optional(),
+    })
+    .nullable(),
 });

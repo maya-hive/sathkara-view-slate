@@ -106,49 +106,51 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 };
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    hero_content: z.string().nullable(),
-    hero_image: z.string().nullable(),
-    itineraries: z
-      .array(
-        z
-          .object({
-            category: z.string(),
-            itineraries: z.array(z.string()).nullable(),
-            content: z.string().nullable(),
+  data: z
+    .object({
+      hero_content: z.string().nullable(),
+      hero_image: z.string().nullable(),
+      itineraries: z
+        .array(
+          z
+            .object({
+              category: z.string(),
+              itineraries: z.array(z.string()).nullable(),
+              content: z.string().nullable(),
+            })
+            .nullable()
+        )
+        .nullable(),
+      destination_title: z.string().nullable(),
+      destination_items: z.array(z.string()).nullable(),
+      featured_itineraries: z.array(z.string()).nullable(),
+      itinerary_content: z.string().nullable(),
+      itineraries_by_destination_title: z.string().nullable(),
+      itineraries_by_destination_items: z.array(z.string()).nullable(),
+      banner_image_1: z.string().nullable(),
+      banner_link_1: z.object({
+        title: z.string().nullable(),
+        url: z.string().nullable(),
+      }),
+      banner_content_1: z.string().nullable(),
+      content_section_image_1: z.string().nullable(),
+      content_section_content_1: z.string().nullable(),
+      content_section_link_1: z.object({
+        title: z.string().nullable(),
+        url: z.string().nullable(),
+      }),
+      audience_title: z.string().nullable(),
+      audience_items: z
+        .array(
+          z.object({
+            image: z.string().nullable(),
+            audience: z.string().nullable(),
+            title: z.string().nullable(),
+            description: z.string().nullable(),
+            testimonial: z.string().nullable(),
           })
-          .nullable()
-      )
-      .nullable(),
-    destination_title: z.string().nullable(),
-    destination_items: z.array(z.string()).nullable(),
-    featured_itineraries: z.array(z.string()).nullable(),
-    itinerary_content: z.string().nullable(),
-    itineraries_by_destination_title: z.string().nullable(),
-    itineraries_by_destination_items: z.array(z.string()).nullable(),
-    banner_image_1: z.string().nullable(),
-    banner_link_1: z.object({
-      title: z.string().nullable(),
-      url: z.string().nullable(),
-    }),
-    banner_content_1: z.string().nullable(),
-    content_section_image_1: z.string().nullable(),
-    content_section_content_1: z.string().nullable(),
-    content_section_link_1: z.object({
-      title: z.string().nullable(),
-      url: z.string().nullable(),
-    }),
-    audience_title: z.string().nullable(),
-    audience_items: z
-      .array(
-        z.object({
-          image: z.string().nullable(),
-          audience: z.string().nullable(),
-          title: z.string().nullable(),
-          description: z.string().nullable(),
-          testimonial: z.string().nullable(),
-        })
-      )
-      .nullable(),
-  }),
+        )
+        .nullable(),
+    })
+    .nullable(),
 });

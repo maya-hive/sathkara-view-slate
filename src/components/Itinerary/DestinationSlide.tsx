@@ -78,9 +78,11 @@ const Itinerary = z.object({
 });
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    id: z.number(),
-    name: z.string(),
-    featured_itineraries: z.array(Itinerary).nullable(),
-  }),
+  data: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+      featured_itineraries: z.array(Itinerary).nullable(),
+    })
+    .nullable(),
 });

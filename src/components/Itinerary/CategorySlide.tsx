@@ -21,6 +21,8 @@ export const ItineraryCategorySlide = async ({
 
   const { data } = await fetchData(category);
 
+  if (!data) return <></>;
+
   return (
     <div className="mx-5 flex flex-col md:flex-row border rounded-2xl overflow-hidden gap-5">
       <div className="flex items-end relative md:max-w-[450px]">
@@ -104,9 +106,11 @@ const fetchData = async (
 };
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    id: z.number(),
-    name: z.string(),
-    featured_image: z.string(),
-  }),
+  data: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+      featured_image: z.string(),
+    })
+    .nullable(),
 });

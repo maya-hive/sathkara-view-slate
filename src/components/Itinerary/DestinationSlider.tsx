@@ -28,26 +28,32 @@ export const ItineraryDestinationSlider = async ({
         <div className="text-center text-2xl font-semibold">
           {content && <span dangerouslySetInnerHTML={{ __html: content }} />}
         </div>
-        <Tabs defaultValue={data[0].slug}>
+        <Tabs defaultValue={data[0]?.slug}>
           <div className="mb-8 flex flex-col md:flex-row items-center justify-center gap-4">
             <span className="font-semibold">Sort by Destination :</span>
             <span className="flex gap-3">
               <TabsList>
-                {data?.map(({ name, slug }, idx) => (
-                  <TabsTrigger key={idx} value={slug}>
-                    {name}
-                  </TabsTrigger>
-                ))}
+                {data?.map(
+                  (destination, idx) =>
+                    destination && (
+                      <TabsTrigger key={idx} value={destination.slug}>
+                        {destination.name}
+                      </TabsTrigger>
+                    )
+                )}
               </TabsList>
             </span>
           </div>
-          {data?.map(({ slug }, idx) => (
-            <TabsContent key={idx} value={slug}>
-              <SliderClient>
-                <Slide destination={slug} />
-              </SliderClient>
-            </TabsContent>
-          ))}
+          {data?.map(
+            (destination, idx) =>
+              destination && (
+                <TabsContent key={idx} value={destination.slug}>
+                  <SliderClient>
+                    <Slide destination={destination.slug} />
+                  </SliderClient>
+                </TabsContent>
+              )
+          )}
         </Tabs>
       </div>
     </section>
@@ -112,10 +118,12 @@ const Itinerary = z.object({
 });
 
 const ApiResponseSchema = z.object({
-  data: z.object({
-    id: z.number(),
-    slug: z.string(),
-    name: z.string(),
-    featured_itineraries: z.array(Itinerary).nullable(),
-  }),
+  data: z
+    .object({
+      id: z.number(),
+      slug: z.string(),
+      name: z.string(),
+      featured_itineraries: z.array(Itinerary).nullable(),
+    })
+    .nullable(),
 });
