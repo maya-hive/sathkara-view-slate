@@ -15,13 +15,7 @@ export const Header = async () => {
   return (
     <header className="border-b">
       <Navigation
-        socials={{
-          facebook: data.facebook,
-          instagram: data.instagram,
-          twitter: data.twitter_x,
-          linkedin: data.linkedin,
-          youtube: data.youtube,
-        }}
+        socials={data.social_media}
         phone={{
           title: data.header_contact_title,
           value: data.header_contact_number,
@@ -52,12 +46,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "site_logo",
         "header_contact_title",
         "header_contact_number",
-        "facebook",
-        "instagram",
-        "twitter_x",
-        "tiktok",
-        "youtube",
-        "linkedin",
+        "social_media",
       ],
     },
     { arrayFormat: "bracket" }
@@ -98,12 +87,16 @@ const ApiResponseSchema = z.object({
       site_logo: z.string().nullable(),
       header_contact_title: z.string().nullable(),
       header_contact_number: z.string().nullable(),
-      facebook: z.string().nullable(),
-      instagram: z.string().nullable(),
-      twitter_x: z.string().nullable(),
-      tiktok: z.string().nullable(),
-      youtube: z.string().nullable(),
-      linkedin: z.string().nullable(),
+      social_media: z
+        .object({
+          facebook: z.string().nullable(),
+          instagram: z.string().nullable(),
+          twitter_x: z.string().nullable(),
+          tiktok: z.string().nullable(),
+          youtube: z.string().nullable(),
+          linkedin: z.string().nullable(),
+        })
+        .nullable(),
     })
     .nullable(),
 });

@@ -11,7 +11,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   children: ReactNode[] | ReactNode;
   phone: { value: string | null; title: string | null };
-  socials?: SocialMediaLinks;
+  socials?: SocialMediaLinks | null;
 }
 
 export const Navigation = async ({ children, phone, socials }: Props) => {
@@ -23,7 +23,13 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
 
   return (
     <nav className="w-full">
-      <TopBar links={data.header_quick_links} phone={phone} socials={socials} />
+      {socials && (
+        <TopBar
+          links={data.header_quick_links}
+          phone={phone}
+          socials={socials}
+        />
+      )}
       <div className="bg-white relative">
         <div className="container mx-auto text-black flex md:flex-none items-center px-4 md:px-0">
           <div className="flex py-2 w-full items-center md:justify-center gap-5 text-md">
@@ -59,7 +65,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               )}
             </div>
           </div>
-          <Menu links={data.header_mobile} />
+          {data.header_mobile && <Menu links={data.header_mobile} />}
         </div>
       </div>
     </nav>
@@ -203,7 +209,7 @@ const navFrame: z.ZodType<NavFrameType> = navFrameBase.extend({
   children: z.lazy(() => navFrame.array().optional()).optional(),
 });
 
-const navFrames = z.array(navFrame);
+const navFrames = z.array(navFrame).optional();
 
 const ApiResponseSchema = z.object({
   data: z

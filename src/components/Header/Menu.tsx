@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { NavFrameType } from "./Navigation";
 
 interface Props {
-  links: LinkFrame[];
+  links: LinkFrame[] | null;
 }
 
 type LinkFrame = {

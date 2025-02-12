@@ -21,7 +21,7 @@ export interface Props {
 export type SocialMediaLinks = {
   facebook?: string | null;
   instagram?: string | null;
-  twitter?: string | null;
+  twitter_x?: string | null;
   linkedin?: string | null;
   youtube?: string | null;
 };
@@ -42,8 +42,8 @@ export const SocialMediaIcons = ({
         <FontAwesomeIcon icon={faInstagram} size={size} />
       </Link>
     )}
-    {links?.twitter && (
-      <Link href={links.twitter} target="_blank" rel="noopener noreferrer">
+    {links?.twitter_x && (
+      <Link href={links.twitter_x} target="_blank" rel="noopener noreferrer">
         <FontAwesomeIcon icon={faTwitter} size={size} />
       </Link>
     )}

@@ -52,13 +52,7 @@ export const Footer = async () => {
               <div className="mt-6">
                 <SocialMediaIcons
                   color="text-sky-400"
-                  links={{
-                    facebook: data.facebook,
-                    twitter: data.twitter_x,
-                    instagram: data.instagram,
-                    linkedin: data.linkedin,
-                    youtube: data.youtube,
-                  }}
+                  links={data.social_media}
                   size="sm"
                 />
               </div>
@@ -99,21 +93,23 @@ export const Footer = async () => {
                 new Date().getFullYear().toString()
               )}
             </p>
-            <Link
-              className="flex items-center gap-1.5"
-              href="https://mayahive.com"
-              target="_blank"
-            >
-              <span>Website By</span>
-              <Image
-                className="object-contain"
-                src="/maya-logo.webp"
-                alt="Maya Hive"
-                height={20}
-                width={65}
-                priority={false}
-              />
-            </Link>
+            {process.env.NEXT_PUBLIC_AUTHOR_URL && (
+              <Link
+                className="flex items-center gap-1.5"
+                href={process.env.NEXT_PUBLIC_AUTHOR_URL}
+                target="_blank"
+              >
+                <span>Website By</span>
+                <Image
+                  className="object-contain"
+                  src="/maya-logo.webp"
+                  alt="Maya Hive"
+                  height={20}
+                  width={65}
+                  priority={false}
+                />
+              </Link>
+            )}
           </small>
         </div>
         {data.footer_bg_image && (
@@ -144,12 +140,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "phone_numbers",
         "email_address",
         "address",
-        "facebook",
-        "instagram",
-        "twitter_x",
-        "tiktok",
-        "youtube",
-        "linkedin",
+        "social_media",
         "collaborations_title",
         "itinerary_collaborations",
       ],
@@ -200,12 +191,16 @@ const ApiResponseSchema = z.object({
       footer_contact_title: z.string().nullable().optional(),
       footer_contact_number: z.string().nullable().optional(),
       footer_copyrights: z.string().nullable().optional(),
-      facebook: z.string().nullable(),
-      instagram: z.string().nullable(),
-      twitter_x: z.string().nullable(),
-      tiktok: z.string().nullable(),
-      youtube: z.string().nullable(),
-      linkedin: z.string().nullable(),
+      social_media: z
+        .object({
+          facebook: z.string().nullable(),
+          instagram: z.string().nullable(),
+          twitter_x: z.string().nullable(),
+          tiktok: z.string().nullable(),
+          youtube: z.string().nullable(),
+          linkedin: z.string().nullable(),
+        })
+        .nullable(),
       phone_numbers: z
         .array(z.object({ number: z.string().nullable() }))
         .nullable()
