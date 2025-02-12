@@ -158,9 +158,17 @@ const Activities = ({}: z.infer<typeof ApiResponseSchema>) => (
     <h2 className="text-xl font-bold mb-4">Activities</h2>
   </div>
 );
-const PackageIncludes = ({}: z.infer<typeof ApiResponseSchema>) => (
+const PackageIncludes = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
-    <h2 className="text-xl font-bold mb-4">Package Includes</h2>
+    {data?.package_includes && (
+      <div>
+        <h2 className="text-xl font-bold mb-4">Package Includes</h2>
+        <div
+          dangerouslySetInnerHTML={{ __html: data.package_includes }}
+          className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
+        />
+      </div>
+    )}
   </div>
 );
 
