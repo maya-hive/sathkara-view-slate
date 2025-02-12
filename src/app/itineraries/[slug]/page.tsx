@@ -1,6 +1,7 @@
 import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard";
 import { CityCompactCard } from "@/components/City/CompactCard";
 import { shimmer } from "@/components/Shimmer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toBase64 } from "@/utils/base64";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,10 +25,28 @@ export default async function Page({
       <Banner image={data.featured_image} alt={data.name} />
       <TopBar data={data} />
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_380px] gap-12 pt-12">
-          <Main data={data} />
-          <Aside data={data} />
-        </div>
+        <Tabs defaultValue={"overview"}>
+          <span className="mt-8 flex gap-3">
+            <TabsList>
+              {tabs.map(({ name, title }, idx) => (
+                <TabsTrigger key={idx} value={name}>
+                  {title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-[auto_380px] gap-12 pt-12">
+            <div>
+              {tabs.map(({ name, Component }, idx) => (
+                <TabsContent key={idx} value={name}>
+                  <Component data={data} />
+                </TabsContent>
+              ))}
+              <TabsContent value={"itinerary"}></TabsContent>
+            </div>
+            <Aside data={data} />
+          </div>
+        </Tabs>
       </div>
     </article>
   );
@@ -47,7 +66,7 @@ const Banner = ({ image, alt }: { image: string | null; alt: string }) => (
   </div>
 );
 
-const Main = ({ data }: z.infer<typeof ApiResponseSchema>) => (
+const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
     {data?.package_includes && (
       <div>
@@ -95,6 +114,33 @@ const Main = ({ data }: z.infer<typeof ApiResponseSchema>) => (
     </div>
   </div>
 );
+
+const Itinerary = ({}: z.infer<typeof ApiResponseSchema>) => (
+  <div>
+    <h2 className="text-xl font-bold mb-4">Itinerary</h2>
+  </div>
+);
+const Activities = ({}: z.infer<typeof ApiResponseSchema>) => (
+  <div>
+    <h2 className="text-xl font-bold mb-4">Activities</h2>
+  </div>
+);
+const PackageIncludes = ({}: z.infer<typeof ApiResponseSchema>) => (
+  <div>
+    <h2 className="text-xl font-bold mb-4">Package Includes</h2>
+  </div>
+);
+
+const tabs = [
+  { name: "overview", title: "Overview", Component: Overview },
+  { name: "itinerary", title: "Itienrary", Component: Itinerary },
+  { name: "activities", title: "Activities", Component: Activities },
+  {
+    name: "package-includes",
+    title: "Package Includes",
+    Component: PackageIncludes,
+  },
+];
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
