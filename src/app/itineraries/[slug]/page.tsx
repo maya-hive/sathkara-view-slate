@@ -269,7 +269,7 @@ const Schema = z.object({
     .array(z.object({ content: z.string().nullable() }))
     .nullable(),
   featured_image: z.string().nullable(),
-  listing_image: z.string().nullable(),
+  listing_image: z.string().nullable().optional(),
 });
 
 const ApiResponseSchema = z.object({
