@@ -1,3 +1,5 @@
+import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard";
+import { CityCompactCard } from "@/components/City/CompactCard";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
 import Image from "next/image";
@@ -22,7 +24,7 @@ export default async function Page({
       <Banner image={data.featured_image} alt={data.name} />
       <TopBar data={data} />
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_380px] gap-5 pt-12">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_380px] gap-12 pt-12">
           <Main data={data} />
           <Aside data={data} />
         </div>
@@ -53,6 +55,44 @@ const Main = ({ data }: z.infer<typeof ApiResponseSchema>) => (
         <div dangerouslySetInnerHTML={{ __html: data.package_includes }} />
       </div>
     )}
+    <div className="grid xl:grid-cols-6 gap-12">
+      {data?.featured_cities && (
+        <div className="mt-12 col-span-6 xl:col-span-4">
+          <h3 className="text-lg font-semibold mb-4">Featured Destinations</h3>
+          <div className="grid xl:grid-cols-3 gap-3 xl:gap-2">
+            {data.featured_cities.map((city, idx) => (
+              <CityCompactCard key={idx} slug={city} />
+            ))}
+          </div>
+        </div>
+      )}
+      {data?.tour_highlights && (
+        <div className="mt-12 col-span-6 xl:col-span-2">
+          <h3 className="text-lg font-semibold mb-4">Tour Highlights</h3>
+          <ul className="flex flex-col gap-3">
+            {data.tour_highlights.map(({ content }, idx) => (
+              <li key={idx} className="rounded-lg bg-sky-200 p-6">
+                <p className="text-md font-medium text-sky-800">{content}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+    <div className="mt-12">
+      {data?.featured_accommodations && (
+        <div className="mt-12 col-span-4">
+          <h3 className="text-lg font-semibold mb-4">
+            Featured Accommodations
+          </h3>
+          <div className="grid xl:grid-cols-3 gap-3">
+            {data.featured_accommodations.map((accommodation, idx) => (
+              <AccommodationCompactCard key={idx} slug={accommodation} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   </div>
 );
 
@@ -97,7 +137,7 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="bg-primary">
-    <div className="container mx-auto py-4 flex justify-between gap-8">
+    <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <p className="text-md">/Home/Itineraries/[slug]</p>
