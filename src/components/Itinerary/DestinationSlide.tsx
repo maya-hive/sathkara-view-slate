@@ -12,7 +12,9 @@ interface Props {
 export const ItineraryDestinationSlide = async ({ destination }: Props) => {
   const { data } = await fetchData(destination);
 
-  if (!data) return <></>;
+  if (!data?.featured_itineraries) {
+    return null;
+  }
 
   return (
     <>

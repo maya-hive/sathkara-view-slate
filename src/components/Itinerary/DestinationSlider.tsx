@@ -14,13 +14,22 @@ export const ItineraryDestinationSlider = async ({
   destinations,
   content,
 }: Props) => {
-  if (!destinations) return <></>;
+  if (!destinations) return null;
 
   const allData = await fetchData(destinations);
 
   const data = allData.map((item) => item.data);
 
-  if (!data) return <></>;
+  if (!data) return null;
+
+  if (
+    !data.some(
+      (item) =>
+        item?.featured_itineraries && item.featured_itineraries.length > 0
+    )
+  ) {
+    return null;
+  }
 
   return (
     <section>
