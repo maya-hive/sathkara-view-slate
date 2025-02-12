@@ -5,6 +5,7 @@ import Link from "next/link";
 import { z } from "zod";
 
 import { shimmer } from "../Shimmer";
+import { CityName } from "@/components/City/Name";
 
 interface Props {
   slug: string;
@@ -17,13 +18,24 @@ type Itinerary = {
   slug: string;
   short_description: string;
   price: string;
+  price_description: string | null;
   featured_image: string;
   listing_image?: string | null;
   sale_price?: string | null;
   duration?: string | null;
+  days_count_html?: string | null;
   destination?: {
     name: string;
+    slug: string;
+    color: string;
   } | null;
+  featured_cities?: string[] | null;
+  tags: Tag[] | null;
+};
+
+type Tag = {
+  name: string;
+  slug: string;
 };
 
 export const ItineraryCard = async ({ slug }: Props) => {
@@ -55,7 +67,10 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
       <div className="p-4">
         {data.destination && (
           <div className="absolute bottom-0 right-5 z-10">
-            <h4 className="rounded-t bg-orange-400 text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
+            <h4
+              className="rounded-t text-white text-sm font-semibold w-fit py-2 px-5 uppercase"
+              style={{ backgroundColor: data.destination.color }}
+            >
               {data.destination.name}
             </h4>
           </div>
@@ -67,38 +82,48 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
         <Link href={"/itineraries/" + data.slug}>
           <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
         </Link>
-        <div className="border-y py-3">
-          <div className="flex items-center gap-2">
-            <MapIcon />
-            <p className="text-sm font-semibold">
-              Wilpattu, Yala, Kandy, Polonnaruwa and More
-            </p>
+        {data.featured_cities && data.featured_cities.length > 0 && (
+          <div className="border-y py-3">
+            <div className="flex items-center gap-2">
+              <MapIcon />
+              <p className="text-sm font-semibold inline-flex gap-1">
+                {data.featured_cities.map((city, idx) => (
+                  <span key={idx}>
+                    <CityName slug={city} />,
+                  </span>
+                ))}
+                {"and More"}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
         <div className="border-b py-3 flex flex-col flex-1">
           <p className="text-sm font-semibold text-neutral-700">
             {data.short_description}
           </p>
           <div className="mt-2 flex gap-3">
-            <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
-              Wildlife
-            </span>
-            <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
-              Adventure
-            </span>
+            {data?.tags?.map(({ name, slug }, idx) => (
+              <Link key={idx} href={`/itineraries?tags[]=${slug}`}>
+                <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
+                  {name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
         <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between font-bold">
           <div className="px-2 text-lg min-w-[100px]">
-            <p className="font-extrabold">10 Days</p>
-            <p className="text-sm leading-[16px]">9 Nights</p>
+            {data?.days_count_html && (
+              <div
+                dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
+                className="font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+              />
+            )}
           </div>
           <div className="flex border-l border-yellow-500 px-3">
             <div>
               <p className="text-3xl">$ {data.price.replace(".00", "")}</p>
-              <p className="text-xs">
-                Includes Return International Flights & Cruise
-              </p>
+              <p className="text-xs">{data.price_description}</p>
             </div>
           </div>
         </div>
@@ -161,9 +186,13 @@ const fetchData = async (
         "listing_image",
         "short_description",
         "duration",
+        "days_count_html",
         "price",
+        "price_description",
+        "destination",
+        "tags",
+        "featured_cities",
       ],
-      relations: ["destination"],
     },
     { arrayFormat: "bracket" }
   );
@@ -205,15 +234,23 @@ const ApiResponseSchema = z.object({
       slug: z.string(),
       short_description: z.string(),
       price: z.string(),
+      price_description: z.string().nullable(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
       sale_price: z.string().nullable(),
       duration: z.string().nullable(),
+      days_count_html: z.string().nullable(),
       destination: z
         .object({
           name: z.string(),
+          slug: z.string(),
+          color: z.string(),
         })
         .nullable(),
+      tags: z
+        .array(z.object({ name: z.string(), slug: z.string() }))
+        .nullable(),
+      featured_cities: z.array(z.string()).nullable().optional(),
     })
     .nullable(),
 });
