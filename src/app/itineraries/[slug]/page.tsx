@@ -177,9 +177,45 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   </div>
 );
 
-const Itinerary = ({}: z.infer<typeof ApiResponseSchema>) => (
+const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
-    <h2 className="text-xl font-bold mb-4">Itinerary</h2>
+    {data?.milestones && data?.milestones.length > 0 && (
+      <div>
+        <h2 className="text-xl font-bold mb-4">Itinerary Milestones</h2>
+        <div className="flex flex-col gap-4">
+          {data.milestones.map(({ name, image, content }, idx) => (
+            <div
+              key={idx}
+              className="rounded-lg bg-slate-50 overflow-hidden border flex flex-col xl:flex-row"
+            >
+              <Image
+                src={
+                  image ??
+                  `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+                }
+                placeholder={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+                )}`}
+                className="object-cover h-auto w-auto xl:w-[400px]"
+                alt={name}
+                width={400}
+                height={200}
+                priority={false}
+              />
+              <div className="py-4 px-6">
+                <h3 className="text-lg font-bold">{name}</h3>
+                {content && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: content }}
+                    className="mt-2 [&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 );
 const Activities = ({}: z.infer<typeof ApiResponseSchema>) => (
@@ -340,6 +376,7 @@ const fetchData = async (
         "featured_accommodations",
         "tour_highlights",
         "destination",
+        "milestones",
         "tags",
       ],
     },
@@ -409,6 +446,39 @@ const Schema = z.object({
       slug: z.string(),
       color: z.string(),
     })
+    .nullable(),
+  milestones: z
+    .array(
+      z.object({
+        name: z.string(),
+        content: z.string().nullable(),
+        image: z.string().nullable(),
+        cities: z
+          .array(
+            z.object({
+              name: z.string(),
+              slug: z.string(),
+            })
+          )
+          .nullable(),
+        accommodations: z
+          .array(
+            z.object({
+              name: z.string(),
+              slug: z.string(),
+            })
+          )
+          .nullable(),
+        activities: z
+          .array(
+            z.object({
+              name: z.string(),
+              slug: z.string(),
+            })
+          )
+          .nullable(),
+      })
+    )
     .nullable(),
 });
 

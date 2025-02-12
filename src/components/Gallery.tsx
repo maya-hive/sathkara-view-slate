@@ -21,6 +21,7 @@ export const Gallery = ({ children }: Props) => {
         modules={[Navigation, A11y]}
         spaceBetween={20}
         slidesPerView={1}
+        loop={true}
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}
