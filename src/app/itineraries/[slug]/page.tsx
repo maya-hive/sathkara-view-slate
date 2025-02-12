@@ -1,15 +1,16 @@
-import { toBase64 } from "@/utils/base64";
 import Image from "next/image";
 import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
+import { toBase64 } from "@/utils/base64";
 import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard";
 import { CityCompactCard } from "@/components/City/CompactCard";
 import { shimmer } from "@/components/Shimmer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Gallery } from "@/components/Gallery";
+import { Banner } from "@/components/Banner";
 
 export default async function Page({
   params,
@@ -28,7 +29,6 @@ export default async function Page({
       <Banner
         image={data.featured_image}
         thumbnail={data.featured_image_mobile}
-        alt={data.name}
       />
       <TopBar data={data} />
       <div className="container mx-auto">
@@ -65,39 +65,6 @@ export default async function Page({
     </article>
   );
 }
-
-const Banner = ({
-  image,
-  thumbnail,
-  alt,
-}: {
-  image: string;
-  thumbnail: string | null;
-  alt: string;
-}) => (
-  <div className="relative pt-[400px]">
-    <Image
-      className="xs:block absolute left-0 top-0 w-full h-full object-cover"
-      src={image ?? `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-      alt={alt}
-      placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-      width={1200}
-      height={800}
-      priority={true}
-    />
-    <Image
-      className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
-      src={
-        thumbnail ?? `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
-      }
-      alt={alt}
-      placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-      width={400}
-      height={600}
-      priority={true}
-    />
-  </div>
-);
 
 const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>

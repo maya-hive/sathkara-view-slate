@@ -2,7 +2,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { ItineraryCategorySlider } from "@/components/Itinerary/CategorySlider";
-import { Banner } from "@/components/Banner";
+import { HomeHero } from "@/components/HomeHero";
 import { DestinationSection } from "@/components/Destination/Section";
 import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
@@ -19,7 +19,11 @@ export default async function Home() {
 
   return (
     <article>
-      <Banner image={data.hero_image} content={data.hero_content} />
+      <HomeHero
+        image={data.hero_image}
+        video={data.hero_video}
+        content={data.hero_content}
+      />
       <DestinationSection
         items={data.destination_items}
         content={data.destination_title}
@@ -57,6 +61,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
       fields: [
         "hero_content",
         "hero_image",
+        "hero_video",
         "itineraries",
         "itinerary_content",
         "featured_itineraries",
@@ -108,8 +113,9 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
-      hero_content: z.string().nullable(),
-      hero_image: z.string().nullable(),
+      hero_content: z.string().nullable().optional(),
+      hero_image: z.string().nullable().optional(),
+      hero_video: z.string().nullable().optional(),
       itineraries: z
         .array(
           z
@@ -122,11 +128,14 @@ const ApiResponseSchema = z.object({
         )
         .nullable(),
       destination_title: z.string().nullable(),
-      destination_items: z.array(z.string()).nullable(),
-      featured_itineraries: z.array(z.string()).nullable(),
-      itinerary_content: z.string().nullable(),
+      destination_items: z.array(z.string()).nullable().optional(),
+      featured_itineraries: z.array(z.string()).nullable().optional(),
+      itinerary_content: z.string().nullable().optional(),
       itineraries_by_destination_title: z.string().nullable(),
-      itineraries_by_destination_items: z.array(z.string()).nullable(),
+      itineraries_by_destination_items: z
+        .array(z.string())
+        .nullable()
+        .optional(),
       banner_image_1: z.string().nullable(),
       banner_link_1: z.object({
         title: z.string().nullable(),

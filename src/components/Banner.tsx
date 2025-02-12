@@ -1,33 +1,60 @@
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
+import { toBase64 } from "@/utils/base64";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { shimmer } from "@/components/Shimmer";
+
 interface Props {
-  image?: string | null;
+  image: string;
+  thumbnail?: string | null;
   content?: string | null;
 }
 
-export const Banner = async ({ image, content }: Props) => {
-  return (
-    <section className="relative">
-      <div className="absolute bottom-0 left-0 h-[100px] w-full bg-gradient-to-b from-transparent to-black"></div>
-      <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
-        {image && (
-          <Image
-            className="absolute top-0 left-0 w-full h-full object-cover -z-10"
-            src={image}
-            alt={"Banner image"}
-            width={1600}
-            height={800}
+export const Banner = ({ image, thumbnail, content }: Props) => (
+  <div>
+    <div className="relative pt-[400px]">
+      <Image
+        className="xs:block absolute left-0 top-0 w-full h-full object-cover"
+        alt={"Banner image"}
+        src={image ?? placeholder}
+        placeholder={placeholder}
+        width={1400}
+        height={800}
+        priority={true}
+      />
+      {thumbnail && (
+        <Image
+          className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
+          alt={"Banner image"}
+          src={thumbnail ?? placeholder}
+          placeholder={placeholder}
+          width={400}
+          height={600}
+          priority={true}
+        />
+      )}
+    </div>
+    {content && <MetaBar content={content} />}
+  </div>
+);
+
+const MetaBar = ({ content }: { content: string }) => (
+  <div className="bg-primary">
+    <div className="container mx-auto py-4">
+      <div className="flex items-center gap-8">
+        <div className="font-semibold">
+          <Breadcrumb />
+          <div
+            className="text-white [&>h1]:text-3xl"
+            dangerouslySetInnerHTML={{ __html: content }}
           />
-        )}
-        <div className="text-center text-white pt-[480px] pb-[50px] z-10">
-          {content && (
-            <span
-              className="[&>h1]:text-7xl [&>h1]:font-bold"
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
-          )}
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </div>
+);
+
+const placeholder: PlaceholderValue = `data:image/svg+xml;base64,${toBase64(
+  shimmer(700, 475)
+)}`;

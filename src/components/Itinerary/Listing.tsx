@@ -1,6 +1,10 @@
 import { Suspense } from "react";
-import { ItineraryCard } from "./Card";
-import { type PaginationLink, Pagination } from "../Pagination";
+import queryString from "query-string";
+import { z } from "zod";
+
+import { type PaginationLink, Pagination } from "@/components/Pagination";
+import { Banner } from "@/components/Banner";
+import { ItineraryCard } from "@/components/Itinerary/Card";
 
 interface Props {
   data: Itinerary[] | null;
@@ -26,26 +30,81 @@ type Itinerary = {
   destination: Destination | null;
 };
 
-export const ItineraryListing = ({ data, links }: Props) => {
+export const ItineraryListing = async ({ data, links }: Props) => {
   if (!data?.length) return <></>;
 
+  const { data: pageData } = await fetchData();
+
   return (
-    <article className="container mx-auto">
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
-        <div>
-          <div className="rounded bg-slate-100 h-full"></div>
-        </div>
-        <div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-            <Suspense fallback={<span>Loading</span>}>
-              {data?.map((item) => (
-                <ItineraryCard key={item.id} slug={item.slug} />
-              ))}
-            </Suspense>
+    <article>
+      {pageData?.banner_image && (
+        <Banner
+          content={pageData.page_content}
+          image={pageData?.banner_image}
+        />
+      )}
+      <div className="container mx-auto">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
+          <div>
+            <div className="rounded bg-slate-100 h-full"></div>
           </div>
-          <Pagination links={links} />
+          <div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+              <Suspense fallback={<span>Loading</span>}>
+                {data?.map((item) => (
+                  <ItineraryCard key={item.id} slug={item.slug} />
+                ))}
+              </Suspense>
+            </div>
+            <Pagination links={links} />
+          </div>
         </div>
       </div>
     </article>
   );
 };
+
+const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
+  const query = queryString.stringify(
+    {
+      fields: ["page_content", "banner_image"],
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/settings/page_itinerary_listing?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+
+  try {
+    return ApiResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.log(error.errors);
+
+      throw new Error("API Response validation failed: " + error.message);
+    }
+    throw error;
+  }
+};
+
+const ApiResponseSchema = z.object({
+  data: z
+    .object({
+      page_content: z.string().nullable().optional(),
+      banner_image: z.string().nullable().optional(),
+    })
+    .nullable(),
+});
