@@ -34,7 +34,7 @@ export default async function Page({
       <div className="container mx-auto">
         <Tabs defaultValue={tabs[0].name}>
           <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-            <div className="md:min-w-[calc(100%-380px)] md:w-[calc(100%-380px)]">
+            <div className="md:min-w-[calc(100%-400px)] md:w-[calc(100%-400px)]">
               <div className="mt-8">
                 <TabsList className="p-0 flex-wrap gap-2">
                   {tabs.map(({ name, title }, idx) => (
@@ -56,7 +56,7 @@ export default async function Page({
                 ))}
               </div>
             </div>
-            <div className="md:w-[380px]">
+            <div className="md:w-[400px]">
               <Aside data={data} />
             </div>
           </div>
@@ -146,11 +146,11 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
 
 const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
-    {data?.milestones && data?.milestones.length > 0 && (
+    {data?.itinerary_milestones && data?.itinerary_milestones.length > 0 && (
       <div>
         <h2 className="text-xl font-bold mb-4">Itinerary Milestones</h2>
         <div className="flex flex-col gap-4">
-          {data.milestones.map(({ name, image, content }, idx) => (
+          {data.itinerary_milestones.map(({ name, image, content }, idx) => (
             <div
               key={idx}
               className="rounded-lg bg-slate-50 overflow-hidden border flex flex-col xl:flex-row"
@@ -216,7 +216,7 @@ const tabs = [
 ];
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div>
+  <div className="sticky top-10">
     <div className="rounded-lg bg-primary py-4 px-6">
       <div className="text-center border-b border-gray-400 px-8 pb-4">
         <h3 className="text-3xl font-medium">Ready to start your journey?</h3>
@@ -224,15 +224,18 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           Choose dates, passengers, and we will take care of your dream vacation
         </p>
       </div>
-      <div className="mt-2 rounded-lg bg-white py-6 px-8 flex">
-        <div>
-          <p className="pr-3 text-3xl">$ {data?.price?.replace(".00", "")}</p>
+      <div className="mt-2 rounded-lg bg-white py-6 px-8 flex items-center">
+        <div className="text-orange-800">
+          <span className="text-sm font-semibold">Starting From</span>
+          <p className="pr-3 text-4xl font-semibold">
+            $ {data?.price?.replace(".00", "")}
+          </p>
         </div>
         <div className="border-l border-slate-600 px-2 text-lg min-w-[100px]">
           {data?.days_count_html && (
             <div
               dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-              className="font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+              className="text-slate-600 text-xl font-semibold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
             />
           )}
         </div>
@@ -343,7 +346,7 @@ const fetchData = async (
         "featured_accommodations",
         "tour_highlights",
         "destination",
-        "milestones",
+        "itinerary_milestones",
         "tags",
       ],
     },
@@ -414,7 +417,7 @@ const Schema = z.object({
       color: z.string(),
     })
     .nullable(),
-  milestones: z
+  itinerary_milestones: z
     .array(
       z.object({
         name: z.string(),
@@ -446,7 +449,8 @@ const Schema = z.object({
           .nullable(),
       })
     )
-    .nullable(),
+    .nullable()
+    .optional(),
 });
 
 const ApiResponseSchema = z.object({

@@ -1,18 +1,20 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { ItineraryDestinationSliderClient as SliderClient } from "./DestinationSlider.client";
-import { ItineraryDestinationSlide as Slide } from "./DestinationSlide";
+import { ItineraryDestinationSliderClient as SliderClient } from "@/components/Itinerary/DestinationSlider.client";
+import { ItineraryDestinationSlide as Slide } from "@/components/Itinerary/DestinationSlide";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Props {
   destinations?: string[] | null;
   content?: TrustedHTML | null;
+  title: string | null;
 }
 
 export const ItineraryDestinationSlider = async ({
   destinations,
   content,
+  title,
 }: Props) => {
   if (!destinations) return null;
 
@@ -39,7 +41,7 @@ export const ItineraryDestinationSlider = async ({
         </div>
         <Tabs defaultValue={data[0]?.slug}>
           <div className="mb-8 flex flex-col md:flex-row items-center justify-center gap-4">
-            <span className="font-semibold">Sort by Destination :</span>
+            <span className="font-semibold">{title}</span>
             <span className="flex gap-3">
               <TabsList>
                 {data?.map(

@@ -34,7 +34,7 @@ export default async function Home() {
       />
       <ItineraryDestinationSlider
         destinations={data.itineraries_by_destination_items}
-        content={data.itineraries_by_destination_title}
+        title={data.itineraries_by_destination_title}
       />
       <ItineraryCategorySlider items={data.itineraries} />
       <CallToAction
