@@ -153,46 +153,118 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
       <div>
         <h2 className="text-xl font-bold mb-4">Itinerary Milestones</h2>
         <div className="flex flex-col gap-4">
-          {data.itinerary_milestones.map(({ name, image, content }, idx) => (
-            <div
-              key={idx}
-              className="rounded-lg bg-slate-50 overflow-hidden border flex flex-col xl:flex-row"
-            >
-              <Image
-                src={
-                  image ??
-                  `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
-                }
-                placeholder={`data:image/svg+xml;base64,${toBase64(
-                  shimmer(700, 475)
-                )}`}
-                className="object-cover h-auto w-auto xl:min-w-[400px] xl:w-[400px]"
-                alt={name}
-                width={400}
-                height={200}
-                priority={false}
-              />
-              <div className="py-4 px-6">
-                <h3 className="text-lg font-bold">{name}</h3>
-                {content && (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: content }}
-                    className="mt-2 [&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
-                  />
-                )}
+          {data.itinerary_milestones.map(
+            (
+              { name, image, content, activities, accommodations, cities },
+              idx
+            ) => (
+              <div
+                key={idx}
+                className="rounded-lg bg-slate-50 overflow-hidden border flex flex-col xl:flex-row"
+              >
+                <Image
+                  src={
+                    image ??
+                    `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+                  }
+                  placeholder={`data:image/svg+xml;base64,${toBase64(
+                    shimmer(700, 475)
+                  )}`}
+                  className="object-cover h-auto w-auto xl:min-w-[400px] xl:w-[400px]"
+                  alt={name}
+                  width={400}
+                  height={200}
+                  priority={false}
+                />
+                <div className="py-4 px-6">
+                  <h3 className="text-lg font-bold">{name}</h3>
+                  {content && (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: content }}
+                      className="mt-2 [&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
+                    />
+                  )}
+                  {activities && (
+                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
+                      <span className="text-md font-medium">Activities:</span>
+                      <div className="flex gap-2">
+                        {activities?.map(({ name }, idx) => (
+                          <span
+                            key={idx}
+                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+                          >
+                            {name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {cities && (
+                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
+                      <span className="text-md font-medium">Cities:</span>
+                      <div className="flex gap-2">
+                        {cities?.map(({ name }, idx) => (
+                          <span
+                            key={idx}
+                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+                          >
+                            {name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {accommodations && (
+                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
+                      <span className="text-md font-medium">
+                        Accommodations:
+                      </span>
+                      <div className="flex gap-2">
+                        {accommodations?.map(({ name }, idx) => (
+                          <span
+                            key={idx}
+                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+                          >
+                            {name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     )}
   </div>
 );
-const Activities = ({}: z.infer<typeof ApiResponseSchema>) => (
-  <div>
-    <h2 className="text-xl font-bold mb-4">Activities</h2>
-  </div>
-);
+const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  const activities = data?.itinerary_milestones
+    ?.flatMap((milestone) => milestone.activities)
+    .filter((activity) => activity != null);
+
+  return (
+    <div>
+      <h2 className="text-xl font-bold mb-4">Activities</h2>
+      {activities && (
+        <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
+          <div className="flex gap-2">
+            {activities?.map(({ name }, idx) => (
+              <span
+                key={idx}
+                className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+              >
+                {name}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 const PackageIncludes = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
     {data?.package_includes && (
