@@ -38,7 +38,7 @@ const CardLayout = ({ data }: { data: Destination }) => (
         <p className="mt-1">Tour Options</p>
         <Link
           href={"/itineraries/" + data.slug}
-          className="mt-2 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-md uppercase"
+          className="mt-6 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase"
         >
           Plan Your Trip
         </Link>
@@ -52,7 +52,7 @@ const CardLayout = ({ data }: { data: Destination }) => (
         width={500}
         height={400}
       />
-      <span className="absolute bottom-0 left-0 h-[240px] w-full bg-gradient-to-b from-transparent to-black"></span>
+      <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-black"></span>
     </div>
   </div>
 );

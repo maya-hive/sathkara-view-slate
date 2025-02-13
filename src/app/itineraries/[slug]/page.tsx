@@ -3,14 +3,16 @@ import Link from "next/link";
 import queryString from "query-string";
 import { z } from "zod";
 
-import { toBase64 } from "@/utils/base64";
 import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard";
-import { CityCompactCard } from "@/components/City/CompactCard";
-import { shimmer } from "@/components/Shimmer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ItineraryInquiryForm } from "@/components/Itinerary/InquiryForm";
+import { CityCompactCard } from "@/components/City/CompactCard";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { shimmer } from "@/components/Shimmer";
 import { Gallery } from "@/components/Gallery";
 import { Banner } from "@/components/Banner";
+import { PriceTag } from "@/components/PriceTag";
+import { toBase64 } from "@/utils/base64";
 
 export default async function Page({
   params,
@@ -54,6 +56,7 @@ export default async function Page({
                     <Component data={data} />
                   </TabsContent>
                 ))}
+                <ItineraryInquiryForm />
               </div>
             </div>
             <div className="md:w-[400px]">
@@ -163,7 +166,7 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                 placeholder={`data:image/svg+xml;base64,${toBase64(
                   shimmer(700, 475)
                 )}`}
-                className="object-cover h-auto w-auto xl:w-[400px]"
+                className="object-cover h-auto w-auto xl:min-w-[400px] xl:w-[400px]"
                 alt={name}
                 width={400}
                 height={200}
@@ -217,18 +220,20 @@ const tabs = [
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="sticky top-10">
-    <div className="rounded-lg bg-primary py-4 px-6">
-      <div className="text-center border-b border-gray-400 px-8 pb-4">
-        <h3 className="text-3xl font-medium">Ready to start your journey?</h3>
-        <p className="mt-2 text-md">
+    <div className="rounded-lg bg-primary p-6">
+      <div className="text-center border-b border-slate-400 px-4 pb-4">
+        <h3 className="text-3xl text-slate-900 font-semibold">
+          Ready to start your journey?
+        </h3>
+        <p className="mt-3 text-md font-semibold">
           Choose dates, passengers, and we will take care of your dream vacation
         </p>
       </div>
-      <div className="mt-2 rounded-lg bg-white py-6 px-8 flex items-center">
+      <div className="mt-3 rounded-lg bg-white py-6 px-8 flex items-center">
         <div className="text-orange-800">
           <span className="text-sm font-semibold">Starting From</span>
           <p className="pr-3 text-4xl font-semibold">
-            $ {data?.price?.replace(".00", "")}
+            <PriceTag amount={data?.price} />
           </p>
         </div>
         <div className="border-l border-slate-600 px-2 text-lg min-w-[100px]">

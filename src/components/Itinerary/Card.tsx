@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { shimmer } from "../Shimmer";
 import { CityName } from "@/components/City/Name";
+import { PriceTag } from "../PriceTag";
 
 interface Props {
   slug: string;
@@ -122,7 +123,9 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
           </div>
           <div className="flex border-l border-yellow-500 px-3">
             <div>
-              <p className="text-3xl">$ {data.price.replace(".00", "")}</p>
+              <p className="text-3xl">
+                <PriceTag amount={data.price} />
+              </p>
               <p className="text-xs">{data.price_description}</p>
             </div>
           </div>

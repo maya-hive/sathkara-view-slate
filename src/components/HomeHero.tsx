@@ -19,7 +19,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
 
   return (
     <section className="mb-10 relative">
-      <div className="absolute bottom-0 left-0 h-[100px] w-full bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
       <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
         {video ? (
           <video
@@ -44,16 +44,18 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
             height={800}
           />
         )}
-        <div className="text-center text-white pt-[480px] pb-[50px] z-10">
-          {content && (
-            <span
-              className="[&>h1]:text-7xl [&>h1]:font-bold"
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
-          )}
+        <div className="container mx-auto">
+          <div className="relative text-white pt-[480px] z-10 pointer-events-none">
+            {content && (
+              <span
+                className="[&>h1]:text-7xl [&>h1]:font-bold"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            )}
+          </div>
         </div>
       </div>
-      <div className="container mx-auto relative -bottom-10">
+      <div className="container mx-auto relative -mt-2 -bottom-10">
         <SearchForm title={title} />
       </div>
     </section>

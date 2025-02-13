@@ -66,10 +66,10 @@ export const SearchItineraryDurations = () => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="input"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-full justify-between"
+          className="w-full h-full bg-gray-100 justify-between"
         >
           {value
             ? itineraryDurations.find((item) => item.value === value)?.label

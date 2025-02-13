@@ -1,6 +1,7 @@
 import { SearchItienraries } from "./Itineraries";
 import { SearchItineraryCategories } from "./ItineraryCategories";
 import { SearchItineraryDurations } from "./ItineraryDurations";
+import Link from "next/link";
 
 interface Props {
   title?: string | null;
@@ -8,11 +9,11 @@ interface Props {
 
 export const SearchForm = ({ title }: Props) => (
   <div className="rounded-xl shadow-lg bg-white py-6 px-12 flex flex-col md:flex-row gap-4 items-center">
-    <div className="text-lg font-semibold md:max-w-[120px]">
+    <h2 className="text-lg font-bold md:max-w-[120px] leading-tight">
       {title ?? "Search"}
-    </div>
+    </h2>
     <div className="w-full flex flex-col md:flex-row gap-3">
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full md:min-w-[500px]">
         <SearchItienraries />
       </div>
       <div className="flex-1 w-full">
@@ -22,9 +23,11 @@ export const SearchForm = ({ title }: Props) => (
         <SearchItineraryDurations />
       </div>
       <div className="flex-1 w-full md:max-w-[200px]">
-        <button className="rounded-md w-full bg-secondary py-4 px-8 text-md font-semibold uppercase text-white">
-          Search
-        </button>
+        <Link href="/itineraries">
+          <button className="rounded-md w-full bg-secondary py-4 px-8 text-md font-semibold uppercase text-white">
+            Search
+          </button>
+        </Link>
       </div>
     </div>
   </div>
