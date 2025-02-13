@@ -8,7 +8,7 @@ import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
 import { CallToAction } from "@/components/CallToAction";
 import { ContentSection } from "@/components/ContentSection";
-import { AudienceSlider } from "@/components/Audience/Slider";
+import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -42,7 +42,7 @@ export default async function Home() {
         link={data.banner_link_1}
         image={data.banner_image_1}
       />
-      <AudienceSlider
+      <AudienceTestimonialSlider
         items={data.audience_items}
         content={data.audience_title}
       />

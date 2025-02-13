@@ -25,7 +25,7 @@ type Audience = {
   featured_image: string;
 };
 
-export const AudienceFeaturedCard = async ({
+export const AudienceTestimonialCard = async ({
   data: props,
 }: {
   data: Props;
@@ -34,8 +34,8 @@ export const AudienceFeaturedCard = async ({
 
   const { data } = await fetchData(props.audience);
 
-  if (!data) {
-    return <></>;
+  if (!data || !props.testimonial) {
+    return null;
   }
 
   return <CardLayout data={data} props={props} />;
