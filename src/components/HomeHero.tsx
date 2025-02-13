@@ -3,20 +3,22 @@ import Image from "next/image";
 
 import { toBase64 } from "@/utils/base64";
 import { shimmer } from "@/components/Shimmer";
+import { SearchForm } from "./Search/Form";
 
 interface Props {
   image?: string | null;
   video?: string | null;
+  title?: string | null;
   content?: string | null;
 }
 
-export const HomeHero = async ({ image, video, content }: Props) => {
+export const HomeHero = async ({ image, video, title, content }: Props) => {
   if (!image) {
     return null;
   }
 
   return (
-    <section className="relative">
+    <section className="mb-10 relative">
       <div className="absolute bottom-0 left-0 h-[100px] w-full bg-gradient-to-b from-transparent to-black"></div>
       <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
         {video ? (
@@ -50,6 +52,9 @@ export const HomeHero = async ({ image, video, content }: Props) => {
             />
           )}
         </div>
+      </div>
+      <div className="container mx-auto relative -bottom-10">
+        <SearchForm title={title} />
       </div>
     </section>
   );

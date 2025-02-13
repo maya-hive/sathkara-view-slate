@@ -23,6 +23,7 @@ export default async function Home() {
         image={data.hero_image}
         video={data.hero_video}
         content={data.hero_content}
+        title={data.hero_filter_title}
       />
       <DestinationSection
         items={data.destination_items}
@@ -62,6 +63,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "hero_content",
         "hero_image",
         "hero_video",
+        "hero_filter_title",
         "itineraries",
         "itinerary_content",
         "featured_itineraries",
@@ -116,6 +118,7 @@ const ApiResponseSchema = z.object({
       hero_content: z.string().nullable().optional(),
       hero_image: z.string().nullable().optional(),
       hero_video: z.string().nullable().optional(),
+      hero_filter_title: z.string().nullable().optional(),
       itineraries: z
         .array(
           z
