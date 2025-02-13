@@ -56,7 +56,7 @@ export default async function Page({
                     <Component data={data} />
                   </TabsContent>
                 ))}
-                <ItineraryInquiryForm />
+                <ItineraryInquiryForm itineraryCategories={null} />
               </div>
             </div>
             <div className="md:w-[400px]">
