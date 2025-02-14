@@ -34,7 +34,7 @@ export const ActivityCard = async ({ slug }: Props) => {
 const CardLayout = ({ data }: { data: Activity }) => (
   <div className="border rounded-lg overflow-hidden flex flex-col justify-between">
     <div className="relative pt-[260px]">
-      <Link href={"/itineraries/" + data.slug}>
+      <Link href={"/activities/" + data.slug}>
         <Image
           className="w-full h-full object-cover absolute top-0 left-0"
           src={data.listing_image ?? data.featured_image}
@@ -50,7 +50,7 @@ const CardLayout = ({ data }: { data: Activity }) => (
     </div>
     <div className="p-4 flex flex-col h-full">
       <div className="flex flex-col h-full">
-        <Link href={"/itineraries/" + data.slug}>
+        <Link href={"/activities/" + data.slug}>
           <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
         </Link>
         <div className="border-b py-3 flex flex-col flex-1">
