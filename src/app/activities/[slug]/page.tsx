@@ -16,6 +16,7 @@ import {
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { PriceTag } from "@/components/PriceTag";
+import { ActivityInquiryForm } from "@/components/Activity/ActivityForm";
 
 export default async function Page({
   params,
@@ -133,6 +134,7 @@ export default async function Page({
                   </div>
                 )}
               </div>
+              <ActivityInquiryForm />
             </div>
           </div>
           <div className="md:w-[400px]">
