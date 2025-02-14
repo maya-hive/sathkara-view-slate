@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
+import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 export default async function Page() {
   const data = await fetchData("1");
@@ -10,7 +10,7 @@ export default async function Page() {
     return <></>;
   }
 
-  return <ItineraryListing {...data} />;
+  return <ActivityListing {...data} />;
 }
 
 const fetchData = async (
@@ -23,19 +23,16 @@ const fetchData = async (
         "name",
         "status",
         "slug",
-        "sale_price",
         "featured_image",
         "short_description",
         "duration",
-        "price",
-        "destination",
       ],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/activity/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],
@@ -68,15 +65,8 @@ const Schema = z.object({
   name: z.string(),
   slug: z.string(),
   short_description: z.string(),
-  price: z.string(),
   featured_image: z.string(),
-  sale_price: z.string().nullable(),
   duration: z.string().nullable(),
-  destination: z
-    .object({
-      name: z.string(),
-    })
-    .nullable(),
 });
 
 const ApiResponseSchema = z.object({

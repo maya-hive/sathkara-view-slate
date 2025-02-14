@@ -3,7 +3,7 @@ import { cache } from "react";
 import { z } from "zod";
 
 import { redirect } from "next/navigation";
-import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
+import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 type Args = {
   params: Promise<{
@@ -15,7 +15,7 @@ export default async function Page({ params }: Args) {
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect("/itineraries");
+    return redirect("/activities");
   }
 
   const data = await fetchData(id);
@@ -24,7 +24,7 @@ export default async function Page({ params }: Args) {
     return <></>;
   }
 
-  return <ItineraryListing {...data} />;
+  return <ActivityListing {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -46,19 +46,16 @@ const fetchData = cache(
           "name",
           "status",
           "slug",
-          "sale_price",
           "featured_image",
           "short_description",
-          "destination",
           "duration",
-          "price",
         ],
       },
       { arrayFormat: "bracket" }
     );
 
     const response = await fetch(
-      `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
+      `${process.env.API_URL}/modules/activity/index?page=${id}&${query}`,
       {
         next: {
           tags: ["global"],
@@ -92,15 +89,8 @@ const Schema = z.object({
   name: z.string(),
   slug: z.string(),
   short_description: z.string(),
-  price: z.string(),
   featured_image: z.string(),
-  sale_price: z.string().nullable(),
   duration: z.string().nullable(),
-  destination: z
-    .object({
-      name: z.string(),
-    })
-    .nullable(),
 });
 
 const ApiResponseSchema = z.object({

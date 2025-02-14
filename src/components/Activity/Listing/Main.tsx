@@ -4,55 +4,42 @@ import { z } from "zod";
 
 import { type PaginationLink, Pagination } from "@/components/Pagination";
 import { Banner } from "@/components/Banner";
-import { ItineraryCard } from "@/components/Itinerary/Card";
+import { ActivityCard } from "@/components/Activity/Card";
+import { ActivityListingAside as Aside } from "./Aside";
 
 interface Props {
-  data: Itinerary[] | null;
+  data: Activity[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
 }
 
-type Destination = {
-  name: string;
-};
-
-type Itinerary = {
+type Activity = {
   id: number;
   status: number;
   name: string;
   slug: string;
   short_description: string;
-  price: string;
   featured_image: string;
-  sale_price: string | null;
   duration: string | null;
-  destination: Destination | null;
 };
 
-export const ItineraryListing = async ({ data, links }: Props) => {
+export const ActivityListing = async ({ data, links }: Props) => {
   if (!data?.length) return <></>;
 
   const { data: pageData } = await fetchData();
 
   return (
     <article>
-      {pageData?.banner_image && (
-        <Banner
-          content={pageData.page_content}
-          image={pageData?.banner_image}
-        />
-      )}
+      <Banner content={pageData?.page_content} image={pageData?.banner_image} />
       <div className="container mx-auto">
         <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
-          <div>
-            <div className="rounded bg-slate-100 h-full"></div>
-          </div>
+          <Aside />
           <div>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
               <Suspense fallback={<span>Loading</span>}>
                 {data?.map((item) => (
-                  <ItineraryCard key={item.id} slug={item.slug} />
+                  <ActivityCard key={item.id} slug={item.slug} />
                 ))}
               </Suspense>
             </div>
@@ -73,7 +60,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_itinerary_listing?${query}`,
+    `${process.env.API_URL}/settings/page_activity_listing?${query}`,
     {
       next: {
         tags: ["global"],
