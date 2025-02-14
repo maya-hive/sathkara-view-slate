@@ -10,7 +10,7 @@ interface Props {
   layout?: "default" | "horizontal";
 }
 
-type Accommodation = {
+type Activity = {
   id: number;
   status: number;
   name: string;
@@ -20,7 +20,7 @@ type Accommodation = {
   listing_image?: string | null;
 };
 
-export const AccommodationCompactCard = async ({
+export const ActivityCompactCard = async ({
   slug,
   layout = "default",
 }: Props) => {
@@ -37,7 +37,7 @@ export const AccommodationCompactCard = async ({
   return <CardLayout data={data} />;
 };
 
-const CardLayout = ({ data }: { data: Accommodation }) => (
+const CardLayout = ({ data }: { data: Activity }) => (
   <div className="rounded-md overflow-hidden">
     <div className="relative h-full pt-[180px] flex items-end text-white">
       <div className="relative z-20 p-8">
@@ -57,7 +57,7 @@ const CardLayout = ({ data }: { data: Accommodation }) => (
   </div>
 );
 
-const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
+const CardLayoutHorizontal = ({ data }: { data: Activity }) => (
   <div className="rounded-md overflow-hidden">
     <div className="flex text-white relative h-full py-[20px] pl-4 z-10">
       <div className="relative z-20">
@@ -72,7 +72,7 @@ const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
         width={200}
         height={100}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-l from-transparent to-sky-600"></div>
+      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-l from-transparent to-sky-600 to-[70%]"></div>
     </div>
   </div>
 );
@@ -96,7 +96,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/accommodation/${slug}?${query}`,
+    `${process.env.API_URL}/modules/activity/${slug}?${query}`,
     {
       next: {
         tags: ["global"],

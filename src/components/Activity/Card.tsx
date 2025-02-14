@@ -58,9 +58,8 @@ const CardLayout = ({ data }: { data: Activity }) => (
             {data.short_description}
           </p>
         </div>
-        <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between font-bold"></div>
       </div>
-      <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
+      <div className="mt-2 w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
         <Link
           href={"/activities/" + data.slug}
           className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-300 p-3 flex flex-col justify-center items-center flex-1"

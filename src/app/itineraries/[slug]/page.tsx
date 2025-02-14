@@ -13,6 +13,8 @@ import { Gallery } from "@/components/Gallery";
 import { Banner } from "@/components/Banner";
 import { PriceTag } from "@/components/PriceTag";
 import { toBase64 } from "@/utils/base64";
+import { ActivityCompactCard } from "@/components/Activity/CompactCard";
+import { ActivityCard } from "@/components/Activity/Card";
 
 export default async function Page({
   params,
@@ -181,52 +183,47 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                   {content && (
                     <div
                       dangerouslySetInnerHTML={{ __html: content }}
-                      className="mt-2 [&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
+                      className="mt-2 [&>p]:text-[15px] [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc [&>ul]:text-[15px]"
                     />
                   )}
-                  {activities && (
-                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
-                      <span className="text-md font-medium">Activities:</span>
-                      <div className="flex gap-2">
-                        {activities?.map(({ name }, idx) => (
-                          <span
+                  {activities && activities.length > 0 && (
+                    <div className="mt-3">
+                      <div className="text-md font-medium">Activities</div>
+                      <div className="mt-1 grid grid-cols-2 xl:grid-cols-3 gap-2">
+                        {activities?.map(({ slug }, idx) => (
+                          <ActivityCompactCard
                             key={idx}
-                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
-                          >
-                            {name}
-                          </span>
+                            slug={slug}
+                            layout="horizontal"
+                          />
                         ))}
                       </div>
                     </div>
                   )}
-                  {cities && (
-                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
-                      <span className="text-md font-medium">Cities:</span>
-                      <div className="flex gap-2">
-                        {cities?.map(({ name }, idx) => (
-                          <span
+                  {cities && cities.length > 0 && (
+                    <div className="mt-3">
+                      <div className="text-md font-medium">Cities</div>
+                      <div className="mt-1 grid grid-cols-2 xl:grid-cols-3 gap-2">
+                        {cities?.map(({ slug }, idx) => (
+                          <CityCompactCard
                             key={idx}
-                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
-                          >
-                            {name}
-                          </span>
+                            slug={slug}
+                            layout="horizontal"
+                          />
                         ))}
                       </div>
                     </div>
                   )}
-                  {accommodations && (
-                    <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
-                      <span className="text-md font-medium">
-                        Accommodations:
-                      </span>
-                      <div className="flex gap-2">
-                        {accommodations?.map(({ name }, idx) => (
-                          <span
+                  {accommodations && accommodations.length > 0 && (
+                    <div className="mt-3">
+                      <div className="text-md font-medium">Accommodations</div>
+                      <div className="mt-1 grid grid-cols-2 xl:grid-cols-3 gap-2">
+                        {accommodations?.map(({ slug }, idx) => (
+                          <AccommodationCompactCard
                             key={idx}
-                            className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
-                          >
-                            {name}
-                          </span>
+                            slug={slug}
+                            layout="horizontal"
+                          />
                         ))}
                       </div>
                     </div>
@@ -248,18 +245,11 @@ const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Activities</h2>
-      {activities && (
-        <div className="mt-4 flex flex-col md:flex-row items-center gap-2">
-          <div className="flex gap-2">
-            {activities?.map(({ name }, idx) => (
-              <span
-                key={idx}
-                className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
+      {activities && activities.length > 0 && (
+        <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
+          {activities?.map(({ slug }, idx) => (
+            <ActivityCard key={idx} slug={slug} />
+          ))}
         </div>
       )}
     </div>
