@@ -56,28 +56,26 @@ export default async function Page({
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
-                    <div className="mt-6">
-                      <Gallery>
-                        {data.gallery.map((image, idx) => (
-                          <Image
-                            key={idx}
-                            src={
-                              image ??
-                              `data:image/svg+xml;base64,${toBase64(
-                                shimmer(700, 475)
-                              )}`
-                            }
-                            placeholder={`data:image/svg+xml;base64,${toBase64(
+                    <Gallery>
+                      {data.gallery.map((image, idx) => (
+                        <Image
+                          key={idx}
+                          src={
+                            image ??
+                            `data:image/svg+xml;base64,${toBase64(
                               shimmer(700, 475)
-                            )}`}
-                            alt={`Gallery image ${idx}`}
-                            width={800}
-                            height={500}
-                            priority={false}
-                          />
-                        ))}
-                      </Gallery>
-                    </div>
+                            )}`
+                          }
+                          placeholder={`data:image/svg+xml;base64,${toBase64(
+                            shimmer(700, 475)
+                          )}`}
+                          alt={`Gallery image ${idx}`}
+                          width={800}
+                          height={500}
+                          priority={false}
+                        />
+                      ))}
+                    </Gallery>
                   </div>
                 )}
               </div>
