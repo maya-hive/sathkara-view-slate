@@ -76,7 +76,7 @@ const Media = ({ image, thumbnail }: Props) => (
 );
 
 const MetaBar = ({ content }: { content: string }) => (
-  <div className="bg-primary">
+  <div className="relative z-10 bg-primary">
     <div className="container mx-auto py-4">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
