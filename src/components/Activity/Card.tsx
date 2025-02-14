@@ -4,80 +4,97 @@ import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 
-import { shimmer } from "../Shimmer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PriceTag } from "@/components/PriceTag";
+import { shimmer } from "@/components/Shimmer";
+import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   slug: string;
 }
 
-type Activity = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-  listing_image?: string | null;
-  duration?: string | null;
-};
-
 export const ActivityCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return <CardLayout data={data} />;
 };
 
-const CardLayout = ({ data }: { data: Activity }) => (
-  <div className="border rounded-lg overflow-hidden flex flex-col justify-between">
-    <div className="relative pt-[260px]">
-      <Link href={"/activities/" + data.slug}>
-        <Image
-          className="w-full h-full object-cover absolute top-0 left-0"
-          src={data.listing_image ?? data.featured_image}
-          alt={data.name}
-          placeholder={`data:image/svg+xml;base64,${toBase64(
-            shimmer(700, 475)
-          )}`}
-          priority={false}
-          width={500}
-          height={400}
-        />
-      </Link>
-    </div>
-    <div className="p-4 flex flex-col h-full">
-      <div className="flex flex-col h-full">
-        <Link href={"/activities/" + data.slug}>
-          <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
-        </Link>
-        <div className="border-b py-3 flex flex-col flex-1">
-          <p className="text-sm font-semibold text-neutral-700">
-            {data.short_description}
-          </p>
+const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <div className="relative pt-[260px] border rounded-lg overflow-hidden flex flex-col justify-between">
+      <div className="text-white relative z-10 p-4 flex flex-col h-full">
+        <div className="border-b">
+          <Link href={"/activities/" + data.slug}>
+            <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
+          </Link>
+        </div>
+        <div className="flex-col h-full my-2">
+          {(data.duration || data.best_time || data.approximate_charge) && (
+            <div className="flex px-1 space-x-4">
+              {data.duration && (
+                <div className="border-r border-r-gray-600 pr-4">
+                  <div className="flex items-center gap-2 text-md font-medium uppercase">
+                    <FontAwesomeIcon icon={faStopwatch} />
+                    Duration
+                  </div>
+                  <div className="mt-1 text-md">{data.duration}</div>
+                </div>
+              )}
+              {data.best_time && (
+                <div className="pr-4">
+                  <div className="flex items-center gap-2 text-md font-medium uppercase">
+                    <FontAwesomeIcon icon={faCalendar} />
+                    Best Time
+                  </div>
+                  <div className="mt-1 text-md">{data.best_time}</div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        {data.approximate_charge && (
+          <div className="mt-2 rounded bg-yellow-300 text-black p-4 flex justify-between font-bold">
+            <div className="flex border-yellow-500 px-3">
+              <div className="pr-4">
+                <p className="text-xs">Approximate Charge</p>
+                <PriceTag
+                  amount={data.approximate_charge}
+                  className="text-3xl"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
+          <Link
+            href={"/activities/" + data.slug}
+            className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center"
+          >
+            Learn More About The Activity
+          </Link>
         </div>
       </div>
-      <div className="mt-2 w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
-        <Link
-          href={"/activities/" + data.slug}
-          className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-300 p-3 flex flex-col justify-center items-center flex-1"
-        >
-          Learn More <br />
-          About The Journey
-        </Link>
-        <Link
-          href="#"
-          className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center flex-1"
-        >
-          Start Your <br />
-          Journey
-        </Link>
-      </div>
+      <Image
+        className="w-full h-full object-cover absolute top-0 left-0"
+        src={data.listing_image ?? data.featured_image}
+        alt={data.name}
+        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+        priority={false}
+        width={500}
+        height={400}
+      />
+      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-black to-[70%]"></div>
     </div>
-  </div>
-);
+  );
+};
 
 const fetchData = async (
   slug: string
@@ -93,6 +110,8 @@ const fetchData = async (
         "listing_image",
         "short_description",
         "duration",
+        "best_time",
+        "approximate_charge",
       ],
     },
     { arrayFormat: "bracket" }
@@ -137,6 +156,8 @@ const ApiResponseSchema = z.object({
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
       duration: z.string().nullable(),
+      best_time: z.string().nullable(),
+      approximate_charge: z.string().nullable(),
     })
     .nullable(),
 });

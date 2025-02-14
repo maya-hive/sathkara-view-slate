@@ -9,6 +9,13 @@ import { Gallery } from "@/components/Gallery";
 import Image from "next/image";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendar,
+  faMoneyBill,
+  faStopwatch,
+} from "@fortawesome/free-solid-svg-icons";
+import { PriceTag } from "@/components/PriceTag";
 
 export default async function Page({
   params,
@@ -24,7 +31,54 @@ export default async function Page({
 
   return (
     <article>
-      <Banner image={data.featured_image} />
+      <Banner image={data.featured_image}>
+        <div>
+          <h1 className="text-5xl font-bold">{data.name}</h1>
+          <div className="my-6 border-y border-cyan-600 py-4">
+            {(data.duration || data.best_time || data.approximate_charge) && (
+              <div className="flex flex-col md:flex-row md:space-x-4 md:items-center">
+                {data.duration && (
+                  <div className="border-b md:border-b-0 md:border-r border-cyan-600 pb-4 md:pb-0 md:pr-4">
+                    <div className="flex items-center gap-2 text-md font-medium uppercase">
+                      <FontAwesomeIcon icon={faStopwatch} />
+                      Duration
+                    </div>
+                    <div className="mt-1 text-lgt-1">{data.duration}</div>
+                  </div>
+                )}
+                {data.best_time && (
+                  <div className="border-b md:border-b-0 md:border-r border-cyan-600 py-4 md:py-0 md:pr-4">
+                    <div className="flex items-center gap-2 text-md font-medium uppercase">
+                      <FontAwesomeIcon icon={faCalendar} />
+                      Best Time
+                    </div>
+                    <div className="mt-1 text-lgt-1">{data.best_time}</div>
+                  </div>
+                )}
+                {data.approximate_charge && (
+                  <div className="pr-4">
+                    <div className="flex items-center gap-2 text-md font-medium uppercase">
+                      <FontAwesomeIcon icon={faMoneyBill} />
+                      Approx. Charge
+                    </div>
+                    <PriceTag
+                      className="block mt-1 text-lg"
+                      amount={data.approximate_charge}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <p className="mt-4">{data.short_description}</p>
+          <Link
+            href="/itineraries"
+            className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+          >
+            Plan Your Trip
+          </Link>
+        </div>
+      </Banner>
       <TopBar data={data} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row gap-12 md:pt-12">
@@ -92,7 +146,7 @@ export default async function Page({
 
 const Aside = ({}: z.infer<typeof ApiResponseSchema>) => (
   <div className="sticky top-10">
-    <div className="rounded-lg bg-primary p-6">
+    <div className="rounded-lg bg-blue-100 p-6">
       <div className="text-center border-b border-slate-400 px-4 pb-4">
         <h3 className="text-3xl text-slate-900 font-semibold">
           Ready to start your journey?
@@ -155,6 +209,8 @@ const fetchData = async (
         "name",
         "slug",
         "duration",
+        "best_time",
+        "approximate_charge",
         "featured_image",
         "gallery",
         "description",
@@ -200,6 +256,8 @@ const Schema = z.object({
   name: z.string(),
   slug: z.string(),
   duration: z.string().nullable(),
+  best_time: z.string().nullable(),
+  approximate_charge: z.string().nullable(),
   description: z.string().nullable(),
   short_description: z.string().nullable(),
   meta_title: z.string().nullable(),

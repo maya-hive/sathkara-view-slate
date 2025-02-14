@@ -246,7 +246,7 @@ const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Activities</h2>
+      <h2 className="text-xl font-bold mb-4">All Activities</h2>
       {activities && activities.length > 0 && (
         <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
           {activities?.map(({ slug }, idx) => (

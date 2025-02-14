@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { format } from "date-fns";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -14,11 +17,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 
 import {
   Command,
@@ -28,7 +32,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -81,6 +85,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
   return (
     <Form {...form}>
       <form
+        id="inquiry_form"
         onSubmit={form.handleSubmit(onSubmit)}
         className="mt-8 rounded-xl bg-indigo-50 p-6 space-y-6"
       >

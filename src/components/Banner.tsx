@@ -9,41 +9,71 @@ interface Props {
   image?: string | null;
   thumbnail?: string | null;
   content?: string | null;
+  children?: React.ReactNode;
 }
 
-export const Banner = ({ image, thumbnail, content }: Props) => {
-  if (!image) {
+export const Banner = (props: Props) => {
+  if (!props.image) {
     return null;
   }
 
-  return (
-    <div>
-      <div className="relative pt-[400px]">
-        <Image
-          className="xs:block absolute left-0 top-0 w-full h-full object-cover"
-          alt={"Banner image"}
-          src={image ?? placeholder}
-          placeholder={placeholder}
-          width={1400}
-          height={800}
-          priority={true}
-        />
-        {thumbnail && (
-          <Image
-            className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
-            alt={"Banner image"}
-            src={thumbnail ?? placeholder}
-            placeholder={placeholder}
-            width={400}
-            height={600}
-            priority={true}
-          />
-        )}
-      </div>
-      {content && <MetaBar content={content} />}
-    </div>
-  );
+  if (props.children) {
+    return <Content {...props} />;
+  }
+
+  return <Default {...props} />;
 };
+
+const Default = ({ image, thumbnail, content }: Props) => (
+  <div className="relative pt-[400px]">
+    <div>
+      <Media image={image} thumbnail={thumbnail} />
+    </div>
+    {content && <MetaBar content={content} />}
+  </div>
+);
+
+const Content = ({ image, children, thumbnail, content }: Props) => (
+  <div className="relative py-[100px]">
+    <div>
+      <Media image={image} thumbnail={thumbnail} />
+      {children && (
+        <>
+          <div className="container mx-auto relative w-full z-10 text-white flex justify-end">
+            <div className="md:max-w-[600px]">{children}</div>
+          </div>
+          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent to-cyan-500 to-[70%]"></div>
+        </>
+      )}
+    </div>
+    {content && <MetaBar content={content} />}
+  </div>
+);
+
+const Media = ({ image, thumbnail }: Props) => (
+  <>
+    <Image
+      className="xs:block absolute left-0 top-0 w-full h-full object-cover"
+      alt={"Banner image"}
+      src={image ?? placeholder}
+      placeholder={placeholder}
+      width={1400}
+      height={800}
+      priority={true}
+    />
+    {thumbnail && (
+      <Image
+        className="md:hidden absolute left-0 top-0 w-full h-full object-cover"
+        alt={"Banner image"}
+        src={thumbnail ?? placeholder}
+        placeholder={placeholder}
+        width={400}
+        height={600}
+        priority={true}
+      />
+    )}
+  </>
+);
 
 const MetaBar = ({ content }: { content: string }) => (
   <div className="bg-primary">

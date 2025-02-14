@@ -14,7 +14,7 @@ export default async function Home() {
   const { data } = await fetchData();
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -31,7 +31,7 @@ export default async function Home() {
       />
       <ItinerarySection
         items={data.featured_itineraries}
-        content={data.itinerary_content}
+        title={data.featured_itineraries_title}
       />
       <ItineraryDestinationSlider
         destinations={data.itineraries_by_destination_items}
@@ -65,8 +65,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "hero_video",
         "hero_filter_title",
         "itineraries",
-        "itinerary_content",
         "featured_itineraries",
+        "featured_itineraries_title",
         "destination_title",
         "destination_items",
         "itineraries_by_destination_title",
@@ -133,7 +133,7 @@ const ApiResponseSchema = z.object({
       destination_title: z.string().nullable(),
       destination_items: z.array(z.string()).nullable().optional(),
       featured_itineraries: z.array(z.string()).nullable().optional(),
-      itinerary_content: z.string().nullable().optional(),
+      featured_itineraries_title: z.string().nullable().optional(),
       itineraries_by_destination_title: z.string().nullable(),
       itineraries_by_destination_items: z
         .array(z.string())
