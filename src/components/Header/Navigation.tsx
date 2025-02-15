@@ -32,8 +32,8 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
       )}
       <div className="bg-white relative">
         <div className="container mx-auto text-black flex md:flex-none items-center px-4 md:px-0">
-          <div className="flex py-2 w-full items-center md:justify-center gap-5 text-md">
-            <div className="hidden md:flex gap-10 w-full justify-start items-center">
+          <div className="flex py-2 w-full items-center lg:justify-center gap-5 text-md">
+            <div className="hidden lg:flex gap-10 w-full justify-start items-center">
               {data.header_primary_left?.map(({ value, children }, idx) => (
                 <NavLink key={idx} value={value}>
                   {children}
@@ -49,7 +49,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               )}
             </div>
             <div className="min-w-[150px]">{children}</div>
-            <div className="hidden md:flex gap-10 w-full justify-end items-center">
+            <div className="hidden lg:flex gap-10 w-full justify-end items-center">
               {data.header_primary_right?.map(({ value, children }, idx) => (
                 <NavLink key={idx} value={value}>
                   {children}
@@ -122,14 +122,14 @@ const NavLink = ({ value, children }: NavLinkProps) => (
       </div>
 
       {children && children.length > 0 && (
-        <div className="absolute top-full left-0 min-w-[250px] rounded bg-slate-200 z-50 flex flex-col gap-2 p-2 opacity-0 invisible peer-hover:opacity-100 peer-hover:visible hover:opacity-100 hover:visible transition-opacity duration-200 shadow-lg">
+        <div className="absolute top-full left-0 min-w-[250px] rounded bg-slate-100 z-50 flex flex-col gap-2 p-2 opacity-0 invisible peer-hover:opacity-100 peer-hover:visible hover:opacity-100 hover:visible transition-opacity duration-200 shadow-xl">
           {children.map(
             ({ value }, idx) =>
               value && (
                 <Link
                   key={idx}
                   href={value.slug ?? ""}
-                  className="block hover:bg-slate-300 py-1 px-2 rounded"
+                  className="block py-1 px-2 rounded text-md"
                 >
                   {value.title}
                 </Link>

@@ -8,12 +8,12 @@ interface Props {
 }
 
 export const SearchForm = ({ title }: Props) => (
-  <div className="rounded-xl shadow-lg bg-white py-6 px-12 flex flex-col md:flex-row gap-4 items-center">
-    <h2 className="text-lg font-bold md:max-w-[120px] leading-tight">
+  <div className="rounded-xl shadow-lg bg-white py-6 px-12 flex flex-col xl:flex-row gap-4 items-center">
+    <h2 className="text-lg font-bold xl:max-w-[120px] leading-tight">
       {title ?? "Search"}
     </h2>
-    <div className="w-full flex flex-col md:flex-row gap-3">
-      <div className="flex-1 w-full md:min-w-[500px]">
+    <div className="w-full flex flex-col xl:flex-row gap-3">
+      <div className="flex-1 w-full xl:min-w-[500px]">
         <SearchItienraries />
       </div>
       <div className="flex-1 w-full">
@@ -22,7 +22,7 @@ export const SearchForm = ({ title }: Props) => (
       <div className="flex-1 w-full">
         <SearchItineraryDurations />
       </div>
-      <div className="flex-1 w-full md:max-w-[200px]">
+      <div className="flex-1 w-full xl:max-w-[200px]">
         <Link href="/itineraries">
           <button className="rounded-md w-full bg-secondary py-4 px-8 text-md font-semibold uppercase text-white">
             Search

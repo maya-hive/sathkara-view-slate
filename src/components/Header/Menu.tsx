@@ -31,7 +31,7 @@ export const Menu = ({ links }: Props) => {
   }, [pathname]);
 
   return (
-    <div className="flex md:hidden">
+    <div className="flex lg:hidden">
       <span onClick={() => setIsOpen(!isOpen)}>
         <FontAwesomeIcon
           icon={faBars}

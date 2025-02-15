@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -6,7 +7,6 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { Banner } from "@/components/Banner";
 import { CityCompactCard } from "@/components/City/CompactCard";
 import { Gallery } from "@/components/Gallery";
-import Image from "next/image";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
