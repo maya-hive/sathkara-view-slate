@@ -490,8 +490,8 @@ const Schema = z.object({
     .array(
       z.object({
         name: z.string(),
-        content: z.string().nullable(),
-        image: z.string().nullable(),
+        content: z.string().nullable().optional(),
+        image: z.string().nullable().optional(),
         cities: z
           .array(
             z.object({
@@ -499,7 +499,8 @@ const Schema = z.object({
               slug: z.string(),
             })
           )
-          .nullable(),
+          .nullable()
+          .optional(),
         accommodations: z
           .array(
             z.object({
@@ -507,7 +508,8 @@ const Schema = z.object({
               slug: z.string(),
             })
           )
-          .nullable(),
+          .nullable()
+          .optional(),
         activities: z
           .array(
             z.object({
@@ -515,7 +517,8 @@ const Schema = z.object({
               slug: z.string(),
             })
           )
-          .nullable(),
+          .nullable()
+          .optional(),
       })
     )
     .nullable()
