@@ -16,7 +16,7 @@ import {
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { PriceTag } from "@/components/PriceTag";
-import { ActivityInquiryForm } from "@/components/Activity/ActivityForm";
+import { ActivityInquiryForm } from "@/components/Activity/InquiryForm";
 
 export default async function Page({
   params,
@@ -158,7 +158,7 @@ const Aside = ({}: z.infer<typeof ApiResponseSchema>) => (
         </p>
       </div>
       <Link
-        href="#"
+        href="#inquiry_form"
         className="mt-4 block rounded bg-black text-white p-3 uppercase text-md text-center font-medium"
       >
         Plan your trip
