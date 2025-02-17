@@ -140,7 +140,7 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
           About The Journey
         </Link>
         <Link
-          href="#"
+          href={"/itineraries/" + data.slug + "#inquiry_form"}
           className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center flex-1"
         >
           Start Your <br />
