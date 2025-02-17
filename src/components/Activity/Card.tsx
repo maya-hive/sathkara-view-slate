@@ -5,7 +5,6 @@ import Link from "next/link";
 import { z } from "zod";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PriceTag } from "@/components/PriceTag";
 import { shimmer } from "@/components/Shimmer";
 import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 
@@ -61,14 +60,14 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
           )}
         </div>
         {data.approximate_charge && (
-          <div className="mt-2 rounded bg-yellow-300 text-black p-4 flex justify-between font-bold">
+          <div className="mt-2 rounded bg-white text-black p-4 flex justify-between font-bold">
             <div className="flex border-yellow-500 px-3">
               <div className="pr-4">
                 <p className="text-xs">Approximate Charge</p>
-                <PriceTag
-                  amount={data.approximate_charge}
-                  className="text-3xl"
-                />
+                <span className="flex items-center gap-2">
+                  <span className="text-2xl">{data.approximate_charge}</span>
+                  <p className="text-sm">Price Per Person</p>
+                </span>
               </div>
             </div>
           </div>
