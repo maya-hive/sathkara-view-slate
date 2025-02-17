@@ -83,7 +83,7 @@ export default async function Page({
       <TopBar data={data} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-          <div className="md:min-w-[calc(100%-400px)] md:w-[calc(100%-400px)]">
+          <div className="md:w-[calc(100%-400px)]">
             <div className="mt-8">
               <div className="mt-4">
                 {data.description && (
@@ -93,6 +93,7 @@ export default async function Page({
                     </h2>
                     <div
                       dangerouslySetInnerHTML={{ __html: data.description }}
+                      className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:mt-2 [&>ul]:list-disc [&>ul]:text-[15px]"
                     />
                   </div>
                 )}

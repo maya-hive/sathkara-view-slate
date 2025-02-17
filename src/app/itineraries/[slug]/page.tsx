@@ -38,7 +38,7 @@ export default async function Page({
       <div className="container mx-auto">
         <Tabs defaultValue={tabs[0].name}>
           <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-            <div className="md:min-w-[calc(100%-400px)] md:w-[calc(100%-400px)]">
+            <div className="md:w-[calc(100%-400px)]">
               <div className="mt-8">
                 <TabsList className="p-0 flex-wrap gap-2">
                   {tabs.map(({ name, title }, idx) => (
@@ -78,7 +78,7 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
         <h2 className="text-xl font-bold mb-4">Tour Overview</h2>
         <div
           dangerouslySetInnerHTML={{ __html: data.overview }}
-          className="[&>p]:text-md [&>p]:font-medium"
+          className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:mt-2 [&>ul]:list-disc [&>ul]:text-[15px]"
         />
       </div>
     )}
