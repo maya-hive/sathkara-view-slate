@@ -19,9 +19,9 @@ import { ActivityCard } from "@/components/Activity/Card";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ itinerary: string }>;
 }) {
-  const slug = (await params).slug;
+  const slug = (await params).itinerary;
   const { data } = await fetchData(slug);
 
   if (!data) {

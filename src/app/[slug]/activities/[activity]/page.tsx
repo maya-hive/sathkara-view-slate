@@ -21,9 +21,9 @@ import { ActivityInquiryForm } from "@/components/Activity/InquiryForm";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ activity: string }>;
 }) {
-  const slug = (await params).slug;
+  const slug = (await params).activity;
   const { data } = await fetchData(slug);
 
   if (!data) {
@@ -198,7 +198,7 @@ export async function generateStaticParams() {
   const { data } = await response.json();
 
   return data.map(({ slug }: { slug: string }) => ({
-    slug: slug,
+    activity: slug,
   }));
 }
 
