@@ -198,12 +198,12 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                       </div>
                     </div>
                   )}
-                  {cities && cities.length > 0 && (
+                  {accommodations && accommodations.length > 0 && (
                     <div className="mt-3">
-                      <div className="text-md font-medium">Cities</div>
+                      <div className="text-md font-medium">Accommodations</div>
                       <div className="mt-1 grid grid-cols-2 xl:grid-cols-3 gap-2">
-                        {cities?.map(({ slug }, idx) => (
-                          <CityCompactCard
+                        {accommodations?.map(({ slug }, idx) => (
+                          <AccommodationCompactCard
                             key={idx}
                             slug={slug}
                             layout="horizontal"
@@ -212,12 +212,12 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                       </div>
                     </div>
                   )}
-                  {accommodations && accommodations.length > 0 && (
+                  {cities && cities.length > 0 && (
                     <div className="mt-3">
-                      <div className="text-md font-medium">Accommodations</div>
-                      <div className="mt-1 grid grid-cols-2 xl:grid-cols-3 gap-2">
-                        {accommodations?.map(({ slug }, idx) => (
-                          <AccommodationCompactCard
+                      <div className="text-md font-medium">Cities</div>
+                      <div className="mt-1 flex gap-2">
+                        {cities?.map(({ slug }, idx) => (
+                          <CityCompactCard
                             key={idx}
                             slug={slug}
                             layout="horizontal"

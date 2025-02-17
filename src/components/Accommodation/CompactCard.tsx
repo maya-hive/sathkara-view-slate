@@ -59,7 +59,7 @@ const CardLayout = ({ data }: { data: Accommodation }) => (
 
 const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
   <div className="rounded-md overflow-hidden">
-    <div className="flex text-white relative h-full py-[20px] pl-4 z-10">
+    <div className="flex text-white relative h-full pt-[60px] pb-[20px] px-4 z-10">
       <div className="relative z-20">
         <h3 className="text-md font-semibold">{data.name}</h3>
       </div>
@@ -72,7 +72,7 @@ const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
         width={200}
         height={100}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-l from-transparent to-sky-600"></div>
+      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-sky-600"></div>
     </div>
   </div>
 );

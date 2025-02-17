@@ -4,6 +4,7 @@ import Image from "next/image";
 import { z } from "zod";
 
 import { shimmer } from "../Shimmer";
+import Link from "next/link";
 
 interface Props {
   slug: string;
@@ -55,23 +56,12 @@ const CardLayout = ({ data }: { data: City }) => (
 );
 
 const CardLayoutHorizontal = ({ data }: { data: City }) => (
-  <div className="rounded-md overflow-hidden">
-    <div className="flex text-white relative h-full py-[20px] pl-4 z-10">
-      <div className="relative z-20">
-        <h3 className="text-md font-semibold">{data.name}</h3>
-      </div>
-      <Image
-        className="w-full h-full object-cover absolute top-0 left-0 -z-10"
-        src={data.listing_image ?? data.featured_image}
-        alt={data.name}
-        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-        priority={false}
-        width={200}
-        height={100}
-      />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-l from-transparent to-sky-600"></div>
-    </div>
-  </div>
+  <Link
+    href={"/itineraries?city=" + data.slug}
+    className="rounded-md border border-slate-900"
+  >
+    <h3 className="text-sm font-semibold py-1 px-6">{data.name}</h3>
+  </Link>
 );
 
 const fetchData = async (
