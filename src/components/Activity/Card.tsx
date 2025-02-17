@@ -7,6 +7,7 @@ import { z } from "zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shimmer } from "@/components/Shimmer";
 import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import { currencySymbol } from "@/components/PriceTag";
 
 interface Props {
   slug: string;
@@ -65,7 +66,9 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               <div className="pr-4">
                 <p className="text-xs">Approximate Charge</p>
                 <span className="flex items-center gap-2">
-                  <span className="text-2xl">{data.approximate_charge}</span>
+                  <span className="text-2xl">
+                    {currencySymbol} {data.approximate_charge}
+                  </span>
                   <p className="text-sm">Price Per Person</p>
                 </span>
               </div>

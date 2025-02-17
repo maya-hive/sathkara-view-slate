@@ -7,15 +7,20 @@ interface Props extends ComponentPropsWithoutRef<"span"> {
 export const PriceTag = ({ amount, ...props }: Props) => {
   if (!amount) return null;
 
-  const price = formatCurrency(parseFloat(amount));
+  const price = numberFormat(parseFloat(amount));
 
-  return <span {...props}>{price}</span>;
+  return (
+    <span {...props}>
+      {currencySymbol} {price}
+    </span>
+  );
 };
 
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
+export const currencySymbol = "$";
+
+const numberFormat = (amount: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "decimal",
     currency: "USD",
     maximumFractionDigits: 0,
   }).format(amount);
-};
