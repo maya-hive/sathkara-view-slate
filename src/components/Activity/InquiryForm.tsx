@@ -32,19 +32,6 @@ const formSchema = z.object({
 export const ActivityInquiryForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      country: "",
-      arrivalDate: new Date(),
-      departureDate: new Date(),
-      adults: 0,
-      children: 0,
-      tripType: "",
-      referralSource: "",
-      message: "",
-    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -140,7 +127,7 @@ export const ActivityInquiryForm = () => {
               <FormControl>
                 <Textarea
                   placeholder="Message"
-                  className="h-14 font-semibold"
+                  className="min-h-24 font-semibold"
                   {...field}
                 />
               </FormControl>

@@ -39,7 +39,10 @@ export const ActivityCompactCard = async ({
 };
 
 const CardLayout = ({ data }: { data: Activity }) => (
-  <div className="rounded-md overflow-hidden">
+  <Link
+    href={"/activities/" + data.slug}
+    className="rounded-md overflow-hidden"
+  >
     <div className="relative h-full pt-[180px] flex items-end text-white">
       <div className="relative z-20 p-8">
         <h3 className="text-2xl font-semibold">{data.name}</h3>
@@ -55,7 +58,7 @@ const CardLayout = ({ data }: { data: Activity }) => (
       />
       <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-sky-600"></div>
     </div>
-  </div>
+  </Link>
 );
 
 const CardLayoutHorizontal = ({ data }: { data: Activity }) => (

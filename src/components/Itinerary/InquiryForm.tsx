@@ -60,19 +60,6 @@ type ItineraryCategory = {
 export const ItineraryInquiryForm = ({}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      country: "",
-      arrivalDate: new Date(),
-      departureDate: new Date(),
-      adults: 0,
-      children: 0,
-      tripType: "",
-      referralSource: "",
-      message: "",
-    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -198,7 +185,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
-                            <span>Pick a date</span>
+                            <span>Pick an Arrival Date</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
@@ -240,7 +227,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
-                            <span>Pick a date</span>
+                            <span>Pick a Departure Date</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
@@ -271,6 +258,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
                 <FormControl>
                   <Input
                     type="number"
+                    placeholder="Number of Adults"
                     min={1}
                     className="h-14 font-semibold"
                     {...field}
@@ -288,6 +276,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
                 <FormControl>
                   <Input
                     type="number"
+                    placeholder="Number of Children"
                     min={0}
                     className="h-14 font-semibold"
                     {...field}
@@ -384,7 +373,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
               <FormControl>
                 <Textarea
                   placeholder="Message"
-                  className="h-14 font-semibold"
+                  className="min-h-24 font-semibold"
                   {...field}
                 />
               </FormControl>

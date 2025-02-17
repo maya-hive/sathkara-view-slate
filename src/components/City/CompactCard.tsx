@@ -36,7 +36,10 @@ export const CityCompactCard = async ({ slug, layout = "default" }: Props) => {
 };
 
 const CardLayout = ({ data }: { data: City }) => (
-  <div className="rounded-md overflow-hidden">
+  <Link
+    href={"/itineraries?city=" + data.slug}
+    className="rounded-md overflow-hidden"
+  >
     <div className="relative h-full pt-[280px] flex items-end text-white">
       <div className="relative z-20 p-8">
         <h3 className="text-2xl font-semibold">{data.name}</h3>
@@ -52,7 +55,7 @@ const CardLayout = ({ data }: { data: City }) => (
       />
       <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
     </div>
-  </div>
+  </Link>
 );
 
 const CardLayoutHorizontal = ({ data }: { data: City }) => (
