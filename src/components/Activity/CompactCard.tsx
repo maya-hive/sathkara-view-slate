@@ -59,7 +59,10 @@ const CardLayout = ({ data }: { data: Activity }) => (
 );
 
 const CardLayoutHorizontal = ({ data }: { data: Activity }) => (
-  <Link href={"activities/" + data.slug} className="rounded-md overflow-hidden">
+  <Link
+    href={"/activities/" + data.slug}
+    className="rounded-md overflow-hidden"
+  >
     <div className="flex text-white relative h-full pt-[80px] pb-[20px] px-4 z-10">
       <div className="relative z-20">
         <h3 className="text-md font-semibold">{data.name}</h3>
