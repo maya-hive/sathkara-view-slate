@@ -1,61 +1,61 @@
-import { toBase64 } from "@/utils/base64";
 import queryString from "query-string";
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 
-import { shimmer } from "../Shimmer";
+import { shimmer } from "@/components/Shimmer";
+import { toBase64 } from "@/utils/base64";
 
 interface Props {
   slug: string;
 }
 
-type Destination = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-  listing_image?: string | null;
-};
-
 export const DestinationCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return <CardLayout data={data} />;
 };
 
-const CardLayout = ({ data }: { data: Destination }) => (
-  <div className="rounded-md overflow-hidden">
-    <div className="relative h-full pt-[300px] flex items-end text-white">
-      <div className="relative z-20 p-8">
-        <h3 className="text-4xl font-semibold">{data.name}</h3>
-        <p className="mt-1">Tour Options</p>
-        <Link
-          href={"/itineraries/" + data.slug}
-          className="mt-6 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase"
-        >
-          Plan Your Trip
-        </Link>
+const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data) {
+    return null;
+  }
+
+  const slug = `/${data.slug}/itineraries`;
+
+  return (
+    <div className="rounded-md overflow-hidden">
+      <div className="relative h-full pt-[300px] flex items-end text-white">
+        <div className="relative z-20 p-8">
+          <h3 className="text-4xl font-semibold">{data.name}</h3>
+          <p className="mt-1">Tour Options</p>
+          <Link
+            href={slug}
+            className="mt-6 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase"
+          >
+            Plan Your Trip
+          </Link>
+        </div>
+        <Image
+          className="w-full h-full object-cover absolute top-0 left-0 -z-10"
+          src={data.listing_image ?? data.featured_image}
+          alt={data.name}
+          placeholder={`data:image/svg+xml;base64,${toBase64(
+            shimmer(700, 475)
+          )}`}
+          priority={false}
+          width={500}
+          height={400}
+        />
+        <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-black"></span>
       </div>
-      <Image
-        className="w-full h-full object-cover absolute top-0 left-0 -z-10"
-        src={data.listing_image ?? data.featured_image}
-        alt={data.name}
-        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-        priority={false}
-        width={500}
-        height={400}
-      />
-      <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-black"></span>
     </div>
-  </div>
-);
+  );
+};
 
 const fetchData = async (
   slug: string

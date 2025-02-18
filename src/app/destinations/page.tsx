@@ -1,29 +1,20 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
+import { DestinationListing } from "@/components/Destination/Listing/Main";
 
-type Args = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
-  const data = await fetchData("1", slug);
+export default async function Page() {
+  const data = await fetchData("1");
 
   if (!data) {
     return null;
   }
 
-  return <ItineraryListing {...data} />;
+  return <DestinationListing {...data} />;
 }
 
 const fetchData = async (
-  id: string,
-  destination: string
+  id: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
@@ -32,20 +23,15 @@ const fetchData = async (
         "name",
         "status",
         "slug",
-        "sale_price",
         "featured_image",
         "short_description",
-        "duration",
-        "price",
-        "destination",
       ],
-      by_destination: destination,
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/destination/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],
@@ -72,25 +58,17 @@ const fetchData = async (
   }
 };
 
-const Schema = z.object({
+const ApiSchema = z.object({
   id: z.number(),
   status: z.number(),
   name: z.string(),
   slug: z.string(),
   short_description: z.string(),
-  price: z.string(),
   featured_image: z.string(),
-  sale_price: z.string().nullable(),
-  duration: z.string().nullable(),
-  destination: z
-    .object({
-      name: z.string(),
-    })
-    .nullable(),
 });
 
 const ApiResponseSchema = z.object({
-  data: z.array(Schema).nullable(),
+  data: z.array(ApiSchema).nullable(),
   current_page: z.number().nullable(),
   last_page: z.number().nullable(),
   links: z

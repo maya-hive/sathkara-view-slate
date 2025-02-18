@@ -1,72 +1,51 @@
-import { toBase64 } from "@/utils/base64";
 import queryString from "query-string";
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 
-import { shimmer } from "../Shimmer";
+import { shimmer } from "@/components/Shimmer";
 import { CityName } from "@/components/City/Name";
-import { PriceTag } from "../PriceTag";
+import { PriceTag } from "@/components/PriceTag";
+import { toBase64 } from "@/utils/base64";
 
 interface Props {
   slug: string;
 }
 
-type Itinerary = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  price: string;
-  price_description: string | null;
-  featured_image: string;
-  listing_image?: string | null;
-  sale_price?: string | null;
-  duration?: string | null;
-  days_count_html?: string | null;
-  destination?: {
-    name: string;
-    slug: string;
-    color: string;
-  } | null;
-  featured_cities?: string[] | null;
-  tags: Tag[] | null;
-};
-
-type Tag = {
-  name: string;
-  slug: string;
-};
-
 export const ItineraryCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return <CardLayout data={data} />;
 };
 
-const CardLayout = ({ data }: { data: Itinerary }) => (
-  <div className="border rounded-lg overflow-hidden flex flex-col justify-between">
-    <div className="relative pt-[260px]">
-      <Link href={"/itineraries/" + data.slug}>
-        <Image
-          className="w-full h-full object-cover absolute top-0 left-0"
-          src={data.listing_image ?? data.featured_image}
-          alt={data.name}
-          placeholder={`data:image/svg+xml;base64,${toBase64(
-            shimmer(700, 475)
-          )}`}
-          priority={false}
-          width={500}
-          height={400}
-        />
-      </Link>
-      <div className="p-4">
-        {data.destination && (
+const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data) {
+    return null;
+  }
+
+  const slug = `/${data.destination.slug}/itineraries/${data.slug}`;
+
+  return (
+    <div className="border rounded-lg overflow-hidden flex flex-col justify-between">
+      <div className="relative pt-[260px]">
+        <Link href={slug}>
+          <Image
+            className="w-full h-full object-cover absolute top-0 left-0"
+            src={data.listing_image ?? data.featured_image}
+            alt={data.name}
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(700, 475)
+            )}`}
+            priority={false}
+            width={500}
+            height={400}
+          />
+        </Link>
+        <div className="p-4">
           <div className="absolute bottom-0 right-5 z-10">
             <h4
               className="rounded-t text-white text-sm font-semibold w-fit py-2 px-5 uppercase"
@@ -75,104 +54,100 @@ const CardLayout = ({ data }: { data: Itinerary }) => (
               {data.destination.name}
             </h4>
           </div>
-        )}
+        </div>
       </div>
-    </div>
-    <div className="p-4 flex flex-col h-full">
-      <div className="flex flex-col h-full">
-        <Link href={"/itineraries/" + data.slug}>
-          <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
-        </Link>
-        {data.featured_cities && data.featured_cities.length > 0 && (
-          <div className="border-y py-3">
-            <div className="flex items-center gap-2">
-              <MapIcon />
-              <p className="text-sm font-semibold inline-flex gap-1">
-                {data.featured_cities.map((city, idx) => (
-                  <span key={idx}>
-                    <CityName slug={city} />,
+      <div className="p-4 flex flex-col h-full">
+        <div className="flex flex-col h-full">
+          <Link href={slug}>
+            <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
+          </Link>
+          {data.featured_cities && data.featured_cities.length > 0 && (
+            <div className="border-y py-3">
+              <div className="flex items-center gap-2">
+                <svg
+                  width="16"
+                  height="17"
+                  viewBox="0 0 16 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13 7.81818C13 11.9545 7.5 15.5 7.5 15.5C7.5 15.5 2 11.9545 2 7.81818C2 6.40771 2.57946 5.05501 3.61091 4.05766C4.64236 3.06031 6.04131 2.5 7.5 2.5C8.95869 2.5 10.3576 3.06031 11.3891 4.05766C12.4205 5.05501 13 6.40771 13 7.81818Z"
+                    stroke="#FFC60D"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M7.5 9.5C8.32843 9.5 9 8.82843 9 8C9 7.17157 8.32843 6.5 7.5 6.5C6.67157 6.5 6 7.17157 6 8C6 8.82843 6.67157 9.5 7.5 9.5Z"
+                    stroke="#FFC60D"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p className="text-sm font-semibold inline-flex gap-1">
+                  {data.featured_cities.map((city, idx) => (
+                    <span key={idx}>
+                      <CityName slug={city} />,
+                    </span>
+                  ))}
+                  and More
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="border-b py-3 flex flex-col flex-1">
+            <p className="text-sm font-semibold text-neutral-700">
+              {data.short_description}
+            </p>
+            <div className="mt-2 flex gap-3">
+              {data?.tags?.map(({ name, slug }, idx) => (
+                <Link key={idx} href={`/itineraries?tags[]=${slug}`}>
+                  <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
+                    {name}
                   </span>
-                ))}
-                {"and More"}
-              </p>
+                </Link>
+              ))}
             </div>
           </div>
-        )}
-        <div className="border-b py-3 flex flex-col flex-1">
-          <p className="text-sm font-semibold text-neutral-700">
-            {data.short_description}
-          </p>
-          <div className="mt-2 flex gap-3">
-            {data?.tags?.map(({ name, slug }, idx) => (
-              <Link key={idx} href={`/itineraries?tags[]=${slug}`}>
-                <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
-                  {name}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between font-bold">
-          <div className="px-2 text-lg min-w-[100px]">
-            {data?.days_count_html && (
-              <div
-                dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-                className="font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
-              />
-            )}
-          </div>
-          <div className="flex border-l border-yellow-500 px-3">
-            <div>
-              <p className="text-3xl">
-                <PriceTag amount={data.price} />
-              </p>
-              <p className="text-xs">{data.price_description}</p>
+          <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between font-bold">
+            <div className="px-2 text-lg min-w-[100px]">
+              {data?.days_count_html && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
+                  className="font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+                />
+              )}
+            </div>
+            <div className="flex border-l border-yellow-500 px-3">
+              <div>
+                <p className="text-3xl">
+                  <PriceTag amount={data.price} />
+                </p>
+                <p className="text-xs">{data.price_description}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
-        <Link
-          href={"/itineraries/" + data.slug}
-          className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-300 p-3 flex flex-col justify-center items-center flex-1"
-        >
-          Learn More <br />
-          About The Journey
-        </Link>
-        <Link
-          href={"/itineraries/" + data.slug + "#inquiry_form"}
-          className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center flex-1"
-        >
-          Start Your <br />
-          Journey
-        </Link>
+        <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
+          <Link
+            href={slug}
+            className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-300 p-3 flex flex-col justify-center items-center flex-1"
+          >
+            Learn More <br />
+            About The Journey
+          </Link>
+          <Link
+            href={slug + "#inquiry_form"}
+            className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center flex-1"
+          >
+            Start Your <br />
+            Journey
+          </Link>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-const MapIcon = () => (
-  <svg
-    width="16"
-    height="17"
-    viewBox="0 0 16 17"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M13 7.81818C13 11.9545 7.5 15.5 7.5 15.5C7.5 15.5 2 11.9545 2 7.81818C2 6.40771 2.57946 5.05501 3.61091 4.05766C4.64236 3.06031 6.04131 2.5 7.5 2.5C8.95869 2.5 10.3576 3.06031 11.3891 4.05766C12.4205 5.05501 13 6.40771 13 7.81818Z"
-      stroke="#FFC60D"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M7.5 9.5C8.32843 9.5 9 8.82843 9 8C9 7.17157 8.32843 6.5 7.5 6.5C6.67157 6.5 6 7.17157 6 8C6 8.82843 6.67157 9.5 7.5 9.5Z"
-      stroke="#FFC60D"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+  );
+};
 
 const fetchData = async (
   slug: string
@@ -243,13 +218,11 @@ const ApiResponseSchema = z.object({
       sale_price: z.string().nullable(),
       duration: z.string().nullable(),
       days_count_html: z.string().nullable(),
-      destination: z
-        .object({
-          name: z.string(),
-          slug: z.string(),
-          color: z.string(),
-        })
-        .nullable(),
+      destination: z.object({
+        name: z.string(),
+        slug: z.string(),
+        color: z.string(),
+      }),
       tags: z
         .array(z.object({ name: z.string(), slug: z.string() }))
         .nullable(),

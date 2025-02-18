@@ -1,13 +1,13 @@
-import { toBase64 } from "@/utils/base64";
 import queryString from "query-string";
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 
+import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shimmer } from "@/components/Shimmer";
-import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { currencySymbol } from "@/components/PriceTag";
+import { toBase64 } from "@/utils/base64";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -29,11 +29,13 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
+  const slug = `/${data.destination.slug}/activities/${data.slug}`;
+
   return (
     <div className="relative pt-[260px] border rounded-lg overflow-hidden flex flex-col justify-between">
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
         <div className="border-b">
-          <Link href={"/activities/" + data.slug}>
+          <Link href={slug}>
             <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
           </Link>
         </div>
@@ -84,7 +86,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         )}
         <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
           <Link
-            href={"/activities/" + data.slug}
+            href={slug}
             className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center"
           >
             Learn More About The Activity
@@ -122,6 +124,7 @@ const fetchData = async (
         "best_time",
         "approximate_charge",
         "charge_description",
+        "destination",
       ],
     },
     { arrayFormat: "bracket" }
@@ -169,6 +172,11 @@ const ApiResponseSchema = z.object({
       best_time: z.string().nullable(),
       approximate_charge: z.string().nullable(),
       charge_description: z.string().nullable().optional(),
+      destination: z.object({
+        name: z.string(),
+        slug: z.string(),
+        color: z.string(),
+      }),
     })
     .nullable(),
 });

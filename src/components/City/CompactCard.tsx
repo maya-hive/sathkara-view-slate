@@ -11,16 +11,6 @@ interface Props {
   layout?: "default" | "horizontal";
 }
 
-type City = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-  listing_image?: string | null;
-};
-
 export const CityCompactCard = async ({ slug, layout = "default" }: Props) => {
   const { data } = await fetchData(slug);
 
@@ -35,37 +25,49 @@ export const CityCompactCard = async ({ slug, layout = "default" }: Props) => {
   return <CardLayout data={data} />;
 };
 
-const CardLayout = ({ data }: { data: City }) => (
-  <Link
-    href={"/itineraries?city=" + data.slug}
-    className="rounded-md overflow-hidden"
-  >
-    <div className="relative h-full pt-[280px] flex items-end text-white">
-      <div className="relative z-20 p-8">
-        <h3 className="text-2xl font-semibold">{data.name}</h3>
-      </div>
-      <Image
-        className="w-full h-full object-cover absolute top-0 left-0 -z-10"
-        src={data.listing_image ?? data.featured_image}
-        alt={data.name}
-        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
-        priority={false}
-        width={500}
-        height={400}
-      />
-      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
-    </div>
-  </Link>
-);
+const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data) {
+    return null;
+  }
 
-const CardLayoutHorizontal = ({ data }: { data: City }) => (
-  <Link
-    href={"/itineraries?city=" + data.slug}
-    className="rounded-md border border-slate-900"
-  >
-    <h3 className="text-sm font-semibold py-1 px-6">{data.name}</h3>
-  </Link>
-);
+  const slug = `/${data.destination.slug}/itineraries?city=${data.slug}`;
+
+  return (
+    <Link href={slug} className="rounded-md overflow-hidden">
+      <div className="relative h-full pt-[280px] flex items-end text-white">
+        <div className="relative z-20 p-8">
+          <h3 className="text-2xl font-semibold">{data.name}</h3>
+        </div>
+        <Image
+          className="w-full h-full object-cover absolute top-0 left-0 -z-10"
+          src={data.listing_image ?? data.featured_image}
+          alt={data.name}
+          placeholder={`data:image/svg+xml;base64,${toBase64(
+            shimmer(700, 475)
+          )}`}
+          priority={false}
+          width={500}
+          height={400}
+        />
+        <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
+      </div>
+    </Link>
+  );
+};
+
+const CardLayoutHorizontal = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data) {
+    return null;
+  }
+
+  const slug = `/${data.destination.slug}/itineraries?city=${data.slug}`;
+
+  return (
+    <Link href={slug} className="rounded-md border border-slate-900">
+      <h3 className="text-sm font-semibold py-1 px-6">{data.name}</h3>
+    </Link>
+  );
+};
 
 const fetchData = async (
   slug: string
@@ -80,6 +82,7 @@ const fetchData = async (
         "featured_image",
         "listing_image",
         "short_description",
+        "destination",
       ],
     },
     { arrayFormat: "bracket" }
@@ -123,6 +126,11 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
+      destination: z.object({
+        name: z.string(),
+        slug: z.string(),
+        color: z.string(),
+      }),
     })
     .nullable(),
 });
