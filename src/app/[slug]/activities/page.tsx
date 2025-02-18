@@ -1,17 +1,20 @@
 import queryString from "query-string";
 import { z } from "zod";
 
+import { generateStaticParams } from "./page/[id]/page";
 import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return <ActivityListing {...data} />;
 }
+
+export { generateStaticParams };
 
 const fetchData = async (
   id: string

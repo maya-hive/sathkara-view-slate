@@ -1,6 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
+import { generateStaticParams } from "./page/[id]/page";
 import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
 
 type Args = {
@@ -20,6 +21,8 @@ export default async function Page({ params }: Args) {
 
   return <ItineraryListing {...data} />;
 }
+
+export { generateStaticParams };
 
 const fetchData = async (
   id: string,
