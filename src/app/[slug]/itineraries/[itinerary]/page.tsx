@@ -125,22 +125,24 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
       <div className="mt-12">
         <h3 className="text-lg font-semibold mb-4">Gallery</h3>
         <Gallery>
-          {data.gallery.map((image, idx) => (
-            <Image
-              key={idx}
-              src={
-                image ??
-                `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
-              }
-              placeholder={`data:image/svg+xml;base64,${toBase64(
-                shimmer(700, 475)
-              )}`}
-              alt={`Gallery image ${idx}`}
-              width={800}
-              height={500}
-              priority={false}
-            />
-          ))}
+          {(Array.isArray(data.gallery) ? data.gallery : [data.gallery]).map(
+            (image, idx) => (
+              <Image
+                key={idx}
+                src={
+                  image ??
+                  `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+                }
+                placeholder={`data:image/svg+xml;base64,${toBase64(
+                  shimmer(700, 475)
+                )}`}
+                alt={`Gallery image ${idx}`}
+                width={800}
+                height={500}
+                priority={false}
+              />
+            )
+          )}
         </Gallery>
       </div>
     )}
@@ -477,7 +479,10 @@ const Schema = z.object({
   featured_image: z.string(),
   featured_image_mobile: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  gallery: z.array(z.string()).nullable().optional(),
+  gallery: z
+    .union([z.array(z.string()).nullable(), z.string().nullable()])
+    .nullable()
+    .optional(),
   tags: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
   destination: z
     .object({

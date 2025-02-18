@@ -113,7 +113,10 @@ export default async function Page({
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
                     <Gallery>
-                      {data.gallery.map((image, idx) => (
+                      {(Array.isArray(data.gallery)
+                        ? data.gallery
+                        : [data.gallery]
+                      ).map((image, idx) => (
                         <Image
                           key={idx}
                           src={
@@ -267,7 +270,10 @@ const Schema = z.object({
   meta_description: z.string().nullable(),
   featured_image: z.string(),
   listing_image: z.string().nullable().optional(),
-  gallery: z.array(z.string()).nullable().optional(),
+  gallery: z
+    .union([z.array(z.string()).nullable(), z.string().nullable()])
+    .nullable()
+    .optional(),
   cities: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
 });
 
