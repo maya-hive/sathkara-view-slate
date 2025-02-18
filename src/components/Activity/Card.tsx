@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { shimmer } from "@/components/Shimmer";
 import { faCalendar, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { currencySymbol } from "@/components/PriceTag";
+import { cn } from "@/lib/utils";
 
 interface Props {
   slug: string;
@@ -65,11 +66,17 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
             <div className="flex border-yellow-500 px-3">
               <div className="pr-4">
                 <p className="text-xs">Approximate Charge</p>
-                <span className="flex items-center gap-2">
+                <span
+                  className={cn(
+                    "flex items-center gap-2",
+                    String(data.approximate_charge).length > 10 &&
+                      "flex-col items-start gap-0"
+                  )}
+                >
                   <span className="text-2xl">
                     {currencySymbol} {data.approximate_charge}
                   </span>
-                  <p className="text-sm">Price Per Person</p>
+                  <p className="text-sm">{data.charge_description}</p>
                 </span>
               </div>
             </div>
@@ -114,6 +121,7 @@ const fetchData = async (
         "duration",
         "best_time",
         "approximate_charge",
+        "charge_description",
       ],
     },
     { arrayFormat: "bracket" }
@@ -160,6 +168,7 @@ const ApiResponseSchema = z.object({
       duration: z.string().nullable(),
       best_time: z.string().nullable(),
       approximate_charge: z.string().nullable(),
+      charge_description: z.string().nullable().optional(),
     })
     .nullable(),
 });
