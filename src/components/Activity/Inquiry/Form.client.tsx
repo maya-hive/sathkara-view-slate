@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,28 +15,60 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { type ApiJSONResponse } from "@/types/ApiResponse.types";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   email: z.string().email(),
   phone: z.string().min(5),
-  country: z.string(),
-  arrivalDate: z.date(),
-  departureDate: z.date(),
-  adults: z.number().min(0),
-  children: z.number().min(0),
-  tripType: z.string(),
-  referralSource: z.string().optional(),
   message: z.string().optional(),
 });
 
-export const ActivityInquiryForm = () => {
+export const ActivityInquiryFormClient = () => {
+  const [formSuccessMessage, setSuccessFormMessage] = useState<string | null>(
+    null
+  );
+  const [formErrorMessage, setErrorFormMessage] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/inquiry/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
+
+      const data: ApiJSONResponse = await response.json();
+
+      if (response.ok) {
+        setSuccessFormMessage(data.message);
+        form.reset();
+      } else {
+        setErrorFormMessage(data.message);
+
+        if (data.errors) {
+          Object.entries(data.errors).forEach(([key, errorArray]) => {
+            errorArray.forEach((error) => {
+              form.setError(key as keyof z.infer<typeof formSchema>, {
+                message: error,
+              });
+            });
+          });
+        }
+      }
+    } catch (error) {
+      setErrorFormMessage(`Submission failed with error: ${error}`);
+    }
   }
 
   return (
@@ -43,30 +76,18 @@ export const ActivityInquiryForm = () => {
       <form
         id="inquiry_form"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-8 rounded-xl bg-indigo-50 p-6 space-y-6"
+        className="space-y-6"
       >
-        <div className="flex justify-between flex-col xl:flex-row gap-4 border-b border-slate-300 pt-2 pb-5">
-          <div>
-            <h3 className="text-3xl font-semibold">
-              Ready to start your journey?
-            </h3>
-            <p className="mt-2 text-md font-medium">
-              Choose dates, passengers, and we will take care of your dream
-              vacation
-            </p>
+        {formSuccessMessage && (
+          <div className="rounded border border-green-600 text-green-600 bg-green-50 py-2 px-4 text-md font-medium">
+            {formSuccessMessage}
           </div>
-          <div className="pr-2">
-            <p className="text-md font-medium text-sky-700">
-              Need Help ? Feel Free to Call us
-            </p>
-            <a
-              href="tel:+94 333 333 333"
-              className="mt-1 block text-2xl font-semibold"
-            >
-              +94 333 333 333
-            </a>
+        )}
+        {formErrorMessage && (
+          <div className="rounded border border-red-600 text-red-600 bg-red-50 py-2 px-4 text-md font-medium">
+            {formErrorMessage}
           </div>
-        </div>
+        )}
         <div className="grid xl:grid-cols-3 gap-4">
           <FormField
             control={form.control}

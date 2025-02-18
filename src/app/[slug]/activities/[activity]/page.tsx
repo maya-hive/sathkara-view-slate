@@ -16,7 +16,7 @@ import {
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { PriceTag } from "@/components/PriceTag";
-import { ActivityInquiryForm } from "@/components/Activity/InquiryForm";
+import { ActivityInquiryForm } from "@/components/Activity/Inquiry/Form";
 
 export default async function Page({
   params,

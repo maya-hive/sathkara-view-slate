@@ -33,18 +33,19 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Textarea } from "@/components/ui/textarea";
+import { type ApiJSONResponse } from "@/types/ApiResponse.types";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   email: z.string().email(),
   phone: z.string().min(5),
   country: z.string(),
-  arrivalDate: z.date(),
-  departureDate: z.date(),
-  adults: z.number().min(0),
-  children: z.number().min(0),
-  tripType: z.string(),
-  referralSource: z.string().optional(),
+  arrival_date: z.date(),
+  departure_date: z.date(),
+  adults: z.string().min(0),
+  children: z.string().min(0),
+  trip_type: z.string(),
+  referral: z.string().optional(),
   message: z.string().optional(),
 });
 
@@ -53,51 +54,76 @@ interface Props {
 }
 
 type ItineraryCategory = {
-  id: string;
+  id: number;
   name: string;
 };
 
-export const ItineraryInquiryForm = ({}: Props) => {
+export const ItineraryInquiryFormClient = ({ itineraryCategories }: Props) => {
+  const [formSuccessMessage, setSuccessFormMessage] = useState<string | null>(
+    null
+  );
+  const [formErrorMessage, setErrorFormMessage] = useState<string | null>(null);
+
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/inquiry/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+      const data: ApiJSONResponse = await response.json();
+
+      if (response.ok) {
+        setSuccessFormMessage(data.message);
+        form.reset();
+      } else {
+        setErrorFormMessage(data.message);
+
+        if (data.errors) {
+          Object.entries(data.errors).forEach(([key, errorArray]) => {
+            errorArray.forEach((error) => {
+              form.setError(key as keyof z.infer<typeof formSchema>, {
+                message: error,
+              });
+            });
+          });
+        }
+      }
+    } catch (error) {
+      setErrorFormMessage(`Submission failed with error: ${error}`);
+    }
+  }
 
   return (
     <Form {...form}>
       <form
         id="inquiry_form"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-8 rounded-xl bg-indigo-50 p-6 space-y-6"
+        className="space-y-6"
       >
-        <div className="flex justify-between flex-col xl:flex-row gap-4 border-b border-slate-300 pt-2 pb-5">
-          <div>
-            <h3 className="text-3xl font-semibold">
-              Ready to start your journey?
-            </h3>
-            <p className="mt-2 text-md font-medium">
-              Choose dates, passengers, and we will take care of your dream
-              vacation
-            </p>
+        {formSuccessMessage && (
+          <div className="rounded border border-green-600 text-green-600 bg-green-50 py-2 px-4 text-md font-medium">
+            {formSuccessMessage}
           </div>
-          <div className="pr-2">
-            <p className="text-md font-medium text-sky-700">
-              Need Help ? Feel Free to Call us
-            </p>
-            <a
-              href="tel:+94 333 333 333"
-              className="mt-1 block text-2xl font-semibold"
-            >
-              +94 333 333 333
-            </a>
+        )}
+        {formErrorMessage && (
+          <div className="rounded border border-red-600 text-red-600 bg-red-50 py-2 px-4 text-md font-medium">
+            {formErrorMessage}
           </div>
-        </div>
+        )}
         <div className="grid xl:grid-cols-3 gap-4">
           <FormField
             control={form.control}
@@ -168,7 +194,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
           />
           <FormField
             control={form.control}
-            name="arrivalDate"
+            name="arrival_date"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -210,7 +236,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
           />
           <FormField
             control={form.control}
-            name="departureDate"
+            name="departure_date"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -288,7 +314,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
           />
           <FormField
             control={form.control}
-            name="tripType"
+            name="trip_type"
             render={() => (
               <FormItem>
                 <FormControl>
@@ -300,10 +326,12 @@ export const ItineraryInquiryForm = ({}: Props) => {
                         aria-expanded={open}
                         className="w-full h-14 font-semibold justify-between"
                       >
-                        {value
-                          ? [{ label: "Adventure", value: "adventure" }].find(
-                              (item) => item.value === value
-                            )?.label
+                        {form.getValues().trip_type
+                          ? itineraryCategories?.find(
+                              (item) =>
+                                item.name.toString() ===
+                                form.getValues().trip_type
+                            )?.name
                           : "Type of Trip"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -314,30 +342,30 @@ export const ItineraryInquiryForm = ({}: Props) => {
                         <CommandList>
                           <CommandEmpty>No items found.</CommandEmpty>
                           <CommandGroup>
-                            {[{ label: "Adventure", value: "adventure" }].map(
-                              (item) => (
-                                <CommandItem
-                                  key={item.value}
-                                  value={item.value}
-                                  onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value ? "" : currentValue
-                                    );
-                                    setOpen(false);
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      value === item.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {item.label}
-                                </CommandItem>
-                              )
-                            )}
+                            {itineraryCategories?.map((item) => (
+                              <CommandItem
+                                key={item.id}
+                                value={item.id.toString()}
+                                onSelect={() => {
+                                  form.setValue(
+                                    "trip_type",
+                                    item.name.toString()
+                                  );
+                                  setOpen(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    form.getValues().trip_type ===
+                                      item.name.toString()
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {item.name}
+                              </CommandItem>
+                            ))}
                           </CommandGroup>
                         </CommandList>
                       </Command>
@@ -351,7 +379,7 @@ export const ItineraryInquiryForm = ({}: Props) => {
         </div>
         <FormField
           control={form.control}
-          name="referralSource"
+          name="referral"
           render={({ field }) => (
             <FormItem>
               <FormControl>

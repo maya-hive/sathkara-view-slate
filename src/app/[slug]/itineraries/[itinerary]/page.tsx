@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { AccommodationCompactCard } from "@/components/Accommodation/CompactCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ItineraryInquiryForm } from "@/components/Itinerary/InquiryForm";
+import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { CityCompactCard } from "@/components/City/CompactCard";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { shimmer } from "@/components/Shimmer";
@@ -58,7 +58,7 @@ export default async function Page({
                     <Component data={data} />
                   </TabsContent>
                 ))}
-                <ItineraryInquiryForm itineraryCategories={null} />
+                <ItineraryInquiryForm />
               </div>
             </div>
             <div className="md:w-[400px]">
