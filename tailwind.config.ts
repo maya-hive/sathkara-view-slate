@@ -64,8 +64,45 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      typography: () => ({
+        DEFAULT: {
+          css: [
+            {
+              "--tw-prose-body": "var(--text)",
+              "--tw-prose-headings": "var(--text)",
+              maxWidth: "unset",
+              color: "var(--foreground)",
+              h1: {
+                fontWeight: "bold",
+                marginBottom: "0.25em",
+              },
+              h2: {
+                marginBottom: "0.7rem",
+              },
+              h4: {
+                marginBottom: "0.2rem",
+              },
+              p: {
+                fontSize: "15px",
+              },
+            },
+          ],
+        },
+        md: {
+          css: [
+            {
+              h1: {
+                fontSize: "3.5rem",
+              },
+              h2: {
+                fontSize: "1.5rem",
+              },
+            },
+          ],
+        },
+      }),
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

@@ -9,6 +9,7 @@ import { Banner } from "@/components/Banner";
 import { Gallery } from "@/components/Gallery";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
+import { RichText } from "@/components/RichText";
 
 export default async function Page({
   params,
@@ -36,10 +37,7 @@ export default async function Page({
                     <h2 className="text-xl font-bold mb-4">
                       About The Destination
                     </h2>
-                    <div
-                      dangerouslySetInnerHTML={{ __html: data.description }}
-                      className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:mt-2 [&>ul]:list-disc [&>ul]:text-[15px]"
-                    />
+                    <RichText content={data.description} />
                   </div>
                 )}
                 {data?.cities && data?.cities?.length > 0 && (

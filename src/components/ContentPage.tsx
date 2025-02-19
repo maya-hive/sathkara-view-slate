@@ -2,6 +2,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
+import { RichText } from "@/components/RichText";
 
 interface Args {
   id: string;
@@ -18,10 +19,9 @@ export const ContentPage = async ({ id }: Args) => {
     <article>
       <Banner image={data.banner_image} content={data.page_content} />
       {data.page_content && (
-        <div
-          className="container mx-auto py-8"
-          dangerouslySetInnerHTML={{ __html: data.page_content }}
-        />
+        <div className="container mx-auto mt-20">
+          <RichText content={data.page_content} />
+        </div>
       )}
     </article>
   );

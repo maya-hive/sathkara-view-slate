@@ -15,6 +15,7 @@ import { PriceTag } from "@/components/PriceTag";
 import { toBase64 } from "@/utils/base64";
 import { ActivityCompactCard } from "@/components/Activity/CompactCard";
 import { ActivityCard } from "@/components/Activity/Card";
+import { RichText } from "@/components/RichText";
 
 export default async function Page({
   params,
@@ -76,10 +77,7 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
     {data?.overview && (
       <div>
         <h2 className="text-xl font-bold mb-4">Tour Overview</h2>
-        <div
-          dangerouslySetInnerHTML={{ __html: data.overview }}
-          className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:mt-2 [&>ul]:list-disc [&>ul]:text-[15px]"
-        />
+        <RichText content={data.overview} />
       </div>
     )}
     <div className="mt-4 grid xl:grid-cols-6 gap-12">
@@ -180,12 +178,7 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                 />
                 <div className="py-4 px-6">
                   <h3 className="text-lg font-bold">{name}</h3>
-                  {content && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: content }}
-                      className="mt-2 [&>p]:text-[15px] [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc [&>ul]:text-[15px]"
-                    />
-                  )}
+                  {content && <RichText content={content} />}
                   {activities && activities.length > 0 && (
                     <div className="mt-3">
                       <div className="text-md font-medium">Activities</div>
@@ -262,13 +255,10 @@ const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
 const PackageIncludes = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
     {data?.package_includes && (
-      <div>
+      <>
         <h2 className="text-xl font-bold mb-4">Package Includes</h2>
-        <div
-          dangerouslySetInnerHTML={{ __html: data.package_includes }}
-          className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:list-disc"
-        />
-      </div>
+        <RichText content={data.package_includes} />
+      </>
     )}
   </div>
 );

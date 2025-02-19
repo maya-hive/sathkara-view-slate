@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { PriceTag } from "@/components/PriceTag";
 import { ActivityInquiryForm } from "@/components/Activity/Inquiry/Form";
+import { RichText } from "@/components/RichText";
 
 export default async function Page({
   params,
@@ -91,10 +92,7 @@ export default async function Page({
                     <h2 className="text-xl font-bold mb-4">
                       About The Activity
                     </h2>
-                    <div
-                      dangerouslySetInnerHTML={{ __html: data.description }}
-                      className="[&>p]:text-md [&>p]:font-medium [&>ul]:ml-6 [&>ul]:mt-2 [&>ul]:list-disc [&>ul]:text-[15px]"
-                    />
+                    <RichText content={data.description} />
                   </div>
                 )}
                 {data?.city && (
