@@ -4,8 +4,16 @@ import { z } from "zod";
 import { generateStaticParams } from "./page/[id]/page";
 import { ActivityListing } from "@/components/Activity/Listing/Main";
 
-export default async function Page() {
-  const data = await fetchData("1");
+type Args = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+export default async function Page({ params }: Args) {
+  const { slug } = await params;
+
+  const data = await fetchData("1", slug);
 
   if (!data) {
     return null;
@@ -17,7 +25,8 @@ export default async function Page() {
 export { generateStaticParams };
 
 const fetchData = async (
-  id: string
+  id: string,
+  destination: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
@@ -30,6 +39,7 @@ const fetchData = async (
         "short_description",
         "duration",
       ],
+      by_destination: destination,
     },
     { arrayFormat: "bracket" }
   );
