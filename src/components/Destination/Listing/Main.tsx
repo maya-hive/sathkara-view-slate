@@ -12,7 +12,6 @@ interface Props {
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination: string;
 }
 
 type Destination = {
@@ -24,11 +23,7 @@ type Destination = {
   featured_image: string;
 };
 
-export const DestinationListing = async ({
-  data,
-  destination,
-  links,
-}: Props) => {
+export const DestinationListing = async ({ data, links }: Props) => {
   if (!data?.length) return <></>;
 
   const { data: pageData } = await fetchData();
@@ -47,7 +42,7 @@ export const DestinationListing = async ({
                 ))}
               </Suspense>
             </div>
-            <Pagination prefix={destination} links={links} />
+            <Pagination links={links} />
           </div>
         </div>
       </div>
