@@ -9,10 +9,10 @@ import { CityListingAside as Aside } from "./Aside";
 
 interface Props {
   data: City[] | null;
-  destination: string;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
+  destination: string;
 }
 
 type City = {

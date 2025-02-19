@@ -19,7 +19,7 @@ export default async function Page({ params }: Args) {
     return null;
   }
 
-  return <AccommodationListing {...data} />;
+  return <AccommodationListing destination={slug} {...data} />;
 }
 
 export { generateStaticParams };

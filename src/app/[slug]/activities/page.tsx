@@ -19,7 +19,7 @@ export default async function Page({ params }: Args) {
     return null;
   }
 
-  return <ActivityListing {...data} />;
+  return <ActivityListing destination={slug} {...data} />;
 }
 
 export { generateStaticParams };

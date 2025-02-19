@@ -19,7 +19,7 @@ export default async function Page({ params }: Args) {
     return null;
   }
 
-  return <ItineraryListing {...data} />;
+  return <ItineraryListing destination={slug} {...data} />;
 }
 
 export { generateStaticParams };

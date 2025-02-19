@@ -12,6 +12,7 @@ interface Props {
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
+  destination: string;
 }
 
 type Activity = {
@@ -24,7 +25,7 @@ type Activity = {
   duration: string | null;
 };
 
-export const ActivityListing = async ({ data, links }: Props) => {
+export const ActivityListing = async ({ data, destination, links }: Props) => {
   if (!data?.length) return <></>;
 
   const { data: pageData } = await fetchData();
@@ -43,7 +44,7 @@ export const ActivityListing = async ({ data, links }: Props) => {
                 ))}
               </Suspense>
             </div>
-            <Pagination links={links} />
+            <Pagination prefix={destination} links={links} />
           </div>
         </div>
       </div>

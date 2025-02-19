@@ -7,24 +7,27 @@ import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
 
 type Args = {
   params: Promise<{
+    slug: string;
     id?: string;
   }>;
 };
 
 export default async function Page({ params }: Args) {
+  const { slug } = await params;
+
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect("/itineraries");
+    return redirect(`/${slug}/itineraries`);
   }
 
   const data = await fetchData(id);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
-  return <ItineraryListing {...data} />;
+  return <ItineraryListing destination={slug} {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -38,7 +41,10 @@ export async function generateStaticParams() {
 }
 
 const fetchData = cache(
-  async (id: string): Promise<z.infer<typeof ApiResponseSchema>> => {
+  async (
+    id: string,
+    destination?: string
+  ): Promise<z.infer<typeof ApiResponseSchema>> => {
     const query = queryString.stringify(
       {
         fields: [
@@ -53,6 +59,7 @@ const fetchData = cache(
           "duration",
           "price",
         ],
+        by_destination: destination,
       },
       { arrayFormat: "bracket" }
     );
