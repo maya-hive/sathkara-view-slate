@@ -8,6 +8,7 @@ import {
 
 interface Props {
   links: PaginationLink[] | null;
+  prefix?: string;
 }
 
 export type PaginationLink = {
@@ -16,14 +17,17 @@ export type PaginationLink = {
   active: boolean;
 };
 
-export const Pagination = ({ links }: Props) => (
+export const Pagination = ({ links, prefix }: Props) => (
   <PaginationRoot className="mt-8 w-full flex justify-center">
     <PaginationContent>
       {links?.map(({ url, label, active }) =>
         url ? (
           <PaginationItem key={label}>
             <Button asChild variant={active ? "default" : "outline"}>
-              <Link href={url} dangerouslySetInnerHTML={{ __html: label }} />
+              <Link
+                href={prefix ? "/" + prefix + url : url}
+                dangerouslySetInnerHTML={{ __html: label }}
+              />
             </Button>
           </PaginationItem>
         ) : null
