@@ -109,7 +109,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               ))}
             </div>
           </div>
-          <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between font-bold">
+          <div className="mt-2 rounded bg-yellow-300 p-4 flex justify-between items-center font-bold">
             <div className="px-2 text-lg min-w-[100px]">
               {data?.days_count_html && (
                 <div
@@ -119,11 +119,23 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               )}
             </div>
             <div className="flex border-l border-yellow-500 px-3">
-              <div>
-                <p className="text-3xl">
-                  <PriceTag amount={data.price} />
-                </p>
-                <p className="text-xs">{data.price_description}</p>
+              <div className="text-orange-800">
+                <span className="text-sm font-semibold">Starting From</span>
+                <div>
+                  <p className="pr-3 text-4xl font-semibold">
+                    {data?.is_sale_active ? (
+                      <>
+                        <PriceTag
+                          amount={data.price}
+                          className="block text-lg line-through"
+                        />
+                        <PriceTag amount={data.sale_price} />
+                      </>
+                    ) : (
+                      <PriceTag amount={data?.price} />
+                    )}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -160,6 +172,7 @@ const fetchData = async (
         "status",
         "slug",
         "sale_price",
+        "is_sale_active",
         "featured_image",
         "listing_image",
         "short_description",
@@ -216,6 +229,7 @@ const ApiResponseSchema = z.object({
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
       sale_price: z.string().nullable(),
+      is_sale_active: z.number().nullable(),
       duration: z.string().nullable(),
       days_count_html: z.string().nullable(),
       destination: z.object({

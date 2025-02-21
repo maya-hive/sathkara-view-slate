@@ -285,14 +285,26 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           Choose dates, passengers, and we will take care of your dream vacation
         </p>
       </div>
-      <div className="mt-3 rounded-lg bg-white py-6 px-8 flex items-center">
+      <div className="mt-3 rounded-lg bg-white py-6 px-8 flex justify-between items-center">
         <div className="text-orange-800">
           <span className="text-sm font-semibold">Starting From</span>
-          <p className="pr-3 text-4xl font-semibold">
-            <PriceTag amount={data?.price} />
-          </p>
+          <div className="border-r border-slate-600">
+            <p className="pr-3 text-4xl font-semibold">
+              {data?.is_sale_active ? (
+                <>
+                  <PriceTag
+                    amount={data.price}
+                    className="block text-lg line-through"
+                  />
+                  <PriceTag amount={data?.sale_price} />
+                </>
+              ) : (
+                <PriceTag amount={data?.price} />
+              )}
+            </p>
+          </div>
         </div>
-        <div className="border-l border-slate-600 px-2 text-lg min-w-[100px]">
+        <div className="px-2 text-lg min-w-[100px]">
           {data?.days_count_html && (
             <div
               dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
