@@ -9,17 +9,14 @@ export const Header = async () => {
   const { data } = await fetchData();
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return (
     <header className="border-b">
       <Navigation
         socials={data.social_media}
-        phone={{
-          title: data.header_contact_title,
-          value: data.header_contact_number,
-        }}
+        phone={data.contact_details?.itinerary_inquiry_phone ?? null}
       >
         <Link href="/">
           {data.site_logo && (
@@ -41,13 +38,7 @@ export const Header = async () => {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: [
-        "site_name",
-        "site_logo",
-        "header_contact_title",
-        "header_contact_number",
-        "social_media",
-      ],
+      fields: ["site_name", "site_logo", "contact_details", "social_media"],
     },
     { arrayFormat: "bracket" }
   );
@@ -85,8 +76,18 @@ const ApiResponseSchema = z.object({
     .object({
       site_name: z.string().nullable(),
       site_logo: z.string().nullable(),
-      header_contact_title: z.string().nullable(),
-      header_contact_number: z.string().nullable(),
+      contact_details: z
+        .object({
+          itinerary_inquiry_phone: z
+            .object({
+              title: z.string().nullable(),
+              number: z.string().nullable(),
+            })
+            .nullable()
+            .optional(),
+        })
+        .nullable()
+        .optional(),
       social_media: z
         .object({
           facebook: z.string().nullable(),

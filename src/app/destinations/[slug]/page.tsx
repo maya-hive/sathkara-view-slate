@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import queryString from "query-string";
 import { z } from "zod";
@@ -10,6 +9,7 @@ import { Gallery } from "@/components/Gallery";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
 import { RichText } from "@/components/RichText";
+import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 
 export default async function Page({
   params,
@@ -83,35 +83,14 @@ export default async function Page({
               </div>
             </div>
           </div>
-          <div className="md:w-[400px]">
-            <Aside data={data} />
+          <div className="sticky top-10">
+            <ItineraryInquirySidebarCTA />
           </div>
         </div>
       </div>
     </article>
   );
 }
-
-const Aside = ({}: z.infer<typeof ApiResponseSchema>) => (
-  <div className="sticky top-10">
-    <div className="rounded-lg bg-blue-100 p-6">
-      <div className="text-center border-b border-slate-400 px-4 pb-4">
-        <h3 className="text-3xl text-slate-900 font-semibold">
-          Ready to start your journey?
-        </h3>
-        <p className="mt-3 text-md font-semibold">
-          Choose dates, passengers, and we will take care of your dream vacation
-        </p>
-      </div>
-      <Link
-        href="#inquiry_form"
-        className="mt-4 block rounded bg-black text-white p-3 uppercase text-md text-center font-medium"
-      >
-        Plan your trip
-      </Link>
-    </div>
-  </div>
-);
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="bg-primary">

@@ -11,7 +11,7 @@ export const ActivityInquiryForm = async () => {
   }
 
   return (
-    <div className="mt-8 rounded-xl bg-indigo-50 p-6">
+    <div className="mt-8 rounded-xl bg-indigo-50 p-6" id="inquiry_form">
       <div className="flex justify-between flex-col xl:flex-row gap-4 border-b border-slate-300 pt-2 pb-5 mb-5">
         {data.itinerary_plan_title && (
           <div
@@ -19,17 +19,22 @@ export const ActivityInquiryForm = async () => {
             dangerouslySetInnerHTML={{ __html: data.itinerary_plan_title }}
           />
         )}
-        <div className="pr-2">
-          <p className="text-md font-medium text-sky-700">
-            {data.header_contact_title}
-          </p>
-          <a
-            href={`tel:${data.header_contact_number}`}
-            className="mt-1 block text-2xl font-semibold"
-          >
-            {data.header_contact_number}
-          </a>
-        </div>
+        {data.contact_details?.itinerary_inquiry_phone?.number && (
+          <div className="pr-2">
+            <p className="text-md font-medium text-sky-700">
+              {data.contact_details.itinerary_inquiry_phone?.title}
+            </p>
+            <a
+              href={`tel:${data.contact_details.itinerary_inquiry_phone.number.replace(
+                /\s/g,
+                ""
+              )}`}
+              className="mt-1 block text-2xl font-semibold"
+            >
+              {data.contact_details.itinerary_inquiry_phone.number}
+            </a>
+          </div>
+        )}
       </div>
       <FormClient />
     </div>
@@ -39,11 +44,7 @@ export const ActivityInquiryForm = async () => {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: [
-        "itinerary_plan_title",
-        "header_contact_title",
-        "header_contact_number",
-      ],
+      fields: ["itinerary_plan_title", "contact_details"],
     },
     { arrayFormat: "bracket" }
   );
@@ -80,8 +81,18 @@ const ApiResponseSchema = z.object({
   data: z
     .object({
       itinerary_plan_title: z.string().nullable().optional(),
-      header_contact_title: z.string().nullable(),
-      header_contact_number: z.string().nullable(),
+      contact_details: z
+        .object({
+          itinerary_inquiry_phone: z
+            .object({
+              title: z.string().nullable(),
+              number: z.string().nullable(),
+            })
+            .nullable()
+            .optional(),
+        })
+        .nullable()
+        .optional(),
     })
     .nullable(),
 });

@@ -10,15 +10,15 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   children: ReactNode[] | ReactNode;
-  phone: { value: string | null; title: string | null };
   socials?: SocialMediaLinks | null;
+  phone: Phone | null;
 }
 
 export const Navigation = async ({ children, phone, socials }: Props) => {
   const { data } = await fetchData();
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -72,8 +72,13 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
   );
 };
 
+type Phone = {
+  title: string | null;
+  number: string | null;
+};
+
 type TopBarProps = {
-  phone: { value: string | null; title: string | null };
+  phone: Phone | null;
   socials?: SocialMediaLinks;
   links: z.infer<typeof navFrames>;
 };
@@ -82,9 +87,10 @@ const TopBar = ({ phone, links, socials }: TopBarProps) => (
   <small className="border-b bg-blue-950 text-white py-2 w-full flex items-center justify-between gap-5">
     <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-blue-400 text-sm font-medium">
       <div className="flex gap-5">
-        {phone.value && (
-          <a href={"tel:" + phone.value.replace(/\s/g, "")}>
-            {phone.title} <span className="text-yellow-400">{phone.value}</span>
+        {phone?.number && (
+          <a href={"tel:" + phone.number.replace(/\s/g, "")}>
+            {phone.title}{" "}
+            <span className="text-yellow-400">{phone.number}</span>
           </a>
         )}
       </div>

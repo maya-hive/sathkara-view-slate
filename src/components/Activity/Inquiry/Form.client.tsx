@@ -73,11 +73,7 @@ export const ActivityInquiryFormClient = () => {
 
   return (
     <Form {...form}>
-      <form
-        id="inquiry_form"
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {formSuccessMessage && (
           <div className="rounded border border-green-600 text-green-600 bg-green-50 py-2 px-4 text-md font-medium">
             {formSuccessMessage}

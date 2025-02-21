@@ -62,9 +62,7 @@ export default async function Page({
                 <ItineraryInquiryForm />
               </div>
             </div>
-            <div className="md:w-[400px]">
-              <Aside data={data} />
-            </div>
+            <Aside data={data} />
           </div>
         </Tabs>
       </div>
@@ -285,26 +283,30 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           Choose dates, passengers, and we will take care of your dream vacation
         </p>
       </div>
-      <div className="mt-3 rounded-lg bg-white py-6 px-8 flex justify-between items-center">
-        <div className="text-orange-800">
+      <div className="mt-3 rounded-lg bg-white py-6 px-8 flex items-center">
+        <div className="border-r border-slate-600 text-orange-800">
           <span className="text-sm font-semibold">Starting From</span>
-          <div className="border-r border-slate-600">
-            <p className="pr-3 text-4xl font-semibold">
-              {data?.is_sale_active ? (
-                <>
-                  <PriceTag
-                    amount={data.price}
-                    className="block text-lg line-through"
-                  />
-                  <PriceTag amount={data?.sale_price} />
-                </>
-              ) : (
-                <PriceTag amount={data?.price} />
-              )}
-            </p>
-          </div>
+          <p className="pr-3">
+            {data?.is_sale_active ? (
+              <>
+                <PriceTag
+                  amount={data.price}
+                  className="block text-md font-semibold line-through leading-6"
+                />
+                <PriceTag
+                  amount={data?.sale_price}
+                  className="text-3xl font-semibold"
+                />
+              </>
+            ) : (
+              <PriceTag
+                amount={data?.price}
+                className="text-3xl font-semibold"
+              />
+            )}
+          </p>
         </div>
-        <div className="px-2 text-lg min-w-[100px]">
+        <div className="pl-3 text-lg">
           {data?.days_count_html && (
             <div
               dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
