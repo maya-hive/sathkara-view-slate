@@ -30,7 +30,7 @@ export default async function Page({
       <TopBar data={data} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-          <div className="md:w-[calc(100%-400px)]">
+          <div className="md:min-w-[calc(100%-400px)] xl:max-w-[calc(100%-400px)]">
             <div className="mt-8">
               <div className="mt-4">
                 {data.description && (

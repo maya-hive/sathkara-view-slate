@@ -39,7 +39,7 @@ export default async function Page({
       <div className="container mx-auto">
         <Tabs defaultValue={tabs[0].name}>
           <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-            <div className="md:w-[calc(100%-400px)]">
+            <div className="md:min-w-[calc(100%-400px)] xl:max-w-[calc(100%-400px)]">
               <div className="mt-8">
                 <TabsList className="p-0 flex-wrap gap-2">
                   {tabs.map(({ name, title }, idx) => (
