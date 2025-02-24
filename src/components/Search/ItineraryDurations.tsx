@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ClassNameValue } from "tailwind-merge";
 
 const itineraryDurations = [
   {
@@ -58,7 +59,11 @@ const itineraryDurations = [
   },
 ];
 
-export const SearchItineraryDurations = () => {
+interface Props {
+  className?: ClassNameValue;
+}
+
+export const SearchItineraryDurations = ({ className }: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -69,7 +74,7 @@ export const SearchItineraryDurations = () => {
           variant="input"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-full bg-gray-100 justify-between"
+          className={cn("w-full h-full bg-gray-100 justify-between", className)}
         >
           {value
             ? itineraryDurations.find((item) => item.value === value)?.label

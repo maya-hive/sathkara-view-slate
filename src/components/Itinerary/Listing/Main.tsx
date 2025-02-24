@@ -6,6 +6,8 @@ import { type PaginationLink, Pagination } from "@/components/Pagination";
 import { Banner } from "@/components/Banner";
 import { ItineraryCard } from "@/components/Itinerary/Card";
 import { ItineraryListingAside as Aside } from "./Aside";
+import { SearchItienraries } from "@/components/Search/Itineraries";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   data: Itinerary[] | null;
@@ -44,7 +46,13 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
           <Aside />
           <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
+              <SearchItienraries className="bg-white h-100" />
+              <Button variant="secondary" size="lg">
+                Search
+              </Button>
+            </div>
+            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
               <Suspense fallback={<span>Loading</span>}>
                 {data?.map((item) => (
                   <ItineraryCard key={item.id} slug={item.slug} />

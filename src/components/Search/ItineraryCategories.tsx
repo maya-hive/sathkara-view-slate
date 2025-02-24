@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ChevronsUpDown } from "lucide-react";
+import { ClassNameValue } from "tailwind-merge";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -38,7 +39,11 @@ const itineraryCategories = [
   },
 ];
 
-export const SearchItineraryCategories = () => {
+interface Props {
+  className?: ClassNameValue;
+}
+
+export const SearchItineraryCategories = ({ className }: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -49,7 +54,7 @@ export const SearchItineraryCategories = () => {
           variant="input"
           role="combobox"
           aria-expanded={open}
-          className="w-full h-full bg-gray-100 justify-between"
+          className={cn("w-full h-full bg-gray-100 justify-between", className)}
         >
           {value
             ? itineraryCategories.find((item) => item.value === value)?.label
