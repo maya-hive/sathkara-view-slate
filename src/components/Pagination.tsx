@@ -17,21 +17,29 @@ export type PaginationLink = {
   active: boolean;
 };
 
-export const Pagination = ({ links, prefix }: Props) => (
-  <PaginationRoot className="mt-8 w-full flex justify-center">
-    <PaginationContent>
-      {links?.map(({ url, label, active }) =>
-        url ? (
-          <PaginationItem key={label}>
-            <Button asChild variant={active ? "default" : "outline"}>
-              <Link
-                href={prefix ? "/" + prefix + url : url}
-                dangerouslySetInnerHTML={{ __html: label }}
-              />
-            </Button>
-          </PaginationItem>
-        ) : null
-      )}
-    </PaginationContent>
-  </PaginationRoot>
-);
+export const Pagination = ({ links, prefix }: Props) => {
+  const hasPages = links?.pop()?.url !== null && links?.shift()?.url !== null;
+
+  if (!hasPages) {
+    return null;
+  }
+
+  return (
+    <PaginationRoot className="mt-8 w-full flex justify-center">
+      <PaginationContent>
+        {links?.map(({ url, label, active }) =>
+          url ? (
+            <PaginationItem key={label}>
+              <Button asChild variant={active ? "default" : "outline"}>
+                <Link
+                  href={prefix ? "/" + prefix + url : url}
+                  dangerouslySetInnerHTML={{ __html: label }}
+                />
+              </Button>
+            </PaginationItem>
+          ) : null
+        )}
+      </PaginationContent>
+    </PaginationRoot>
+  );
+};
