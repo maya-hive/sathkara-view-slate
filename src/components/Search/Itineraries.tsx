@@ -12,8 +12,8 @@ interface Props {
 export const SearchItienraries = ({ className }: Props) => {
   return (
     <Input
-      placeholder="Search for what you want"
-      className={cn("h-full font-semibold bg-gray-100", className)}
+      placeholder="Find Your Perfect Itinerary..."
+      className={cn("h-full font-medium bg-gray-100", className)}
     />
   );
 };

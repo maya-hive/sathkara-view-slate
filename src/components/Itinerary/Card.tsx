@@ -110,7 +110,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
             </div>
           </div>
           <div className="mt-2 rounded bg-yellow-300 p-4 flex items-center font-bold">
-            <div className="px-2 text-lg min-w-[100px]">
+            <div className="text-lg min-w-[80px]">
               {data?.days_count_html && (
                 <div
                   dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
@@ -118,10 +118,12 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                 />
               )}
             </div>
-            <div className="border-l border-yellow-500 px-3">
-              <span className="text-sm font-semibold">Starting From</span>
+            <div className="border-l border-yellow-500 pl-3 flex items-center">
+              <span className="text-sm font-semibold max-w-[70px]">
+                Starting From
+              </span>
               <div>
-                <p className="pr-3 font-semibold">
+                <p className="font-semibold">
                   {data?.is_sale_active ? (
                     <>
                       <PriceTag
@@ -134,12 +136,12 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                     <PriceTag amount={data?.price} className="text-3xl" />
                   )}
                 </p>
-                <p className="mt-1 text-sm font-medium">
-                  {data.price_description}
-                </p>
               </div>
             </div>
           </div>
+          <p className="mt-2 text-sm text-center font-medium">
+            {data.price_description}
+          </p>
         </div>
         <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
           <Link
