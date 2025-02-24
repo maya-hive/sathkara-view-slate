@@ -10,6 +10,7 @@ import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
+import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 
 export default async function Page({
   params,
@@ -81,6 +82,7 @@ export default async function Page({
                   </div>
                 )}
               </div>
+              <ItineraryInquiryForm />
             </div>
           </div>
           <div className="sticky top-10">
