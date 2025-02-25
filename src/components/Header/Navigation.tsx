@@ -121,7 +121,7 @@ const NavLink = ({ value, children }: NavLinkProps) => (
   <>
     <div className="relative">
       <div className="peer flex gap-3 items-center">
-        <Link href={value.value ?? ""} className="font-medium">
+        <Link href={value.value ?? value.link ?? "#"} className="font-medium">
           {value.title}
         </Link>
         {children && <FontAwesomeIcon icon={faChevronDown} />}

@@ -17,11 +17,11 @@ export const ItineraryCategorySlide = async ({
   itineraries,
   content,
 }: Props) => {
-  if (!itineraries) return <></>;
+  if (!itineraries) return null;
 
   const { data } = await fetchData(category);
 
-  if (!data) return <></>;
+  if (!data) return null;
 
   return (
     <div className="mx-5 flex flex-col md:flex-row border rounded-2xl overflow-hidden gap-5">

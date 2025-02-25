@@ -25,20 +25,17 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.slug}/itineraries`;
+  const slug = `/destinations/${data.slug}`;
 
   return (
-    <div className="rounded-md overflow-hidden">
+    <Link href={slug} className="rounded-md overflow-hidden">
       <div className="relative h-full pt-[300px] flex items-end text-white">
         <div className="relative z-20 p-8">
           <h3 className="text-4xl font-semibold">{data.name}</h3>
           <p className="mt-1">Tour Options</p>
-          <Link
-            href={slug}
-            className="mt-6 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase"
-          >
+          <div className="mt-6 block w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase">
             Plan Your Trip
-          </Link>
+          </div>
         </div>
         <Image
           className="w-full h-full object-cover absolute top-0 left-0 -z-10"
@@ -53,7 +50,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         />
         <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-black"></span>
       </div>
-    </div>
+    </Link>
   );
 };
 

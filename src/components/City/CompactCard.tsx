@@ -15,7 +15,7 @@ export const CityCompactCard = async ({ slug, layout = "default" }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   if (layout === "horizontal") {

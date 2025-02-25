@@ -16,14 +16,17 @@ export const SearchForm = ({ title }: Props) => (
       <div className="flex-1 w-full xl:min-w-[500px]">
         <SearchItienraries />
       </div>
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full xl:min-w-[350px]">
         <SearchItineraryCategories
           label={false}
           className="h-full bg-gray-100 border-none"
         />
       </div>
       <div className="flex-1 w-full">
-        <SearchItineraryDurations />
+        <SearchItineraryDurations
+          label={false}
+          className="h-full bg-gray-100 border-none"
+        />
       </div>
       <div className="flex-1 w-full xl:max-w-[200px]">
         <Link href="/itineraries">

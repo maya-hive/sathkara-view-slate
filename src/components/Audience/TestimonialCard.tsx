@@ -30,7 +30,7 @@ export const AudienceTestimonialCard = async ({
 }: {
   data: Props;
 }) => {
-  if (!props.audience) return <></>;
+  if (!props.audience) return null;
 
   const { data } = await fetchData(props.audience);
 

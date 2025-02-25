@@ -5,7 +5,6 @@ import { z } from "zod";
 import { type PaginationLink, Pagination } from "@/components/Pagination";
 import { Banner } from "@/components/Banner";
 import { DestinationCard } from "@/components/Destination/Card";
-import { DestinationListingAside as Aside } from "./Aside";
 
 interface Props {
   data: Destination[] | null;
@@ -24,7 +23,7 @@ type Destination = {
 };
 
 export const DestinationListing = async ({ data, links }: Props) => {
-  if (!data?.length) return <></>;
+  if (!data?.length) return null;
 
   const { data: pageData } = await fetchData();
 
@@ -32,18 +31,15 @@ export const DestinationListing = async ({ data, links }: Props) => {
     <article>
       <Banner content={pageData?.page_content} image={pageData?.banner_image} />
       <div className="container mx-auto">
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
-          <Aside />
-          <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-              <Suspense fallback={<span>Loading</span>}>
-                {data?.map((item) => (
-                  <DestinationCard key={item.id} slug={item.slug} />
-                ))}
-              </Suspense>
-            </div>
-            <Pagination links={links} />
+        <div className="mt-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <Suspense fallback={<span>Loading</span>}>
+              {data?.map((item) => (
+                <DestinationCard key={item.id} slug={item.slug} />
+              ))}
+            </Suspense>
           </div>
+          <Pagination links={links} />
         </div>
       </div>
     </article>

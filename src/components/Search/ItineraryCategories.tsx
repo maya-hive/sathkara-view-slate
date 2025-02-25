@@ -36,16 +36,16 @@ export const SearchItineraryCategories = ({
   const [value, setValue] = useState<string[]>([]);
 
   return (
-    <div>
+    <>
       {label && <label className="text-sm font-semibold">Categories</label>}
       <MultiSelect
         options={itineraryCategories}
         onValueChange={setValue}
         defaultValue={value}
         placeholder="Select Itinerary Categories"
-        className={cn("bg-white border", className)}
+        className={cn("h-100 border", className)}
         maxCount={6}
       />
-    </div>
+    </>
   );
 };

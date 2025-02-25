@@ -156,6 +156,15 @@ const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           <h1 className="text-3xl text-white">{data?.name}</h1>
         </div>
       </div>
+      <div className="flex items-center gap-3">
+        {data?.categories.map(({ name, slug }, idx) => (
+          <Link key={idx} href={`/${data.destination.slug}/activities/${slug}`}>
+            <span className="h-fit border rounded border-white text-white py-1 px-3 font-semibold text-xs uppercase">
+              {name}
+            </span>
+          </Link>
+        ))}
+      </div>
     </div>
   </div>
 );
@@ -197,6 +206,8 @@ const fetchData = async (
         "gallery",
         "description",
         "short_description",
+        "categories",
+        "destination",
         "city",
         "meta_title",
         "meta_description",
@@ -250,6 +261,12 @@ const Schema = z.object({
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()
     .optional(),
+  destination: z.object({
+    name: z.string(),
+    slug: z.string(),
+    color: z.string(),
+  }),
+  categories: z.array(z.object({ name: z.string(), slug: z.string() })),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),
 });
 

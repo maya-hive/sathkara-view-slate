@@ -7,7 +7,7 @@ export default async function Page() {
   const { data } = await fetchData();
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return (

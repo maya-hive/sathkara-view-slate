@@ -4,6 +4,7 @@ import Link from "next/link";
 import { z } from "zod";
 
 import { shimmer } from "@/components/Shimmer";
+import { Badge } from "@/components/ui/badge";
 import { toBase64 } from "@/utils/base64";
 
 interface Props {
@@ -30,10 +31,18 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
   return (
     <div className="relative pt-[260px] border rounded-lg overflow-hidden flex flex-col justify-between">
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
-        <div className="border-b">
+        <div className="border-b flex items-center justify-between">
           <Link href={slug}>
             <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
           </Link>
+          <Link href={`/destinations/${data.destination.slug}`}>
+            <Badge variant="outline" className="h-fit text-white rounded-sm">
+              {data.destination.name}
+            </Badge>
+          </Link>
+        </div>
+        <div className="mt-3 flex flex-col h-full">
+          <p className="text-md">{data.short_description}</p>
         </div>
         <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
           <Link
@@ -53,7 +62,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         width={500}
         height={400}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-black to-[70%]"></div>
+      <div className="absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-transparent to-black to-[45%]"></div>
     </div>
   );
 };

@@ -9,7 +9,7 @@ export const CityName = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   return <span>{data.name}</span>;

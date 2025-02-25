@@ -26,7 +26,7 @@ type Activity = {
 };
 
 export const ActivityListing = async ({ data, destination, links }: Props) => {
-  if (!data?.length) return <></>;
+  if (!data?.length) return null;
 
   const { data: pageData } = await fetchData();
 

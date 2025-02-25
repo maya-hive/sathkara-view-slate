@@ -27,7 +27,7 @@ export const AccommodationCompactCard = async ({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return <></>;
+    return null;
   }
 
   if (layout === "horizontal") {

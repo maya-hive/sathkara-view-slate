@@ -9,7 +9,9 @@ export const ItineraryListingAside = () => (
         <div>
           <SearchItineraryCategories className="bg-white border" />
         </div>
-        <SearchItineraryDurations className="bg-white border" />
+        <div>
+          <SearchItineraryDurations className="bg-white border" />
+        </div>
         <div className="mt-2">
           <Button variant="secondary" className="w-full">
             Filter

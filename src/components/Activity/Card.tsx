@@ -102,7 +102,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         width={500}
         height={400}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-black to-[70%]"></div>
+      <div className="absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-transparent to-black to-[35%]"></div>
     </div>
   );
 };

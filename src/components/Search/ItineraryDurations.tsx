@@ -22,6 +22,10 @@ import { ClassNameValue } from "tailwind-merge";
 
 const itineraryDurations = [
   {
+    value: "*",
+    label: "All Durations",
+  },
+  {
     value: "0-3",
     label: "3 Days or Less",
   },
@@ -57,59 +61,69 @@ const itineraryDurations = [
     value: "24+",
     label: "More than 24 Days",
   },
-];
+] as const;
+
+type ItineraryDuration = (typeof itineraryDurations)[number]["value"];
 
 interface Props {
   className?: ClassNameValue;
+  label?: boolean;
 }
 
-export const SearchItineraryDurations = ({ className }: Props) => {
+export const SearchItineraryDurations = ({
+  label = true,
+  className,
+}: Props) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<ItineraryDuration>("*");
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="input"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("w-full h-full bg-gray-100 justify-between", className)}
-        >
-          {value
-            ? itineraryDurations.find((item) => item.value === value)?.label
-            : "Duration"}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="p-0">
-        <Command>
-          <CommandInput placeholder="Search..." />
-          <CommandList>
-            <CommandEmpty>No items found.</CommandEmpty>
-            <CommandGroup>
-              {itineraryDurations.map((item) => (
-                <CommandItem
-                  key={item.value}
-                  value={item.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === item.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {item.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <>
+      {label && <label className="text-sm font-semibold">Duration</label>}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="input"
+            role="combobox"
+            aria-expanded={open}
+            className={cn("w-full h-full justify-between ", className)}
+          >
+            {value
+              ? itineraryDurations.find((item) => item.value === value)?.label
+              : "Duration"}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandInput placeholder="Search..." />
+            <CommandList>
+              <CommandEmpty>No items found.</CommandEmpty>
+              <CommandGroup>
+                {itineraryDurations.map((item) => (
+                  <CommandItem
+                    key={item.value}
+                    value={item.value}
+                    onSelect={(currentValue) => {
+                      const newValue = currentValue as ItineraryDuration;
+                      setValue(newValue === value ? "*" : newValue);
+                      setOpen(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === item.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {item.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 };
