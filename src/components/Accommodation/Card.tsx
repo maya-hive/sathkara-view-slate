@@ -31,9 +31,15 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     <div className="relative pt-[260px] border rounded-lg overflow-hidden flex flex-col justify-between">
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
         <div className="border-b">
-          <Link href={slug}>
-            <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
+          <Link href={`/accommodation-categories/${data.category.slug}`}>
+            <div className="text-md">{data.category.name}</div>
           </Link>
+          <Link href={slug}>
+            <h3 className="mt-1 pb-2 font-bold text-2xl">{data.name}</h3>
+          </Link>
+        </div>
+        <div className="mt-3 flex flex-col h-full">
+          <p className="text-md">{data.short_description}</p>
         </div>
         <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
           <Link
@@ -53,7 +59,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         width={500}
         height={400}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-black to-[70%]"></div>
+      <div className="absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-transparent to-black to-[45%]"></div>
     </div>
   );
 };
@@ -72,6 +78,7 @@ const fetchData = async (
         "listing_image",
         "short_description",
         "destination",
+        "category",
       ],
     },
     { arrayFormat: "bracket" }
@@ -115,6 +122,7 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
+      category: z.object({ name: z.string(), slug: z.string() }),
       destination: z.object({
         name: z.string(),
         slug: z.string(),

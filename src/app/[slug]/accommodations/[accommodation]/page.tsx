@@ -11,6 +11,7 @@ import { toBase64 } from "@/utils/base64";
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -101,6 +102,13 @@ const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           <h1 className="text-3xl text-white">{data?.name}</h1>
         </div>
       </div>
+      <div className="flex items-center gap-3">
+        <Link href={`/accommodation-categories/${data?.category.slug}`}>
+          <span className="h-fit border rounded border-white text-white py-1 px-3 font-semibold text-xs uppercase">
+            {data?.category.name}
+          </span>
+        </Link>
+      </div>
     </div>
   </div>
 );
@@ -140,6 +148,8 @@ const fetchData = async (
         "description",
         "short_description",
         "city",
+        "destination",
+        "category",
         "meta_title",
         "meta_description",
       ],
@@ -190,6 +200,12 @@ const Schema = z.object({
     .nullable()
     .optional(),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),
+  category: z.object({ name: z.string(), slug: z.string() }),
+  destination: z.object({
+    name: z.string(),
+    slug: z.string(),
+    color: z.string(),
+  }),
 });
 
 const ApiResponseSchema = z.object({
