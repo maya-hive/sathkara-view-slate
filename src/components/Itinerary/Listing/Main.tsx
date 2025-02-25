@@ -1,13 +1,12 @@
-import { Suspense } from "react";
 import queryString from "query-string";
 import { z } from "zod";
 
-import { type PaginationLink, Pagination } from "@/components/Pagination";
-import { Banner } from "@/components/Banner";
+import { type PaginationLink } from "@/components/Pagination";
 import { ItineraryCard } from "@/components/Itinerary/Card";
-import { ItineraryListingAside as Aside } from "./Aside";
 import { SearchItienraries } from "@/components/Search/Itineraries";
-import { Button } from "@/components/ui/button";
+import { ListView } from "@/components/ListView";
+
+import { ItineraryListingAside as Aside } from "./Aside";
 
 interface Props {
   data: Itinerary[] | null;
@@ -40,30 +39,19 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
   const { data: pageData } = await fetchData();
 
   return (
-    <article>
-      <Banner content={pageData?.page_content} image={pageData?.banner_image} />
-      <div className="container mx-auto">
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-[280px_auto] gap-5">
-          <Aside />
-          <div>
-            <div className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
-              <SearchItienraries className="bg-white h-100" />
-              <Button variant="secondary" size="lg">
-                Search
-              </Button>
-            </div>
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-              <Suspense fallback={<span>Loading</span>}>
-                {data?.map((item) => (
-                  <ItineraryCard key={item.id} slug={item.slug} />
-                ))}
-              </Suspense>
-            </div>
-            <Pagination prefix={destination} links={links} />
-          </div>
-        </div>
-      </div>
-    </article>
+    <ListView
+      links={links}
+      banner={{
+        image: pageData?.banner_image,
+        content: pageData?.page_content,
+      }}
+      destination={destination}
+      aside={<Aside />}
+      search={<SearchItienraries className="bg-white h-100" />}
+      cards={data.map((item) => (
+        <ItineraryCard key={item.id} slug={item.slug} />
+      ))}
+    />
   );
 };
 

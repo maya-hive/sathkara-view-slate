@@ -1,26 +1,17 @@
-import { Suspense } from "react";
 import queryString from "query-string";
 import { z } from "zod";
 
-import { type PaginationLink, Pagination } from "@/components/Pagination";
-import { Banner } from "@/components/Banner";
+import { type PaginationLink } from "@/components/Pagination";
 import { DestinationCard } from "@/components/Destination/Card";
+import { ListView } from "@/components/ListView";
+import { type BaseResource } from "@/types/ApiResponse.types";
 
 interface Props {
-  data: Destination[] | null;
+  data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
 }
-
-type Destination = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-};
 
 export const DestinationListing = async ({ data, links }: Props) => {
   if (!data?.length) return null;
@@ -28,21 +19,16 @@ export const DestinationListing = async ({ data, links }: Props) => {
   const { data: pageData } = await fetchData();
 
   return (
-    <article>
-      <Banner content={pageData?.page_content} image={pageData?.banner_image} />
-      <div className="container mx-auto">
-        <div className="mt-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            <Suspense fallback={<span>Loading</span>}>
-              {data?.map((item) => (
-                <DestinationCard key={item.id} slug={item.slug} />
-              ))}
-            </Suspense>
-          </div>
-          <Pagination links={links} />
-        </div>
-      </div>
-    </article>
+    <ListView
+      links={links}
+      banner={{
+        image: pageData?.banner_image,
+        content: pageData?.page_content,
+      }}
+      cards={data.map((item) => (
+        <DestinationCard key={item.id} slug={item.slug} />
+      ))}
+    />
   );
 };
 
