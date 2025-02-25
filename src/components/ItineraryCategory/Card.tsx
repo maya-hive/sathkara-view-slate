@@ -10,7 +10,7 @@ interface Props {
   slug: string;
 }
 
-export const AccommodationCard = async ({ slug }: Props) => {
+export const ItineraryCategoryCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
@@ -25,28 +25,22 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.destination.slug}/accommodations/${data.slug}`;
+  const slug = `/itinerary-categories/${data.slug}`;
 
   return (
     <div className="relative pt-[260px] rounded-lg overflow-hidden flex flex-col justify-between">
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
-        <div className="border-b">
-          <Link href={`/accommodation-categories/${data.category.slug}`}>
-            <div className="text-md">{data.category.name}</div>
-          </Link>
-          <Link href={slug}>
-            <h3 className="mt-1 pb-2 font-bold text-2xl">{data.name}</h3>
-          </Link>
-        </div>
-        <div className="mt-3 flex flex-col h-full">
-          <p className="text-md">{data.short_description}</p>
-        </div>
-        <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
+        <Link href={slug}>
+          <h3 className="mt-2 pb-2 font-bold text-center text-2xl">
+            {data.name}
+          </h3>
+        </Link>
+        <div className="w-100 pt-2 text-white text-md text-center font-semibold uppercase">
           <Link
             href={slug}
             className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center"
           >
-            Learn More About The Accommodation
+            Learn More About The Category
           </Link>
         </div>
       </div>
@@ -76,16 +70,13 @@ const fetchData = async (
         "slug",
         "featured_image",
         "listing_image",
-        "short_description",
-        "destination",
-        "category",
       ],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/accommodation/${slug}?${query}`,
+    `${process.env.API_URL}/modules/itineraryCategory/${slug}?${query}`,
     {
       next: {
         tags: ["global"],
@@ -119,15 +110,8 @@ const ApiResponseSchema = z.object({
       status: z.number(),
       name: z.string(),
       slug: z.string(),
-      short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
-      category: z.object({ name: z.string(), slug: z.string() }),
-      destination: z.object({
-        name: z.string(),
-        slug: z.string(),
-        color: z.string(),
-      }),
     })
     .nullable(),
 });

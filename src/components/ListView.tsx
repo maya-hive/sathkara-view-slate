@@ -53,7 +53,7 @@ export const ListView = ({
             {cards.map((card, idx) => (
               <Suspense
                 key={idx}
-                fallback={<Skeleton className="h-[500px] rounded-md" />}
+                fallback={<Skeleton className="h-[400px] rounded-md" />}
               >
                 {card}
               </Suspense>
