@@ -13,7 +13,7 @@ export const Header = async () => {
   }
 
   return (
-    <header className="border-b">
+    <header className="border-b shadow-xl lg:sticky top-0 z-50">
       <Navigation
         socials={data.social_media}
         phone={data.contact_details?.itinerary_inquiry_phone ?? null}
@@ -21,7 +21,7 @@ export const Header = async () => {
         <Link href="/">
           {data.site_logo && (
             <Image
-              className="rounded w-full h-[60px] object-cover"
+              className="rounded w-full h-[60px] object-contain"
               src={data.site_logo}
               alt={data.site_name ?? "logo"}
               width={140}
