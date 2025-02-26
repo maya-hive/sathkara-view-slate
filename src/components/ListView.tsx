@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface Props {
   banner: SkeletonProps["banner"];
@@ -13,7 +14,9 @@ interface Props {
   links: PaginationLink[] | null;
   aside?: React.ReactNode | null;
   search?: React.ReactNode | null;
+  content?: string | null;
   destination?: string;
+  resource?: string;
 }
 
 export const ListView = ({
@@ -23,11 +26,22 @@ export const ListView = ({
   destination,
   aside,
   search,
+  resource,
+  content,
 }: Props) => {
   if (!cards?.length) return null;
 
   return (
     <ListViewSkeleton banner={banner}>
+      {content && (
+        <div className="mt-12 prose">
+          <h3>Description</h3>
+          <div
+            dangerouslySetInnerHTML={{ __html: content }}
+            className="prose"
+          />
+        </div>
+      )}
       <div
         className={cn(
           { "grid grid-cols-1 gap-5 md:grid-cols-[280px_auto]": aside },
@@ -39,9 +53,11 @@ export const ListView = ({
           {search && (
             <div className="mb-6 rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
               {search}
-              <Button variant="secondary" size="lg">
-                Search
-              </Button>
+              <Link href={`/${resource ?? ""}`}>
+                <Button variant="secondary" size="lg">
+                  Search
+                </Button>
+              </Link>
             </div>
           )}
           <div

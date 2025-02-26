@@ -138,7 +138,7 @@ export default async function Page({
               <ActivityInquiryForm />
             </div>
           </div>
-          <div className="sticky top-10">
+          <div className="top-[150px]">
             <ItineraryInquirySidebarCTA />
           </div>
         </div>

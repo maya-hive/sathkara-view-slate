@@ -13,7 +13,7 @@ interface Props {
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination: string;
+  destination?: string;
 }
 
 type Destination = {
@@ -46,6 +46,7 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
         content: pageData?.page_content,
       }}
       destination={destination}
+      resource="itineraries"
       aside={<Aside />}
       search={<SearchItienraries className="bg-white h-100" />}
       cards={data.map((item) => (

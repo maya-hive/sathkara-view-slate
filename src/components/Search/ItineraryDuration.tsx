@@ -70,10 +70,7 @@ interface Props {
   label?: boolean;
 }
 
-export const SearchItineraryDurations = ({
-  label = true,
-  className,
-}: Props) => {
+export const SearchItineraryDuration = ({ label = true, className }: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<ItineraryDuration>("*");
 

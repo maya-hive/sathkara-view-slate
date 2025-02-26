@@ -1,22 +1,17 @@
-import Image from "next/image";
 import queryString from "query-string";
 import { z } from "zod";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Banner } from "@/components/Banner";
-import { Gallery } from "@/components/Gallery";
-import { shimmer } from "@/components/Shimmer";
-import { toBase64 } from "@/utils/base64";
-import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { RichText } from "@/components/RichText";
-import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
+import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 
 export default async function Page({
   params,
 }: {
-  params: Promise<{ city: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).city;
+  const slug = (await params).slug;
   const { data } = await fetchData(slug);
 
   if (!data) {
@@ -28,51 +23,18 @@ export default async function Page({
       <Banner image={data.featured_image} />
       <TopBar data={data} />
       <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row gap-12 md:pt-12">
-          <div className="md:min-w-[calc(100%-400px)] xl:max-w-[calc(100%-400px)]">
-            <div className="mt-8">
+        <div className="mt-8">
+          <div className="mt-4">
+            {data.description && (
               <div className="mt-4">
-                {data.description && (
-                  <div className="mt-4">
-                    <h2 className="text-xl font-bold mb-4">About The City</h2>
-                    <RichText content={data.description} />
-                  </div>
-                )}
-                {data?.gallery && data?.gallery?.length > 0 && (
-                  <div className="mt-12">
-                    <h3 className="text-lg font-semibold mb-4">Gallery</h3>
-                    <Gallery>
-                      {(Array.isArray(data.gallery)
-                        ? data.gallery
-                        : [data.gallery]
-                      ).map((image, idx) => (
-                        <Image
-                          key={idx}
-                          src={
-                            image ??
-                            `data:image/svg+xml;base64,${toBase64(
-                              shimmer(700, 475)
-                            )}`
-                          }
-                          placeholder={`data:image/svg+xml;base64,${toBase64(
-                            shimmer(700, 475)
-                          )}`}
-                          alt={`Gallery image ${idx}`}
-                          width={800}
-                          height={500}
-                          priority={false}
-                        />
-                      ))}
-                    </Gallery>
-                  </div>
-                )}
+                <h2 className="text-xl font-bold mb-4">
+                  About The Itinerary Category
+                </h2>
+                <RichText content={data.description} />
               </div>
-              <ItineraryInquiryForm />
-            </div>
+            )}
           </div>
-          <div className="top-[150px]">
-            <ItineraryInquirySidebarCTA />
-          </div>
+          <ItineraryInquiryForm />
         </div>
       </div>
     </article>
@@ -97,8 +59,9 @@ export async function generateStaticParams() {
     { fields: ["slug"], limit: "1000" },
     { arrayFormat: "bracket" }
   );
+
   const response = await fetch(
-    `${process.env.API_URL}/modules/city/index?${query}`
+    `${process.env.API_URL}/modules/itineraryCategory/index?${query}`
   );
 
   if (!response.ok) {
@@ -109,7 +72,7 @@ export async function generateStaticParams() {
   const { data } = await response.json();
 
   return data.map(({ slug }: { slug: string }) => ({
-    city: slug,
+    slug,
   }));
 }
 
@@ -123,10 +86,7 @@ const fetchData = async (
         "name",
         "slug",
         "featured_image",
-        "gallery",
         "description",
-        "short_description",
-        "destination",
         "meta_title",
         "meta_description",
       ],
@@ -135,7 +95,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/city/${slug}?${query}`,
+    `${process.env.API_URL}/modules/itineraryCategory/${slug}?${query}`,
     {
       next: {
         tags: ["global"],
@@ -167,16 +127,10 @@ const Schema = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  short_description: z.string().nullable(),
   meta_title: z.string().nullable(),
   meta_description: z.string().nullable(),
   featured_image: z.string(),
   listing_image: z.string().nullable().optional(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
-  destination: z.object({ name: z.string(), slug: z.string() }).nullable(),
 });
 
 const ApiResponseSchema = z.object({

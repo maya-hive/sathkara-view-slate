@@ -273,7 +273,7 @@ const tabs = [
 ];
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div className="sticky top-10">
+  <div className="top-[150px]">
     <div className="rounded-lg bg-primary p-6">
       <div className="text-center border-b border-slate-400 px-4 pb-4">
         <h3 className="text-3xl text-slate-900 font-semibold">

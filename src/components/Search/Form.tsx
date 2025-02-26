@@ -1,6 +1,6 @@
 import { SearchItienraries } from "./Itineraries";
 import { SearchItineraryCategories } from "./ItineraryCategories";
-import { SearchItineraryDurations } from "./ItineraryDurations";
+import { SearchItineraryDuration } from "./ItineraryDuration";
 import Link from "next/link";
 
 interface Props {
@@ -23,7 +23,7 @@ export const SearchForm = ({ title }: Props) => (
         />
       </div>
       <div className="flex-1 w-full">
-        <SearchItineraryDurations
+        <SearchItineraryDuration
           label={false}
           className="h-full bg-gray-100 border-none"
         />
