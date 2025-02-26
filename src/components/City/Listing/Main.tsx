@@ -36,7 +36,7 @@ export const CityListing = async ({ data, destination, links }: Props) => {
       links={links}
       banner={{
         image: pageData?.banner_image,
-        content: pageData?.page_content,
+        title: pageData?.page_title,
       }}
       destination={destination}
       aside={<Aside />}
@@ -86,6 +86,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
+      page_title: z.string().nullable().optional(),
       page_content: z.string().nullable().optional(),
       banner_image: z.string().nullable().optional(),
     })

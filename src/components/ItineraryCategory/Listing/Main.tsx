@@ -5,6 +5,7 @@ import { type PaginationLink } from "@/components/Pagination";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { ItineraryCard } from "@/components/Itinerary/Card";
+import { SearchItineraries } from "@/components/Search/Itineraries";
 import { ItineraryListingAside as Aside } from "@/components/Itinerary/Listing/Aside";
 
 interface Props {
@@ -29,10 +30,11 @@ export const ItineraryCategoryListing = async ({
       links={links}
       banner={{
         image: pageData?.featured_image,
-        content: "<h1>" + pageData?.name + "</h1>",
+        title: pageData?.name,
       }}
       content={pageData?.description}
       aside={<Aside />}
+      search={<SearchItineraries className="bg-white h-100" />}
       cards={data.map((item) => (
         <ItineraryCard key={item.id} slug={item.slug} />
       ))}

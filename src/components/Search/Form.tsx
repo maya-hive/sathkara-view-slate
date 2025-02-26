@@ -1,4 +1,4 @@
-import { SearchItienraries } from "./Itineraries";
+import { SearchItineraries } from "./Itineraries";
 import { SearchItineraryCategories } from "./ItineraryCategories";
 import { SearchItineraryDuration } from "./ItineraryDuration";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export const SearchForm = ({ title }: Props) => (
     </h2>
     <div className="w-full flex flex-col xl:flex-row gap-3">
       <div className="flex-1 w-full xl:min-w-[500px]">
-        <SearchItienraries />
+        <SearchItineraries />
       </div>
       <div className="flex-1 w-full xl:min-w-[350px]">
         <SearchItineraryCategories

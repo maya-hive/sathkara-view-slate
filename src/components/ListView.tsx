@@ -35,7 +35,6 @@ export const ListView = ({
     <ListViewSkeleton banner={banner}>
       {content && (
         <div className="mt-12 prose">
-          <h3>Description</h3>
           <div
             dangerouslySetInnerHTML={{ __html: content }}
             className="prose"
@@ -88,14 +87,14 @@ type SkeletonProps = {
 };
 
 type BannerData = {
-  content?: string | null;
+  title?: string | null;
   image?: string | null;
 };
 
 const ListViewSkeleton = ({ children, banner }: SkeletonProps) => {
   return (
     <article>
-      <Banner content={banner?.content} image={banner?.image} />
+      <Banner title={banner?.title} image={banner?.image} />
       <div className="container mx-auto">{children}</div>
     </article>
   );

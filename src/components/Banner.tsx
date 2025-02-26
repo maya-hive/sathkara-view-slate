@@ -8,7 +8,7 @@ import { shimmer } from "@/components/Shimmer";
 interface Props {
   image?: string | null;
   thumbnail?: string | null;
-  content?: string | null;
+  title?: string | null;
   children?: React.ReactNode;
 }
 
@@ -24,16 +24,16 @@ export const Banner = (props: Props) => {
   return <Default {...props} />;
 };
 
-const Default = ({ image, thumbnail, content }: Props) => (
+const Default = ({ image, thumbnail, title }: Props) => (
   <div className="relative pt-[400px]">
     <div>
       <Media image={image} thumbnail={thumbnail} />
     </div>
-    {content && <MetaBar content={content} />}
+    {title && <MetaBar title={title} />}
   </div>
 );
 
-const Content = ({ image, children, thumbnail, content }: Props) => (
+const Content = ({ image, children, thumbnail, title }: Props) => (
   <div className="relative py-[100px]">
     <div>
       <Media image={image} thumbnail={thumbnail} />
@@ -46,7 +46,7 @@ const Content = ({ image, children, thumbnail, content }: Props) => (
         </>
       )}
     </div>
-    {content && <MetaBar content={content} />}
+    {title && <MetaBar title={title} />}
   </div>
 );
 
@@ -75,16 +75,13 @@ const Media = ({ image, thumbnail }: Props) => (
   </>
 );
 
-const MetaBar = ({ content }: { content: string }) => (
+const MetaBar = ({ title }: { title: string }) => (
   <div className="relative z-10 bg-primary">
     <div className="container mx-auto py-4">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />
-          <div
-            className="text-white [&>h1]:text-3xl"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <h1 className="text-white text-3xl">{title}</h1>
         </div>
       </div>
     </div>

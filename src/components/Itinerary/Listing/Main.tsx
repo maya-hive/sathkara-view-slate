@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { type PaginationLink } from "@/components/Pagination";
 import { ItineraryCard } from "@/components/Itinerary/Card";
-import { SearchItienraries } from "@/components/Search/Itineraries";
+import { SearchItineraries } from "@/components/Search/Itineraries";
 import { ListView } from "@/components/ListView";
 
 import { ItineraryListingAside as Aside } from "./Aside";
@@ -43,12 +43,12 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
       links={links}
       banner={{
         image: pageData?.banner_image,
-        content: pageData?.page_content,
+        title: pageData?.page_content,
       }}
       destination={destination}
       resource="itineraries"
       aside={<Aside />}
-      search={<SearchItienraries className="bg-white h-100" />}
+      search={<SearchItineraries className="bg-white h-100" />}
       cards={data.map((item) => (
         <ItineraryCard key={item.id} slug={item.slug} />
       ))}

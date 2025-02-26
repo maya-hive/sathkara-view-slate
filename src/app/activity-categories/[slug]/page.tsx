@@ -1,101 +1,51 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { Breadcrumb } from "@/components/Breadcrumb";
-import { Banner } from "@/components/Banner";
-import { RichText } from "@/components/RichText";
-import { ActivityInquiryForm } from "@/components/Activity/Inquiry/Form";
+import { ActivityCategoryListing } from "@/components/ActivityCategory/Listing/Main";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const slug = (await params).slug;
-  const { data } = await fetchData(slug);
+type Args = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+export default async function Page({ params }: Args) {
+  const { slug } = await params;
+
+  const data = await fetchData("1");
 
   if (!data) {
     return null;
   }
 
-  return (
-    <article>
-      <Banner image={data.featured_image} />
-      <TopBar data={data} />
-      <div className="container mx-auto">
-        <div className="mt-8">
-          <div className="mt-4">
-            {data.description && (
-              <div className="mt-4">
-                <h2 className="text-xl font-bold mb-4">
-                  About The Activity Category
-                </h2>
-                <RichText content={data.description} />
-              </div>
-            )}
-          </div>
-          <ActivityInquiryForm />
-        </div>
-      </div>
-    </article>
-  );
-}
-
-const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div className="bg-primary">
-    <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between gap-8">
-      <div className="flex items-center gap-8">
-        <div className="font-semibold">
-          <Breadcrumb />
-          <h1 className="text-3xl text-white">{data?.name}</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-export async function generateStaticParams() {
-  const query = queryString.stringify(
-    { fields: ["slug"], limit: "1000" },
-    { arrayFormat: "bracket" }
-  );
-
-  const response = await fetch(
-    `${process.env.API_URL}/modules/activityCategory/index?${query}`
-  );
-
-  if (!response.ok) {
-    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
-    throw new Error(errorMessage);
-  }
-
-  const { data } = await response.json();
-
-  return data.map(({ slug }: { slug: string }) => ({
-    slug,
-  }));
+  return <ActivityCategoryListing category={slug} {...data} />;
 }
 
 const fetchData = async (
-  slug: string
+  id: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: [
-        "status",
+        "id",
         "name",
+        "status",
         "slug",
         "featured_image",
-        "description",
-        "meta_title",
-        "meta_description",
+        "listing_image",
+        "short_description",
+        "duration",
+        "best_time",
+        "approximate_charge",
+        "charge_description",
+        "destination",
       ],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/activityCategory/${slug}?${query}`,
+    `${process.env.API_URL}/modules/activity/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],
@@ -123,16 +73,35 @@ const fetchData = async (
 };
 
 const Schema = z.object({
+  id: z.number(),
   status: z.number(),
   name: z.string(),
   slug: z.string(),
-  description: z.string().nullable(),
-  meta_title: z.string().nullable(),
-  meta_description: z.string().nullable(),
+  short_description: z.string(),
   featured_image: z.string(),
   listing_image: z.string().nullable().optional(),
+  duration: z.string().nullable(),
+  best_time: z.string().nullable(),
+  approximate_charge: z.string().nullable(),
+  charge_description: z.string().nullable().optional(),
+  destination: z.object({
+    name: z.string(),
+    slug: z.string(),
+    color: z.string(),
+  }),
 });
 
 const ApiResponseSchema = z.object({
-  data: Schema.nullable(),
+  data: z.array(Schema).nullable(),
+  current_page: z.number().nullable(),
+  last_page: z.number().nullable(),
+  links: z
+    .array(
+      z.object({
+        url: z.string().nullable(),
+        label: z.string(),
+        active: z.boolean(),
+      })
+    )
+    .nullable(),
 });

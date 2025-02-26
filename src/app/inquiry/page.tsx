@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <article>
-      <Banner image={data?.banner_image} content={data?.banner_content} />
+      <Banner image={data?.banner_image} title={data?.page_title} />
       <section className="container mx-auto">
         <ItineraryInquiryForm />
       </section>
@@ -20,7 +20,7 @@ export default async function Page() {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["banner_content", "banner_image"],
+      fields: ["page_content", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );
@@ -56,7 +56,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
-      banner_content: z.string().nullable().optional(),
+      page_title: z.string().nullable().optional(),
       banner_image: z.string().nullable().optional(),
     })
     .nullable(),

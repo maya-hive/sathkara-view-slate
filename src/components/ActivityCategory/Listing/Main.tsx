@@ -2,46 +2,64 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { type PaginationLink } from "@/components/Pagination";
-import { ActivityCategoryCard } from "@/components/ActivityCategory/Card";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
+import { ActivityCard } from "@/components/Activity/Card";
+import { ActivityListingAside as Aside } from "@/components/Activity/Listing/Aside";
 
 interface Props {
   data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
+  category: string;
 }
 
-export const ActivityCategoryListing = async ({ data, links }: Props) => {
+export const ActivityCategoryListing = async ({
+  data,
+  links,
+  category,
+}: Props) => {
   if (!data?.length) return null;
 
-  const { data: pageData } = await fetchData();
+  const { data: pageData } = await fetchData(category);
 
   return (
     <ListView
       links={links}
       banner={{
-        image: pageData?.banner_image,
-        content: pageData?.page_content,
+        image: pageData?.featured_image,
+        title: pageData?.name,
       }}
+      content={pageData?.description}
+      aside={<Aside />}
       cards={data.map((item) => (
-        <ActivityCategoryCard key={item.id} slug={item.slug} />
+        <ActivityCard key={item.id} slug={item.slug} />
       ))}
     />
   );
 };
 
-const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
+const fetchData = async (
+  slug: string
+): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_content", "banner_image"],
+      fields: [
+        "status",
+        "name",
+        "slug",
+        "featured_image",
+        "description",
+        "meta_title",
+        "meta_description",
+      ],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_activity_category_listing?${query}`,
+    `${process.env.API_URL}/modules/activityCategory/${slug}?${query}`,
     {
       next: {
         tags: ["global"],
@@ -68,11 +86,17 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   }
 };
 
+const Schema = z.object({
+  status: z.number(),
+  name: z.string(),
+  slug: z.string(),
+  description: z.string().nullable(),
+  meta_title: z.string().nullable(),
+  meta_description: z.string().nullable(),
+  featured_image: z.string(),
+  listing_image: z.string().nullable().optional(),
+});
+
 const ApiResponseSchema = z.object({
-  data: z
-    .object({
-      page_content: z.string().nullable().optional(),
-      banner_image: z.string().nullable().optional(),
-    })
-    .nullable(),
+  data: Schema.nullable(),
 });

@@ -9,7 +9,7 @@ interface Props {
   className?: ClassNameValue;
 }
 
-export const SearchItienraries = ({ className }: Props) => {
+export const SearchItineraries = ({ className }: Props) => {
   return (
     <Input
       placeholder="Find Your Perfect Itinerary..."
