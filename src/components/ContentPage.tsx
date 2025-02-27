@@ -1,19 +1,24 @@
 import queryString from "query-string";
+import Image from "next/image";
+import Link from "next/link";
 import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
 import { RichText } from "@/components/RichText";
-import Image from "next/image";
 import { toBase64 } from "@/utils/base64";
-import { shimmer } from "./Shimmer";
+import { shimmer } from "@/components/Shimmer";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface Args {
-  id: string;
+  id: number;
+  slug: string;
+  status: number;
+  title: string;
 }
 
-export const ContentPage = async ({ id }: Args) => {
-  const { data } = await fetchData(id);
+export const ContentPage = async ({ id, title }: Args) => {
+  const { data } = await fetchData(id.toString());
 
   if (!data) {
     return null;
@@ -21,7 +26,7 @@ export const ContentPage = async ({ id }: Args) => {
 
   return (
     <article>
-      <Banner image={data.featured_image} title={data.page_title} />
+      <Banner image={data.featured_image} title={title} />
       {data.default_content && (
         <>
           {data.default_content.map((section, idx) => {
@@ -30,16 +35,17 @@ export const ContentPage = async ({ id }: Args) => {
             return (
               <section key={idx} className="container mx-auto my-20">
                 <div className="grid grid-cols-12 gap-6">
-                  <div
-                    className={cn(
-                      "col-span-6",
-                      isImageRight ? "order-2" : "order-1"
-                    )}
-                  >
-                    {section?.image && (
-                      <div className="relative h-[100%]">
+                  {section?.image && (
+                    <div
+                      className={cn(
+                        "md:col-span-6",
+                        isImageRight ? "order-2" : "order-1",
+                        "col-span-12"
+                      )}
+                    >
+                      <div className="relative pt-[100%] md:pt-0 h-[100%]">
                         <Image
-                          className="w-full h-full object-cover absolute top-0 left-0 rounded-lg"
+                          className="w-full h-full object-cover absolute top-0 left-0 md:rounded-lg"
                           src={section.image}
                           alt={"section " + idx}
                           placeholder={`data:image/svg+xml;base64,${toBase64(
@@ -50,16 +56,26 @@ export const ContentPage = async ({ id }: Args) => {
                           height={600}
                         />
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   <div
                     className={cn(
-                      "col-span-6 py-16",
-                      isImageRight ? "order-1" : "order-2"
+                      section?.image
+                        ? "md:col-span-6 md:py-20"
+                        : "md:col-span-12",
+                      isImageRight ? "order-1" : "order-2",
+                      "col-span-12"
                     )}
                   >
                     {section?.content && (
                       <RichText content={section?.content} />
+                    )}
+                    {section?.link_url && (
+                      <Link href={section.link_url} className="block mt-2">
+                        <Button variant="link" className="px-0">
+                          {section.link_title}
+                        </Button>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -77,7 +93,7 @@ const fetchData = async (
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_title", "featured_image", "default_content"],
+      fields: ["featured_image", "default_content"],
     },
     { arrayFormat: "bracket" }
   );
@@ -124,7 +140,6 @@ const Schema = z
 const ApiResponseSchema = z.object({
   data: z
     .object({
-      page_title: z.string().nullable().optional(),
       default_content: z.array(Schema).nullable().optional(),
       featured_image: z.string().nullable().optional(),
     })

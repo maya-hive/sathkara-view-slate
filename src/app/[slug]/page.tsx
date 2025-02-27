@@ -23,7 +23,7 @@ export default async function Page({ params }: Args) {
   const destination = destinations.data?.find((page) => page.slug === slug);
 
   if (contentPage) {
-    return <ContentPage id={contentPage.id.toString()} />;
+    return <ContentPage {...contentPage} />;
   }
 
   if (destination) {

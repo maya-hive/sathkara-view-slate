@@ -43,8 +43,9 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
       links={links}
       banner={{
         image: pageData?.banner_image,
-        title: pageData?.page_content,
+        title: pageData?.page_title,
       }}
+      content={pageData?.page_content}
       destination={destination}
       resource="itineraries"
       aside={<Aside />}
@@ -59,7 +60,7 @@ export const ItineraryListing = async ({ data, destination, links }: Props) => {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_content", "banner_image"],
+      fields: ["page_title", "page_content", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );
@@ -95,6 +96,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
+      page_title: z.string().nullable().optional(),
       page_content: z.string().nullable().optional(),
       banner_image: z.string().nullable().optional(),
     })

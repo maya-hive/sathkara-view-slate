@@ -42,6 +42,7 @@ export const AccommodationListing = async ({
         image: pageData?.banner_image,
         title: pageData?.page_title,
       }}
+      content={pageData?.page_content}
       destination={destination}
       aside={<Aside />}
       cards={data.map((item) => (
