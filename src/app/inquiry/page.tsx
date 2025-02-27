@@ -20,13 +20,13 @@ export default async function Page() {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_content", "banner_image"],
+      fields: ["page_title", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_contact?${query}`,
+    `${process.env.API_URL}/settings/page_inquiry?${query}`,
     {
       next: {
         tags: ["global"],

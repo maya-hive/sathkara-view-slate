@@ -70,7 +70,7 @@ export default async function Page({
               <ItineraryInquiryForm />
             </div>
           </div>
-          <div className="top-[150px]">
+          <div className="top-[150px] w-full">
             <ItineraryInquirySidebarCTA />
           </div>
         </div>

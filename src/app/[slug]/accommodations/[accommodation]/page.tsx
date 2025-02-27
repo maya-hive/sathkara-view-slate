@@ -4,7 +4,6 @@ import { z } from "zod";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Banner } from "@/components/Banner";
-import { CityCompactCard } from "@/components/City/CompactCard";
 import { Gallery } from "@/components/Gallery";
 import { shimmer } from "@/components/Shimmer";
 import { toBase64 } from "@/utils/base64";
@@ -42,16 +41,6 @@ export default async function Page({
                     <RichText content={data.description} />
                   </div>
                 )}
-                {data?.city && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Availbale City
-                    </h3>
-                    <div className="grid xl:grid-cols-4 gap-3 xl:gap-2">
-                      <CityCompactCard slug={data.city.slug} />
-                    </div>
-                  </div>
-                )}
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
@@ -84,8 +73,16 @@ export default async function Page({
               <ItineraryInquiryForm />
             </div>
           </div>
-          <div className="top-[150px]">
+          <div className="top-[150px] w-full">
             <ItineraryInquirySidebarCTA />
+            {data?.map && (
+              <div className="mt-8">
+                <div
+                  dangerouslySetInnerHTML={{ __html: data.map }}
+                  className="rounded-lg overflow-hidden [&>iframe]:w-full [&>iframe]:h-[460px]"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -147,6 +144,7 @@ const fetchData = async (
         "gallery",
         "description",
         "short_description",
+        "map",
         "city",
         "destination",
         "category",
@@ -199,6 +197,7 @@ const Schema = z.object({
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()
     .optional(),
+  map: z.string().nullable(),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),
   category: z.object({ name: z.string(), slug: z.string() }),
   destination: z.object({

@@ -18,7 +18,6 @@ import {
 import { PriceTag } from "@/components/PriceTag";
 import { ActivityInquiryForm } from "@/components/Activity/Inquiry/Form";
 import { RichText } from "@/components/RichText";
-import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 
 export default async function Page({
   params,
@@ -96,16 +95,6 @@ export default async function Page({
                     <RichText content={data.description} />
                   </div>
                 )}
-                {data?.city && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Availbale City
-                    </h3>
-                    <div className="grid xl:grid-cols-4 gap-3 xl:gap-2">
-                      <CityCompactCard slug={data.city.slug} />
-                    </div>
-                  </div>
-                )}
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
@@ -138,8 +127,17 @@ export default async function Page({
               <ActivityInquiryForm />
             </div>
           </div>
-          <div className="top-[150px]">
-            <ItineraryInquirySidebarCTA />
+          <div className="top-[150px] w-full">
+            {data?.city && (
+              <div>
+                <h3 className="mb-4 text-lg font-semibold">
+                  Activity Location
+                </h3>
+                <div className="w-100">
+                  <CityCompactCard slug={data.city.slug} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

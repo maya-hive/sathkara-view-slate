@@ -3,7 +3,6 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { CityCompactCard } from "@/components/City/CompactCard";
 import { Banner } from "@/components/Banner";
 import { Gallery } from "@/components/Gallery";
 import { shimmer } from "@/components/Shimmer";
@@ -11,6 +10,7 @@ import { toBase64 } from "@/utils/base64";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
+import { CityList } from "@/components/City/CityList";
 
 export default async function Page({
   params,
@@ -41,18 +41,9 @@ export default async function Page({
                     <RichText content={data.description} />
                   </div>
                 )}
-                {data?.cities && data?.cities?.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4">
-                      Availbale Cities
-                    </h3>
-                    <div className="grid xl:grid-cols-4 gap-3 xl:gap-2">
-                      {data.cities.map(({ slug }, idx) => (
-                        <CityCompactCard key={idx} slug={slug} />
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <div className="mt-8">
+                  <CityList cities={data.cities} destination={slug} />
+                </div>
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
@@ -85,7 +76,7 @@ export default async function Page({
               <ItineraryInquiryForm />
             </div>
           </div>
-          <div className="top-[150px]">
+          <div className="top-[150px] w-full">
             <ItineraryInquirySidebarCTA />
           </div>
         </div>

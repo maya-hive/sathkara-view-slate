@@ -2,7 +2,6 @@ import { SearchItineraryCategories } from "@/components/Search/ItineraryCategori
 import { SearchItineraryDestination } from "@/components/Search/ItineraryDestination";
 import { SearchItineraryDuration } from "@/components/Search/ItineraryDuration";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export const ItineraryListingAside = () => (
   <aside>
@@ -18,11 +17,9 @@ export const ItineraryListingAside = () => (
           <SearchItineraryDestination className="bg-white border" />
         </div>
         <div className="mt-2">
-          <Link href="/itineraries">
-            <Button variant="secondary" className="w-full">
-              Filter
-            </Button>
-          </Link>
+          <Button variant="secondary" className="w-full">
+            Filter
+          </Button>
         </div>
       </div>
     </div>

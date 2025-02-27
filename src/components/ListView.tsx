@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { Button } from "./ui/button";
-import Link from "next/link";
 
 interface Props {
   banner: SkeletonProps["banner"];
@@ -26,7 +25,6 @@ export const ListView = ({
   destination,
   aside,
   search,
-  resource,
   content,
 }: Props) => {
   if (!cards?.length) return null;
@@ -52,11 +50,9 @@ export const ListView = ({
           {search && (
             <div className="mb-6 rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
               {search}
-              <Link href={`/${resource ?? ""}`}>
-                <Button variant="secondary" size="lg">
-                  Search
-                </Button>
-              </Link>
+              <Button variant="secondary" size="lg">
+                Search
+              </Button>
             </div>
           )}
           <div
@@ -68,7 +64,7 @@ export const ListView = ({
             {cards.map((card, idx) => (
               <Suspense
                 key={idx}
-                fallback={<Skeleton className="h-[400px] rounded-md" />}
+                fallback={<Skeleton className="h-[550px] rounded-md" />}
               >
                 {card}
               </Suspense>

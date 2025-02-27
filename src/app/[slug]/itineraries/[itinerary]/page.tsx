@@ -16,6 +16,7 @@ import { toBase64 } from "@/utils/base64";
 import { ActivityCompactCard } from "@/components/Activity/CompactCard";
 import { ActivityCard } from "@/components/Activity/Card";
 import { RichText } from "@/components/RichText";
+import { CityList } from "@/components/City/CityList";
 
 export default async function Page({
   params,
@@ -205,20 +206,10 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
                       </div>
                     </div>
                   )}
-                  {cities && cities.length > 0 && (
-                    <div className="mt-3">
-                      <div className="text-md font-medium">Cities</div>
-                      <div className="mt-1 flex gap-2">
-                        {cities?.map(({ slug }, idx) => (
-                          <CityCompactCard
-                            key={idx}
-                            slug={slug}
-                            layout="horizontal"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  <CityList
+                    cities={cities}
+                    destination={data.destination.slug}
+                  />
                 </div>
               </div>
             )
@@ -273,7 +264,7 @@ const tabs = [
 ];
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div className="top-[150px]">
+  <div className="top-[150px] w-full">
     <div className="rounded-lg bg-primary p-6">
       <div className="text-center border-b border-slate-400 px-4 pb-4">
         <h3 className="text-3xl text-slate-900 font-semibold">
@@ -325,14 +316,14 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
         Plan your trip
       </Link>
     </div>
-    <div className="mt-8">
-      {data?.map && (
+    {data?.map && (
+      <div className="mt-8">
         <div
           dangerouslySetInnerHTML={{ __html: data.map }}
           className="rounded-lg overflow-hidden [&>iframe]:w-full [&>iframe]:h-[460px]"
         />
-      )}
-    </div>
+      </div>
+    )}
   </div>
 );
 
@@ -489,13 +480,11 @@ const Schema = z.object({
     .nullable()
     .optional(),
   tags: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
-  destination: z
-    .object({
-      name: z.string(),
-      slug: z.string(),
-      color: z.string(),
-    })
-    .nullable(),
+  destination: z.object({
+    name: z.string(),
+    slug: z.string(),
+    color: z.string(),
+  }),
   itinerary_milestones: z
     .array(
       z.object({
