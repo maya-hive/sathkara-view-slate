@@ -93,11 +93,16 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
         <div className="mt-12 col-span-6 xl:col-span-2">
           <h3 className="text-lg font-semibold mb-4">Tour Highlights</h3>
           <ul className="flex flex-col gap-3">
-            {data.tour_highlights.map(({ content }, idx) => (
-              <li key={idx} className="rounded-lg bg-sky-200 p-6">
-                <p className="text-md font-medium text-sky-800">{content}</p>
-              </li>
-            ))}
+            {data.tour_highlights.map(
+              ({ content }, idx) =>
+                content && (
+                  <li key={idx} className="rounded-lg bg-sky-200 p-6">
+                    <p className="text-md font-medium text-sky-800">
+                      {content}
+                    </p>
+                  </li>
+                )
+            )}
           </ul>
         </div>
       )}

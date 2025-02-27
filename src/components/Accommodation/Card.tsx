@@ -28,11 +28,22 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
   const slug = `/${data.destination.slug}/accommodations/${data.slug}`;
 
   return (
-    <div className="relative pt-[260px] rounded-lg overflow-hidden flex flex-col justify-between">
+    <Link
+      href={slug}
+      className="relative pt-[260px] rounded-lg overflow-hidden flex flex-col justify-between"
+    >
+      <div className="absolute top-0 right-4 z-10">
+        <h4
+          className="rounded-b text-white text-sm font-semibold w-fit py-2 px-5 uppercase"
+          style={{ backgroundColor: data.destination.color }}
+        >
+          {data.destination.name}
+        </h4>
+      </div>
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
         <div className="border-b">
           <Link href={`/accommodation-categories/${data.category.slug}`}>
-            <div className="text-md">{data.category.name}</div>
+            <div className="text-md font-semibold">{data.category.name}</div>
           </Link>
           <Link href={slug}>
             <h3 className="mt-1 pb-2 font-bold text-2xl">{data.name}</h3>
@@ -42,12 +53,9 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
           <p className="text-md">{data.short_description}</p>
         </div>
         <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
-          <Link
-            href={slug}
-            className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center"
-          >
+          <div className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center">
             Learn More About The Accommodation
-          </Link>
+          </div>
         </div>
       </div>
       <Image
@@ -60,7 +68,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         height={400}
       />
       <div className="absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-transparent to-black to-[45%]"></div>
-    </div>
+    </Link>
   );
 };
 
