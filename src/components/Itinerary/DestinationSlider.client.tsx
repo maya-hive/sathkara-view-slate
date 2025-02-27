@@ -28,6 +28,7 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
       </button>
       <Swiper
         modules={[Navigation, A11y]}
+        loop={true}
         spaceBetween={18}
         slidesPerView={3}
         breakpoints={{

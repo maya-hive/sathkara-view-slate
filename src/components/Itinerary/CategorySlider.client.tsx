@@ -19,6 +19,7 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
       <div className="container mx-auto">
         <Swiper
           modules={[Navigation, A11y]}
+          loop={true}
           spaceBetween={50}
           slidesPerView={1}
           onBeforeInit={(swiper) => {

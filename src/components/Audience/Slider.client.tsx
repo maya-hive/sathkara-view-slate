@@ -30,6 +30,7 @@ export const AudienceSliderClient = ({ children }: Props) => {
         modules={[Navigation, A11y]}
         spaceBetween={20}
         slidesPerView={2}
+        loop={true}
         breakpoints={{
           0: { slidesPerView: 1 },
           1024: { slidesPerView: 2 },
