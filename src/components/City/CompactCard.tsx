@@ -30,7 +30,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.destination.slug}/itineraries?city=${data.slug}`;
+  const slug = `/${data.destination.slug}/cities/${data.slug}`;
 
   return (
     <Link href={slug} className="rounded-md overflow-hidden">

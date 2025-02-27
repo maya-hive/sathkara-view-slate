@@ -356,12 +356,13 @@ const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
         </div>
       </div>
       <div className="flex items-center gap-3">
-        {data?.tags?.map(({ name, slug }, idx) => (
-          <Link key={idx} href={`/itineraries?tags[]=${slug}`}>
-            <span className="h-fit border rounded border-white text-white py-1 px-3 font-semibold text-xs uppercase">
-              {name}
-            </span>
-          </Link>
+        {data?.tags?.map(({ name }, idx) => (
+          <span
+            key={idx}
+            className="h-fit border rounded border-white text-white py-1 px-3 font-semibold text-xs uppercase"
+          >
+            {name}
+          </span>
         ))}
       </div>
     </div>

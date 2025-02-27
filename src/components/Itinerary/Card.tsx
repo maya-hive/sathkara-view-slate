@@ -100,12 +100,13 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               {data.short_description}
             </p>
             <div className="mt-2 flex gap-3">
-              {data?.tags?.map(({ name, slug }, idx) => (
-                <Link key={idx} href={`/itineraries?tags[]=${slug}`}>
-                  <span className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase">
-                    {name}
-                  </span>
-                </Link>
+              {data?.tags?.map(({ name }, idx) => (
+                <span
+                  key={idx}
+                  className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+                >
+                  {name}
+                </span>
               ))}
             </div>
           </div>
