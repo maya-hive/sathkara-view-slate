@@ -51,7 +51,7 @@ export const CityListing = async ({ data, destination, links }: Props) => {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_content", "banner_image"],
+      fields: ["page_title", "page_content", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );

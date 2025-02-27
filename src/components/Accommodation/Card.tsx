@@ -42,12 +42,8 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
       </div>
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
         <div className="border-b">
-          <Link href={`/accommodation-categories/${data.category.slug}`}>
-            <div className="text-md font-semibold">{data.category.name}</div>
-          </Link>
-          <Link href={slug}>
-            <h3 className="mt-1 pb-2 font-bold text-2xl">{data.name}</h3>
-          </Link>
+          <div className="text-md font-semibold">{data.category.name}</div>
+          <h3 className="mt-1 pb-2 font-bold text-2xl">{data.name}</h3>
         </div>
         <div className="mt-3 flex flex-col h-full">
           <p className="text-md">{data.short_description}</p>

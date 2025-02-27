@@ -55,13 +55,13 @@ export const AccommodationListing = async ({
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_content", "banner_image"],
+      fields: ["page_title", "page_content", "banner_image"],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_activity_listing?${query}`,
+    `${process.env.API_URL}/settings/page_accommodation_listing?${query}`,
     {
       next: {
         tags: ["global"],
