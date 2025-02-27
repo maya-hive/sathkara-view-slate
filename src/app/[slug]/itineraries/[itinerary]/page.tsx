@@ -16,7 +16,6 @@ import { toBase64 } from "@/utils/base64";
 import { ActivityCompactCard } from "@/components/Activity/CompactCard";
 import { ActivityCard } from "@/components/Activity/Card";
 import { RichText } from "@/components/RichText";
-import { CityList } from "@/components/City/CityList";
 
 export default async function Page({
   params,
