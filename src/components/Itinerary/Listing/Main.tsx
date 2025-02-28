@@ -7,31 +7,15 @@ import { SearchItineraries } from "@/components/Search/Itineraries";
 import { ListView } from "@/components/ListView";
 
 import { ItineraryListingAside as Aside } from "./Aside";
+import { type BaseResource } from "@/types/ApiResponse.types";
 
 interface Props {
-  data: Itinerary[] | null;
+  data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
   destination?: string;
 }
-
-type Destination = {
-  name: string;
-};
-
-type Itinerary = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  price: string;
-  featured_image: string;
-  sale_price: string | null;
-  duration: string | null;
-  destination: Destination | null;
-};
 
 export const ItineraryListing = async ({ data, destination, links }: Props) => {
   if (!data?.length) return null;

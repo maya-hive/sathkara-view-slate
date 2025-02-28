@@ -6,24 +6,15 @@ import { ActivityCard } from "@/components/Activity/Card";
 import { ListView } from "@/components/ListView";
 
 import { ActivityListingAside as Aside } from "./Aside";
+import { BaseResource } from "@/types/ApiResponse.types";
 
 interface Props {
-  data: Activity[] | null;
+  data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination: string;
+  destination?: string;
 }
-
-type Activity = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-  duration: string | null;
-};
 
 export const ActivityListing = async ({ data, destination, links }: Props) => {
   if (!data?.length) return null;

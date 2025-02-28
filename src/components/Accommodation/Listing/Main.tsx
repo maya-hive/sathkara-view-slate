@@ -6,23 +6,15 @@ import { AccommodationCard } from "@/components/Accommodation/Card";
 import { ListView } from "@/components/ListView";
 
 import { AccommodationListingAside as Aside } from "./Aside";
+import { BaseResource } from "@/types/ApiResponse.types";
 
 interface Props {
-  data: Accommodation[] | null;
+  data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination: string;
+  destination?: string;
 }
-
-type Accommodation = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-};
 
 export const AccommodationListing = async ({
   data,

@@ -47,15 +47,7 @@ const fetchData = async (
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: [
-        "status",
-        "name",
-        "slug",
-        "featured_image",
-        "description",
-        "meta_title",
-        "meta_description",
-      ],
+      fields: ["id", "status", "name", "slug", "featured_image", "description"],
     },
     { arrayFormat: "bracket" }
   );
@@ -89,14 +81,12 @@ const fetchData = async (
 };
 
 const Schema = z.object({
+  id: z.number(),
   status: z.number(),
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  meta_title: z.string().nullable(),
-  meta_description: z.string().nullable(),
   featured_image: z.string(),
-  listing_image: z.string().nullable().optional(),
 });
 
 const ApiResponseSchema = z.object({

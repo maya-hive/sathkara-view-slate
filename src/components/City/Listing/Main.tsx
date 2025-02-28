@@ -6,23 +6,15 @@ import { CityCard } from "@/components/City/Card";
 import { ListView } from "@/components/ListView";
 
 import { CityListingAside as Aside } from "./Aside";
+import { BaseResource } from "@/types/ApiResponse.types";
 
 interface Props {
-  data: City[] | null;
+  data: BaseResource[] | null;
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination: string;
+  destination?: string;
 }
-
-type City = {
-  id: number;
-  status: number;
-  name: string;
-  slug: string;
-  short_description: string;
-  featured_image: string;
-};
 
 export const CityListing = async ({ data, destination, links }: Props) => {
   if (!data?.length) {

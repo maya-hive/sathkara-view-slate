@@ -1,24 +1,16 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { AccommodationCategoryListing } from "@/components/AccommodationCategory/Listing/Main";
+import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
 
-type Args = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
+export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
     return null;
   }
 
-  return <AccommodationCategoryListing category={slug} {...data} />;
+  return <AccommodationListing {...data} />;
 }
 
 const fetchData = async (

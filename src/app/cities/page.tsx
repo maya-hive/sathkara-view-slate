@@ -1,24 +1,16 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { AccommodationCategoryListing } from "@/components/AccommodationCategory/Listing/Main";
+import { CityListing } from "@/components/City/Listing/Main";
 
-type Args = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
+export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
     return null;
   }
 
-  return <AccommodationCategoryListing category={slug} {...data} />;
+  return <CityListing {...data} />;
 }
 
 const fetchData = async (
@@ -32,7 +24,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/accommodation/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/city/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],

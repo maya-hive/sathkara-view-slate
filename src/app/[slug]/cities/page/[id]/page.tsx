@@ -47,14 +47,7 @@ const fetchData = cache(
   ): Promise<z.infer<typeof ApiResponseSchema>> => {
     const query = queryString.stringify(
       {
-        fields: [
-          "id",
-          "name",
-          "status",
-          "slug",
-          "featured_image",
-          "short_description",
-        ],
+        fields: ["id", "name", "status", "slug"],
         by_destination: destination,
       },
       { arrayFormat: "bracket" }
@@ -92,10 +85,7 @@ const fetchData = cache(
 const Schema = z.object({
   id: z.number(),
   status: z.number(),
-  name: z.string(),
   slug: z.string(),
-  short_description: z.string(),
-  featured_image: z.string(),
 });
 
 const ApiResponseSchema = z.object({
