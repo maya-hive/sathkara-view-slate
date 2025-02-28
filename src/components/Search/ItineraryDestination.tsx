@@ -20,26 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { ClassNameValue } from "tailwind-merge";
 
-const itineraryDestinations = [
-  {
-    value: "*",
-    label: "ALL",
-  },
-  {
-    value: "sri-lanka",
-    label: "Sri Lanka",
-  },
-  {
-    value: "maldives",
-    label: "Maldives",
-  },
-  {
-    value: "seychelles",
-    label: "Seychelles",
-  },
-] as const;
-
-type ItineraryDestination = (typeof itineraryDestinations)[number]["value"];
+type ItineraryDestination = (typeof options)[number]["value"];
 
 interface Props {
   className?: ClassNameValue;
@@ -65,8 +46,7 @@ export const SearchItineraryDestination = ({
             className={cn("w-full h-full justify-between ", className)}
           >
             {value
-              ? itineraryDestinations.find((item) => item.value === value)
-                  ?.label
+              ? options.find((item) => item.value === value)?.label
               : "Destination"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -77,7 +57,7 @@ export const SearchItineraryDestination = ({
             <CommandList>
               <CommandEmpty>No items found.</CommandEmpty>
               <CommandGroup>
-                {itineraryDestinations.map((item) => (
+                {options.map((item) => (
                   <CommandItem
                     key={item.value}
                     value={item.value}
@@ -104,3 +84,22 @@ export const SearchItineraryDestination = ({
     </>
   );
 };
+
+const options = [
+  {
+    value: "*",
+    label: "All Destinations",
+  },
+  {
+    value: "sri-lanka",
+    label: "Sri Lanka",
+  },
+  {
+    value: "maldives",
+    label: "Maldives",
+  },
+  {
+    value: "seychelles",
+    label: "Seychelles",
+  },
+] as const;

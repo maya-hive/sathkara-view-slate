@@ -10,7 +10,7 @@ interface Props {
   label?: boolean;
 }
 
-export const SearchItineraryCategories = ({
+export const SearchItineraryAudiences = ({
   label = true,
   className,
 }: Props) => {
@@ -18,12 +18,12 @@ export const SearchItineraryCategories = ({
 
   return (
     <>
-      {label && <label className="text-sm font-semibold">Categories</label>}
+      {label && <label className="text-sm font-semibold">Audiences</label>}
       <MultiSelect
         options={options}
         onValueChange={setValue}
         defaultValue={value}
-        placeholder="Select Categories"
+        placeholder="Select Audiences"
         className={cn("h-100 border", className)}
         maxCount={6}
       />
@@ -33,19 +33,15 @@ export const SearchItineraryCategories = ({
 
 const options = [
   {
-    value: "adventure",
-    label: "Adventure",
+    value: "young-couples",
+    label: "Young Couples",
   },
   {
-    value: "sport",
-    label: "Sport",
+    value: "families",
+    label: "Families",
   },
   {
-    value: "surfing",
-    label: "Surfing",
-  },
-  {
-    value: "camping",
-    label: "Camping",
+    value: "solo-travelers",
+    label: "Solo Travelers",
   },
 ];

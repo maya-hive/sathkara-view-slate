@@ -20,7 +20,69 @@ import {
 } from "@/components/ui/popover";
 import { ClassNameValue } from "tailwind-merge";
 
-const itineraryDurations = [
+type ItineraryDuration = (typeof options)[number]["value"];
+
+interface Props {
+  className?: ClassNameValue;
+  label?: boolean;
+}
+
+export const SearchItineraryDuration = ({ label = true, className }: Props) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<ItineraryDuration>("*");
+
+  return (
+    <>
+      {label && <label className="text-sm font-semibold">Duration</label>}
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="input"
+            role="combobox"
+            aria-expanded={open}
+            className={cn("w-full h-full justify-between ", className)}
+          >
+            {value
+              ? options.find((item) => item.value === value)?.label
+              : "Duration"}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandInput placeholder="Search..." />
+            <CommandList>
+              <CommandEmpty>No items found.</CommandEmpty>
+              <CommandGroup>
+                {options.map((item) => (
+                  <CommandItem
+                    key={item.value}
+                    value={item.value}
+                    onSelect={(currentValue) => {
+                      const newValue = currentValue as ItineraryDuration;
+                      setValue(newValue === value ? "*" : newValue);
+                      setOpen(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === item.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {item.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
+const options = [
   {
     value: "*",
     label: "All Durations",
@@ -62,65 +124,3 @@ const itineraryDurations = [
     label: "More than 24 Days",
   },
 ] as const;
-
-type ItineraryDuration = (typeof itineraryDurations)[number]["value"];
-
-interface Props {
-  className?: ClassNameValue;
-  label?: boolean;
-}
-
-export const SearchItineraryDuration = ({ label = true, className }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<ItineraryDuration>("*");
-
-  return (
-    <>
-      {label && <label className="text-sm font-semibold">Duration</label>}
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="input"
-            role="combobox"
-            aria-expanded={open}
-            className={cn("w-full h-full justify-between ", className)}
-          >
-            {value
-              ? itineraryDurations.find((item) => item.value === value)?.label
-              : "Duration"}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0">
-          <Command>
-            <CommandInput placeholder="Search..." />
-            <CommandList>
-              <CommandEmpty>No items found.</CommandEmpty>
-              <CommandGroup>
-                {itineraryDurations.map((item) => (
-                  <CommandItem
-                    key={item.value}
-                    value={item.value}
-                    onSelect={(currentValue) => {
-                      const newValue = currentValue as ItineraryDuration;
-                      setValue(newValue === value ? "*" : newValue);
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === item.value ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                    {item.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </>
-  );
-};

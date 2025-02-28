@@ -1,3 +1,4 @@
+import { SearchItineraryAudiences } from "@/components/Search/ItineraryAudiences";
 import { SearchItineraryCategories } from "@/components/Search/ItineraryCategories";
 import { SearchItineraryDestination } from "@/components/Search/ItineraryDestination";
 import { SearchItineraryDuration } from "@/components/Search/ItineraryDuration";
@@ -15,6 +16,9 @@ export const ItineraryListingAside = () => (
         </div>
         <div>
           <SearchItineraryDestination className="bg-white border" />
+        </div>
+        <div>
+          <SearchItineraryAudiences className="bg-white border" />
         </div>
         <div className="mt-2">
           <Button variant="secondary" className="w-full">
