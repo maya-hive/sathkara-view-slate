@@ -40,7 +40,7 @@ export const DefaultContent = ({ sections }: Props) => (
                   "col-span-12"
                 )}
               >
-                <div className="relative pt-[100%] md:pt-0 h-[100%]">
+                <div className="relative pt-[100%] md:min-h-[450px] md:pt-0 h-[100%]">
                   <Image
                     className="w-full h-full object-cover absolute top-0 left-0 md:rounded-lg"
                     src={section.image}
@@ -57,17 +57,17 @@ export const DefaultContent = ({ sections }: Props) => (
             )}
             <div
               className={cn(
-                section?.image ? "md:col-span-6 md:py-20" : "md:col-span-12",
+                section?.image
+                  ? "md:col-span-6 md:py-20 flex flex-col justify-center"
+                  : "md:col-span-12",
                 isImageRight ? "order-1" : "order-2",
                 "col-span-12"
               )}
             >
               {section?.content && <RichText content={section?.content} />}
               {section?.link_url && (
-                <Link href={section.link_url} className="block mt-2">
-                  <Button variant="link" className="px-0">
-                    {section.link_title}
-                  </Button>
+                <Link href={section.link_url} className="block mt-4">
+                  <Button variant="secondary">{section.link_title}</Button>
                 </Link>
               )}
             </div>
