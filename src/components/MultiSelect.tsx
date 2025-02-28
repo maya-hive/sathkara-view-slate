@@ -264,7 +264,7 @@ export const MultiSelect = React.forwardRef<
                     orientation="vertical"
                     className="flex min-h-6 h-full"
                   />
-                  <ChevronDown className="h-4 mx-2 cursor-pointer text-muted-foreground" />
+                  <ChevronDown className="h-4 ml-2 cursor-pointer text-muted-foreground" />
                 </div>
               </div>
             ) : (
@@ -272,7 +272,7 @@ export const MultiSelect = React.forwardRef<
                 <span className="text-md text-muted-foreground">
                   {placeholder}
                 </span>
-                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                <ChevronDown className="h-4 cursor-pointer text-muted-foreground" />
               </div>
             )}
           </Button>
