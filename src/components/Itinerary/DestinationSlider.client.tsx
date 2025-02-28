@@ -41,7 +41,9 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
         }}
       >
         {Children.map(children, (child, index) => (
-          <SwiperSlide key={index}>{child}</SwiperSlide>
+          <SwiperSlide key={index} className="h-auto">
+            {child}
+          </SwiperSlide>
         ))}
       </Swiper>
       <button
