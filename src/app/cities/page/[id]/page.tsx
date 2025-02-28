@@ -6,27 +6,24 @@ import { CityListing } from "@/components/City/Listing/Main";
 
 type Args = {
   params: Promise<{
-    slug: string;
     id?: string;
   }>;
 };
 
 export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/${slug}/cities`);
+    return redirect(`/cities`);
   }
 
-  const data = await fetchData(id, slug);
+  const data = await fetchData(id);
 
   if (!data) {
     return null;
   }
 
-  return <CityListing destination={slug} {...data} />;
+  return <CityListing {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -45,7 +42,7 @@ const fetchData = async (
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["id", "name", "status", "slug"],
+      fields: ["id", "status", "slug"],
       by_destination: destination,
     },
     { arrayFormat: "bracket" }

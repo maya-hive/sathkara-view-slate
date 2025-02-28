@@ -2,31 +2,28 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { redirect } from "next/navigation";
-import { CityListing } from "@/components/City/Listing/Main";
+import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 type Args = {
   params: Promise<{
-    slug: string;
     id?: string;
   }>;
 };
 
 export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/${slug}/cities`);
+    return redirect(`/activities`);
   }
 
-  const data = await fetchData(id, slug);
+  const data = await fetchData(id);
 
   if (!data) {
     return null;
   }
 
-  return <CityListing destination={slug} {...data} />;
+  return <ActivityListing {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -45,14 +42,14 @@ const fetchData = async (
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["id", "name", "status", "slug"],
+      fields: ["id", "status", "slug"],
       by_destination: destination,
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/city/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/activity/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],
