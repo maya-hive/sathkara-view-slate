@@ -5,6 +5,7 @@ import {
   PaginationContent,
   PaginationItem,
 } from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 interface Props {
   links: PaginationLink[] | null;
@@ -28,7 +29,11 @@ export const Pagination = ({ links, prefix }: Props) => {
         {links?.map(({ url, label, active }) =>
           url ? (
             <PaginationItem key={label}>
-              <Button asChild variant={active ? "default" : "outline"}>
+              <Button
+                asChild
+                variant={active ? "default" : "ghost"}
+                className={cn({ "min-w-[120px]": isNaN(parseFloat(label)) })}
+              >
                 <Link
                   href={prefix ? "/" + prefix + url : url}
                   dangerouslySetInnerHTML={{ __html: label }}
