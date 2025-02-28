@@ -1,9 +1,11 @@
+import queryString from "query-string";
 import { Suspense } from "react";
+import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
 import { Pagination, type PaginationLink } from "@/components/Pagination";
-import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 import { Button } from "./ui/button";
 
@@ -30,7 +32,7 @@ export const ListView = ({
   if (!cards?.length) return null;
 
   return (
-    <ListViewSkeleton banner={banner}>
+    <ListViewSkeleton banner={banner} destination={destination}>
       {content && (
         <div className="mt-12 prose">
           <div
@@ -80,6 +82,7 @@ export const ListView = ({
 type SkeletonProps = {
   children: React.ReactNode;
   banner: BannerData | null;
+  destination?: string;
 };
 
 type BannerData = {
@@ -87,11 +90,72 @@ type BannerData = {
   image?: string | null;
 };
 
-const ListViewSkeleton = ({ children, banner }: SkeletonProps) => {
+const ListViewSkeleton = async ({
+  children,
+  banner,
+  destination,
+}: SkeletonProps) => {
+  const response = await fetchData(destination);
+
+  const title = response?.data
+    ? `${banner?.title} in ${response.data.name}`
+    : banner?.title;
+
   return (
     <article>
-      <Banner title={banner?.title} image={banner?.image} />
+      <Banner title={title} image={banner?.image} />
       <div className="container mx-auto">{children}</div>
     </article>
   );
 };
+
+const fetchData = async (
+  slug?: string
+): Promise<z.infer<typeof ApiResponseSchema> | null> => {
+  if (!slug) return null;
+
+  const query = queryString.stringify(
+    {
+      fields: ["id", "status", "name", "slug"],
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+    {
+      next: {
+        tags: ["global"],
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+
+  try {
+    return ApiResponseSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.log(error.errors);
+
+      throw new Error("API Response validation failed: " + error.message);
+    }
+    throw error;
+  }
+};
+
+const Schema = z.object({
+  id: z.number(),
+  status: z.number(),
+  name: z.string(),
+  slug: z.string(),
+});
+
+const ApiResponseSchema = z.object({
+  data: Schema.nullable(),
+});
