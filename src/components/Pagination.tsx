@@ -18,9 +18,7 @@ export type PaginationLink = {
 };
 
 export const Pagination = ({ links, prefix }: Props) => {
-  const hasPages = links?.pop()?.url !== null && links?.shift()?.url !== null;
-
-  if (!hasPages) {
+  if (links?.[0]?.url === null && links?.[links.length - 1]?.url === null) {
     return null;
   }
 
