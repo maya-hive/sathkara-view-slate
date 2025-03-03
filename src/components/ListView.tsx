@@ -47,7 +47,7 @@ export const ListView = ({
       >
         {aside}
         <div>
-          {search && <div className="mb-6">{search}</div>}
+          <Suspense>{search && <div className="mb-6">{search}</div>}</Suspense>
           <div
             className={cn(
               { "xl:grid-cols-3 gap-5": aside, "xl:grid-cols-4": !aside },
