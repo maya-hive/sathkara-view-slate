@@ -119,30 +119,35 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                 />
               )}
             </div>
-            <div className="border-l border-yellow-500 pl-3 flex items-center">
-              <span className="text-sm font-semibold max-w-[70px]">
-                Starting From
-              </span>
-              <div>
-                <p className="font-semibold">
-                  {data?.is_sale_active ? (
-                    <>
-                      <PriceTag
-                        amount={data.price}
-                        className="block text-md line-through leading-6"
-                      />
-                      <PriceTag amount={data.sale_price} className="text-3xl" />
-                    </>
-                  ) : (
-                    <PriceTag amount={data?.price} className="text-3xl" />
-                  )}
-                </p>
+            <div className="border-l border-yellow-500 pl-3">
+              <div className="flex items-center">
+                <span className="text-sm font-semibold max-w-[70px]">
+                  Starting From
+                </span>
+                <div>
+                  <p className="font-semibold">
+                    {data?.is_sale_active ? (
+                      <>
+                        <PriceTag
+                          amount={data.price}
+                          className="block text-md line-through leading-6"
+                        />
+                        <PriceTag
+                          amount={data.sale_price}
+                          className="text-3xl"
+                        />
+                      </>
+                    ) : (
+                      <PriceTag amount={data?.price} className="text-3xl" />
+                    )}
+                  </p>
+                </div>
               </div>
+              <p className="mt-2 text-sm text-center font-medium">
+                {data.price_description}
+              </p>
             </div>
           </div>
-          <p className="mt-2 text-sm text-center font-medium">
-            {data.price_description}
-          </p>
         </div>
         <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
           <Link
