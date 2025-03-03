@@ -26,6 +26,8 @@ export default async function Page({ params, searchParams }: Args) {
   return <ItineraryListing destination={slug} {...data} />;
 }
 
+export const dynamic = "force-dynamic";
+
 export { generateStaticParams };
 
 const fetchData = async (
