@@ -17,7 +17,9 @@ export default async function Page({ params, searchParams }: Args) {
   const { slug } = await params;
   const { query } = await searchParams;
 
-  const data = await fetchData("1", slug, query);
+  const data = query
+    ? await fetchData("1", slug, query)
+    : await fetchData("1", slug);
 
   if (!data) {
     return null;
@@ -25,8 +27,6 @@ export default async function Page({ params, searchParams }: Args) {
 
   return <ItineraryListing destination={slug} {...data} />;
 }
-
-export const dynamic = "force-dynamic";
 
 export { generateStaticParams };
 
@@ -47,6 +47,7 @@ const fetchData = async (
   const response = await fetch(
     `${process.env.API_URL}/modules/itinerary/index?page=${id}&${query}`,
     {
+      cache: search ? "no-store" : "force-cache",
       next: {
         tags: ["global"],
       },
