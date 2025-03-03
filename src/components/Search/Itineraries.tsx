@@ -1,19 +1,52 @@
 "use client";
 
 import { ClassNameValue } from "tailwind-merge";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface Props {
   className?: ClassNameValue;
 }
 
 export const SearchItineraries = ({ className }: Props) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("query") || "");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams);
+
+    if (searchTerm) {
+      params.set("query", searchTerm);
+    } else {
+      params.delete("query");
+    }
+
+    replace(`${pathname}?${params.toString()}`, {
+      scroll: true,
+    });
+  };
+
   return (
-    <Input
-      placeholder="Find Your Perfect Itinerary..."
-      className={cn("h-full font-medium bg-gray-100", className)}
-    />
+    <form
+      className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4"
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <Input
+        placeholder="Find Your Perfect Itinerary..."
+        className={cn("h-full font-medium bg-gray-100", className)}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <Button variant="secondary" size="lg" onClick={handleSearch}>
+        Search
+      </Button>
+    </form>
   );
 };

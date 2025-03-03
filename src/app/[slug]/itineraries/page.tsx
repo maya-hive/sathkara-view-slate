@@ -8,12 +8,16 @@ type Args = {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<{
+    query?: string;
+  }>;
 };
 
-export default async function Page({ params }: Args) {
+export default async function Page({ params, searchParams }: Args) {
   const { slug } = await params;
+  const { query } = await searchParams;
 
-  const data = await fetchData("1", slug);
+  const data = await fetchData("1", slug, query);
 
   if (!data) {
     return null;
@@ -26,12 +30,14 @@ export { generateStaticParams };
 
 const fetchData = async (
   id: string,
-  destination: string
+  destination: string,
+  search?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
       by_destination: destination,
+      search: search,
     },
     { arrayFormat: "bracket" }
   );

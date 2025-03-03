@@ -7,8 +7,6 @@ import { Pagination, type PaginationLink } from "@/components/Pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
-import { Button } from "./ui/button";
-
 interface Props {
   banner: SkeletonProps["banner"];
   cards: React.ReactNode[] | null;
@@ -49,14 +47,7 @@ export const ListView = ({
       >
         {aside}
         <div>
-          {search && (
-            <div className="mb-6 rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
-              {search}
-              <Button variant="secondary" size="lg">
-                Search
-              </Button>
-            </div>
-          )}
+          {search && <div className="mb-6">{search}</div>}
           <div
             className={cn(
               { "xl:grid-cols-3 gap-5": aside, "xl:grid-cols-4": !aside },

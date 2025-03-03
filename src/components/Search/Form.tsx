@@ -1,4 +1,5 @@
-import { SearchItineraries } from "./Itineraries";
+import { cn } from "@/lib/utils";
+import { Input } from "../ui/input";
 import { SearchItineraryCategories } from "./ItineraryCategories";
 import { SearchItineraryDuration } from "./ItineraryDuration";
 import Link from "next/link";
@@ -14,7 +15,10 @@ export const SearchForm = ({ title }: Props) => (
     </h2>
     <div className="w-full flex flex-col xl:flex-row gap-3">
       <div className="flex-1 w-full xl:min-w-[500px]">
-        <SearchItineraries />
+        <Input
+          placeholder="Find Your Perfect Itinerary..."
+          className={cn("h-full font-medium bg-gray-100 border-none")}
+        />
       </div>
       <div className="flex-1 w-full xl:min-w-[350px]">
         <SearchItineraryCategories
