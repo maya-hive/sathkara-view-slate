@@ -120,7 +120,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               )}
             </div>
             <div className="border-l border-yellow-500 pl-3">
-              <div className="flex items-center">
+              <div className="flex">
                 <span className="text-sm font-semibold max-w-[70px]">
                   Starting From
                 </span>
@@ -143,7 +143,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                   </p>
                 </div>
               </div>
-              <p className="mt-2 text-sm text-center font-medium">
+              <p className="mt-2 text-sm font-medium">
                 {data.price_description}
               </p>
             </div>
