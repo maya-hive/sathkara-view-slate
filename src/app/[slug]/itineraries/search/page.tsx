@@ -1,19 +1,23 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { generateStaticParams } from "./page/[id]/page";
+import { generateStaticParams } from "../page/[id]/page";
 import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
 
 type Args = {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<{
+    query?: string;
+  }>;
 };
 
-export default async function Page({ params }: Args) {
+export default async function Page({ params, searchParams }: Args) {
   const { slug } = await params;
+  const { query } = await searchParams;
 
-  const data = await fetchData("1", slug);
+  const data = await fetchData("1", slug, query);
 
   if (!data) {
     return null;
@@ -24,14 +28,18 @@ export default async function Page({ params }: Args) {
 
 export { generateStaticParams };
 
+export const dynamic = "force-dynamic";
+
 const fetchData = async (
   id: string,
-  destination: string
+  destination: string,
+  search?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
       by_destination: destination,
+      search: search,
     },
     { arrayFormat: "bracket" }
   );

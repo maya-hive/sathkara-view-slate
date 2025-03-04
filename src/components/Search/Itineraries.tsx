@@ -28,9 +28,15 @@ export const SearchItineraries = ({ className }: Props) => {
       params.delete("query");
     }
 
-    replace(`${pathname}?${params.toString()}`, {
-      scroll: true,
-    });
+    if (pathname.includes("/search")) {
+      replace(`${pathname}?${params.toString()}`, {
+        scroll: true,
+      });
+    } else {
+      replace(`${pathname}/search?${params.toString()}`, {
+        scroll: true,
+      });
+    }
   };
 
   return (
