@@ -17,23 +17,29 @@ export const SearchItineraries = ({ className }: Props) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("query") || "");
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("query") || ""
+  );
 
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams);
 
-    if (searchTerm) {
-      params.set("query", searchTerm);
+    if (searchQuery) {
+      params.set("query", searchQuery);
+
+      if (pathname.includes("/search")) {
+        replace(`${pathname}?${params.toString()}`, {
+          scroll: true,
+        });
+      } else {
+        replace(`${pathname}/search?${params.toString()}`, {
+          scroll: true,
+        });
+      }
     } else {
       params.delete("query");
-    }
 
-    if (pathname.includes("/search")) {
-      replace(`${pathname}?${params.toString()}`, {
-        scroll: true,
-      });
-    } else {
-      replace(`${pathname}/search?${params.toString()}`, {
+      replace(pathname.replace("/search", ""), {
         scroll: true,
       });
     }
@@ -47,8 +53,8 @@ export const SearchItineraries = ({ className }: Props) => {
       <Input
         placeholder="Find Your Perfect Itinerary..."
         className={cn("h-full font-medium bg-gray-100", className)}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
       <Button variant="secondary" size="lg" onClick={handleSearch}>
         Search
