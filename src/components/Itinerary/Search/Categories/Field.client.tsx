@@ -8,11 +8,18 @@ import { cn } from "@/lib/utils";
 interface Props {
   className?: string;
   label?: boolean;
+  options: Option[];
 }
 
-export const SearchItineraryCategories = ({
+type Option = {
+  value: string;
+  label: string;
+};
+
+export const ItinerarySearchCategoriesClient = ({
   label = true,
   className,
+  options,
 }: Props) => {
   const [value, setValue] = useState<string[]>([]);
 
@@ -30,22 +37,3 @@ export const SearchItineraryCategories = ({
     </>
   );
 };
-
-const options = [
-  {
-    value: "adventure",
-    label: "Adventure",
-  },
-  {
-    value: "sport",
-    label: "Sport",
-  },
-  {
-    value: "surfing",
-    label: "Surfing",
-  },
-  {
-    value: "camping",
-    label: "Camping",
-  },
-];

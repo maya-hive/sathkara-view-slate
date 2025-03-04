@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ChevronDown } from "lucide-react";
+import { ClassNameValue } from "tailwind-merge";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -18,21 +19,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ClassNameValue } from "tailwind-merge";
-
-type ItineraryDestination = (typeof options)[number]["value"];
 
 interface Props {
   className?: ClassNameValue;
   label?: boolean;
+  options: Option[];
 }
 
-export const SearchItineraryDestination = ({
+type Option = {
+  value: string;
+  label: string;
+};
+
+export const ItinerarySearchDestinationClient = ({
   label = true,
   className,
+  options: items,
 }: Props) => {
+  const options = [{ value: "*", label: "All" }, ...items];
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<ItineraryDestination>("*");
+
+  type ItineraryDestination = (typeof options)[number]["value"];
 
   return (
     <>
@@ -84,22 +93,3 @@ export const SearchItineraryDestination = ({
     </>
   );
 };
-
-const options = [
-  {
-    value: "*",
-    label: "All Destinations",
-  },
-  {
-    value: "sri-lanka",
-    label: "Sri Lanka",
-  },
-  {
-    value: "maldives",
-    label: "Maldives",
-  },
-  {
-    value: "seychelles",
-    label: "Seychelles",
-  },
-] as const;

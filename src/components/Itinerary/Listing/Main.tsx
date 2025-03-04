@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { type PaginationLink } from "@/components/Pagination";
 import { ItineraryCard } from "@/components/Itinerary/Card";
-import { SearchItineraries } from "@/components/Search/Itineraries";
+import { SearchItineraries } from "@/components/Itinerary/Search/Query/Field";
 import { ListView } from "@/components/ListView";
 
 import { ItineraryListingAside as Aside } from "./Aside";

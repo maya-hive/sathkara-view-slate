@@ -1,24 +1,25 @@
-import { SearchItineraryAudiences } from "@/components/Search/ItineraryAudiences";
-import { SearchItineraryCategories } from "@/components/Search/ItineraryCategories";
-import { SearchItineraryDestination } from "@/components/Search/ItineraryDestination";
-import { SearchItineraryDuration } from "@/components/Search/ItineraryDuration";
 import { Button } from "@/components/ui/button";
+
+import { ItienrarySearchAudiences as Audiences } from "@/components/Itinerary/Search/Audiences/Field";
+import { ItienrarySearchCategories as Categories } from "@/components/Itinerary/Search/Categories/Field";
+import { ItienrarySearchDestination as Destination } from "@/components/Itinerary/Search/Destination/Field";
+import { ItienrarySearchDuration as Duration } from "@/components/Itinerary/Search/Duration/Field";
 
 export const ItineraryListingAside = () => (
   <aside>
     <div className="rounded-lg bg-slate-100 sticky top-[150px]">
       <div className="w-full p-4 flex flex-col gap-3">
         <div>
-          <SearchItineraryCategories className="bg-white border" />
+          <Categories className="bg-white border" />
         </div>
         <div>
-          <SearchItineraryDuration className="bg-white border" />
+          <Duration className="bg-white border" />
         </div>
         <div>
-          <SearchItineraryDestination className="bg-white border" />
+          <Destination className="bg-white border" />
         </div>
         <div>
-          <SearchItineraryAudiences className="bg-white border" />
+          <Audiences className="bg-white border" />
         </div>
         <div className="mt-2">
           <Button variant="secondary" className="w-full">

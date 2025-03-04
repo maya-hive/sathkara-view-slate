@@ -1,8 +1,9 @@
-import { cn } from "@/lib/utils";
-import { Input } from "../ui/input";
-import { SearchItineraryCategories } from "./ItineraryCategories";
-import { SearchItineraryDuration } from "./ItineraryDuration";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+
+import { ItienrarySearchCategories as Categories } from "@/components/Itinerary/Search/Categories/Field";
+import { ItienrarySearchDuration as Duration } from "@/components/Itinerary/Search/Duration/Field";
 
 interface Props {
   title?: string | null;
@@ -21,16 +22,10 @@ export const SearchForm = ({ title }: Props) => (
         />
       </div>
       <div className="flex-1 w-full xl:min-w-[350px]">
-        <SearchItineraryCategories
-          label={false}
-          className="h-full bg-gray-100 border-none"
-        />
+        <Categories label={false} className="h-full bg-gray-100 border-none" />
       </div>
       <div className="flex-1 w-full">
-        <SearchItineraryDuration
-          label={false}
-          className="h-full bg-gray-100 border-none"
-        />
+        <Duration label={false} className="h-full bg-gray-100 border-none" />
       </div>
       <div className="flex-1 w-full xl:max-w-[200px]">
         <Link href="/itineraries">

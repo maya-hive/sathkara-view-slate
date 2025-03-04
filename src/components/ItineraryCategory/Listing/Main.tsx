@@ -5,7 +5,7 @@ import { type PaginationLink } from "@/components/Pagination";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { ItineraryCard } from "@/components/Itinerary/Card";
-import { SearchItineraries } from "@/components/Search/Itineraries";
+import { SearchItineraries } from "@/components/Itinerary/Search/Query/Field";
 import { ItineraryListingAside as Aside } from "@/components/Itinerary/Listing/Aside";
 
 interface Props {
