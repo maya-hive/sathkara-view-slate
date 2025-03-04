@@ -47,7 +47,9 @@ export const ListView = ({
       >
         {aside}
         <div>
-          <Suspense fallback={<Skeleton className="bg-slate-100 h-[80px]" />}>
+          <Suspense
+            fallback={<Skeleton className="mb-6 bg-slate-100 h-[80px]" />}
+          >
             {search && <div className="mb-6">{search}</div>}
           </Suspense>
           <div
