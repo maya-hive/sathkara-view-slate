@@ -19,7 +19,7 @@ export const SearchItineraries = (props: Props) => {
       className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4"
       onSubmit={(e) => e.preventDefault()}
     >
-      <Suspense fallback={<Skeleton className="h-[76px]" />}>
+      <Suspense fallback={<Skeleton className="h-[65px]" />}>
         <Search {...props} />
       </Suspense>
     </form>
