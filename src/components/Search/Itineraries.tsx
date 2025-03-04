@@ -3,16 +3,30 @@
 import { ClassNameValue } from "tailwind-merge";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 interface Props {
   className?: ClassNameValue;
 }
 
-export const SearchItineraries = ({ className }: Props) => {
+export const SearchItineraries = (props: Props) => {
+  return (
+    <form
+      className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4"
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <Suspense fallback={<Skeleton className="h-[76px]" />}>
+        <Search {...props} />
+      </Suspense>
+    </form>
+  );
+};
+
+const Search = ({ className }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -46,10 +60,7 @@ export const SearchItineraries = ({ className }: Props) => {
   };
 
   return (
-    <form
-      className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4"
-      onSubmit={(e) => e.preventDefault()}
-    >
+    <>
       <Input
         placeholder="Find Your Perfect Itinerary..."
         className={cn("h-full font-medium bg-gray-100", className)}
@@ -59,6 +70,6 @@ export const SearchItineraries = ({ className }: Props) => {
       <Button variant="secondary" size="lg" onClick={handleSearch}>
         Search
       </Button>
-    </form>
+    </>
   );
 };

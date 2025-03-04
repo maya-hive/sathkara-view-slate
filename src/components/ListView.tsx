@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   banner: SkeletonProps["banner"];
-  cards: React.ReactNode[] | null;
+  cards?: React.ReactNode[] | null;
   links: PaginationLink[] | null;
   aside?: React.ReactNode | null;
   search?: React.ReactNode | null;
@@ -27,8 +27,6 @@ export const ListView = ({
   search,
   content,
 }: Props) => {
-  if (!cards?.length) return null;
-
   return (
     <ListViewSkeleton banner={banner} destination={destination}>
       {content && (
@@ -47,26 +45,28 @@ export const ListView = ({
       >
         {aside}
         <div>
-          <Suspense
-            fallback={<Skeleton className="mb-6 bg-slate-100 h-[80px]" />}
-          >
-            {search && <div className="mb-6">{search}</div>}
-          </Suspense>
-          <div
-            className={cn(
-              { "xl:grid-cols-3 gap-5": aside, "xl:grid-cols-4": !aside },
-              "grid grid-cols-1 lg:grid-cols-2 gap-5"
-            )}
-          >
-            {cards.map((card, idx) => (
-              <Suspense
-                key={idx}
-                fallback={<Skeleton className="h-[550px] rounded-md" />}
-              >
-                {card}
-              </Suspense>
-            ))}
-          </div>
+          {search && <div className="mb-6">{search}</div>}
+          {cards?.length ? (
+            <div
+              className={cn(
+                { "xl:grid-cols-3 gap-5": aside, "xl:grid-cols-4": !aside },
+                "grid grid-cols-1 lg:grid-cols-2 gap-5"
+              )}
+            >
+              {cards.map((card, idx) => (
+                <Suspense
+                  key={idx}
+                  fallback={<Skeleton className="h-[550px] rounded-md" />}
+                >
+                  {card}
+                </Suspense>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full text-center rounded-lg bg-yellow-50 border border-yellow-400 text-yellow-500 py-4 text-md">
+              No Resources Found
+            </div>
+          )}
           <Pagination prefix={destination} links={links} />
         </div>
       </div>

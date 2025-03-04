@@ -19,10 +19,6 @@ export default async function Page({ params, searchParams }: Args) {
 
   const data = await fetchData("1", slug, query);
 
-  if (!data) {
-    return null;
-  }
-
   return <ItineraryListing destination={slug} {...data} />;
 }
 
