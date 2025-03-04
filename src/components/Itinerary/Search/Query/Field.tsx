@@ -35,7 +35,7 @@ const Search = ({ className }: Props) => {
     searchParams.get("query") || ""
   );
 
-  const handleSearch = () => {
+  const handleInput = () => {
     const params = new URLSearchParams(searchParams);
 
     if (searchQuery) {
@@ -67,7 +67,7 @@ const Search = ({ className }: Props) => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Button variant="secondary" size="lg" onClick={handleSearch}>
+      <Button variant="secondary" size="lg" onClick={handleInput}>
         Search
       </Button>
     </>
