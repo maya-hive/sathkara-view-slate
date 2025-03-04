@@ -2,12 +2,12 @@
 
 import { ClassNameValue } from "tailwind-merge";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Suspense, useState } from "react";
 
 interface Props {
   className?: ClassNameValue;
@@ -43,18 +43,18 @@ const Search = ({ className }: Props) => {
 
       if (pathname.includes("/search")) {
         replace(`${pathname}?${params.toString()}`, {
-          scroll: true,
+          scroll: false,
         });
       } else {
         replace(`${pathname}/search?${params.toString()}`, {
-          scroll: true,
+          scroll: false,
         });
       }
     } else {
       params.delete("query");
 
       replace(pathname.replace("/search", ""), {
-        scroll: true,
+        scroll: false,
       });
     }
   };
