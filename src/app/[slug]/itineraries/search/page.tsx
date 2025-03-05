@@ -1,4 +1,5 @@
 import queryString from "query-string";
+import type { Metadata } from "next";
 import { z } from "zod";
 
 import { generateStaticParams } from "../page/[id]/page";
@@ -15,6 +16,13 @@ type Args = {
     audiences?: string;
     duration?: string;
   }>;
+};
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function Page({ params, searchParams }: Args) {
