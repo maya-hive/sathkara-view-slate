@@ -50,14 +50,14 @@ export const ItinerarySearchDurationClient = ({
 };
 
 const Select = ({ className, options }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string>("*");
-
   const searchParams = useSearchParams();
 
-  const defaultValue = searchParams.get("duration");
+  const defaultValue = searchParams.get("duration") ?? "*";
 
-  const [searchQuery, setSearchQuery] = useState<string | null>(defaultValue);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>(defaultValue);
+
+  const [, setSearchQuery] = useState<string>(defaultValue);
 
   const handleValueChange = (selected: string) => {
     setSearchQuery(selected);
@@ -72,6 +72,8 @@ const Select = ({ className, options }: Props) => {
     window.history.pushState(null, "", `?${queryString}`);
   };
 
+  const selectedValue = value === "*" ? defaultValue : value;
+
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
@@ -82,8 +84,8 @@ const Select = ({ className, options }: Props) => {
             aria-expanded={open}
             className={cn("w-full h-full justify-between ", className)}
           >
-            {value
-              ? options.find((item) => item.value === value)?.label
+            {selectedValue
+              ? options.find((item) => item.value === selectedValue)?.label
               : "Duration"}
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -99,7 +101,6 @@ const Select = ({ className, options }: Props) => {
                     key={item.value}
                     value={item.value}
                     onSelect={handleValueChange}
-                    defaultValue={item.value === searchQuery ? item.value : "*"}
                   >
                     <Check
                       className={cn(
