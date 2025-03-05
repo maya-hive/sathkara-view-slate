@@ -25,7 +25,9 @@ export const ItinerarySearchAudiencesClient = ({
   return (
     <>
       {label && <label className="text-sm font-semibold">Audiences</label>}
-      <Select className={className} options={options} />
+      <Suspense>
+        <Select className={className} options={options} />
+      </Suspense>
     </>
   );
 };
@@ -54,15 +56,13 @@ const Select = ({ className, options }: Props) => {
   };
 
   return (
-    <Suspense>
-      <MultiSelect
-        options={options}
-        defaultValue={searchQuery ?? undefined}
-        onValueChange={handleValueChange}
-        placeholder="Select Audiences"
-        className={cn("h-100 border", className)}
-        maxCount={6}
-      />
-    </Suspense>
+    <MultiSelect
+      options={options}
+      defaultValue={searchQuery ?? undefined}
+      onValueChange={handleValueChange}
+      placeholder="Select Audiences"
+      className={cn("h-100 border", className)}
+      maxCount={6}
+    />
   );
 };
