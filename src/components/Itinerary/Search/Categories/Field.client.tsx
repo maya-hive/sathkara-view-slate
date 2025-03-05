@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import { MultiSelect } from "@/components/MultiSelect";
@@ -34,8 +34,13 @@ export const ItinerarySearchCategoriesClient = ({
 
 const Select = ({ className, options }: Props) => {
   const searchParams = useSearchParams();
+  const params = useParams();
 
-  const defaultValue = searchParams.get("categories")?.split(",") ?? null;
+  const defaultValue =
+    searchParams.get("categories")?.split(",") ??
+    (options.find((item) => item.value === params?.slug?.toString())?.value
+      ? [options.find((item) => item.value === params?.slug?.toString())!.value]
+      : null);
 
   const [searchQuery, setSearchQuery] = useState<string[] | null>(defaultValue);
 

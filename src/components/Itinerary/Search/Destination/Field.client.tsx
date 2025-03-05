@@ -2,7 +2,7 @@
 
 import { Check, ChevronDown } from "lucide-react";
 import { ClassNameValue } from "tailwind-merge";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -51,8 +51,12 @@ export const ItinerarySearchDestinationClient = ({
 
 const Select = ({ className, options }: Props) => {
   const searchParams = useSearchParams();
+  const params = useParams();
 
-  const defaultValue = searchParams.get("destination") ?? "*";
+  const defaultValue =
+    searchParams.get("destination") ??
+    options.find((item) => item.value === params?.slug?.toString())?.value ??
+    "*";
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>(defaultValue);

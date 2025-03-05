@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 
 import { MultiSelect } from "@/components/MultiSelect";
 import { cn } from "@/lib/utils";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface Props {
   className?: string;
@@ -34,8 +34,13 @@ export const ItinerarySearchAudiencesClient = ({
 
 const Select = ({ className, options }: Props) => {
   const searchParams = useSearchParams();
+  const params = useParams();
 
-  const defaultValue = searchParams.get("audiences")?.split(",") ?? null;
+  const defaultValue =
+    searchParams.get("audiences")?.split(",") ??
+    (options.find((item) => item.value === params?.slug?.toString())?.value
+      ? [options.find((item) => item.value === params?.slug?.toString())!.value]
+      : null);
 
   const [searchQuery, setSearchQuery] = useState<string[] | null>(defaultValue);
 
