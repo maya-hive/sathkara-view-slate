@@ -33,18 +33,19 @@ export const ItinerarySearchCategoriesClient = ({
 const Select = ({ className, options }: Props) => {
   const searchParams = useSearchParams();
 
-  const defaultCategories = searchParams.getAll("categories[]");
+  const defaultValue = searchParams.getAll("categories[]");
 
-  const [searchQuery, setSearchQuery] = useState<string[]>(defaultCategories);
+  const [searchQuery, setSearchQuery] = useState<string[]>(defaultValue);
 
   const handleValueChange = (selected: string[]) => {
     setSearchQuery(selected);
 
-    const queryString = selected
-      .map((value) => `categories[]=${encodeURIComponent(value)}`)
-      .join("&");
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("categories", selected.join(","));
 
-    window.history.replaceState(null, "", `?${queryString}`);
+    const queryString = searchParams.toString().replace(/%2C/g, ",");
+
+    window.history.pushState(null, "", `?${queryString}`);
   };
 
   return (

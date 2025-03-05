@@ -15,21 +15,26 @@ export const ItineraryListingAsideClient = ({
   const pathname = usePathname();
 
   const handleSubmit = () => {
-    const selectedCategories = searchParams.getAll("categories[]");
+    const queryObject: Record<string, string[]> = {};
 
-    const queryString = selectedCategories
-      .map((value) => `categories[]=${encodeURIComponent(value)}`)
+    searchParams.forEach((value, key) => {
+      if (!queryObject[key]) {
+        queryObject[key] = [];
+      }
+      queryObject[key].push(value);
+    });
+
+    const queryString = Object.entries(queryObject)
+      .map(([key, values]) =>
+        values.map((value) => `${key}=${value}`).join("&")
+      )
       .join("&");
 
-    if (pathname.includes("/search")) {
-      router.replace(`${pathname}?${queryString}`, {
-        scroll: false,
-      });
-    } else {
-      router.replace(`${pathname}/search?${queryString}`, {
-        scroll: false,
-      });
-    }
+    const newPath = pathname.includes("/search")
+      ? `${pathname}?${queryString}`
+      : `${pathname}/search?${queryString}`;
+
+    router.replace(newPath, { scroll: false });
   };
 
   return (

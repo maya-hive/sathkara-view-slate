@@ -2,7 +2,8 @@
 
 import { Check, ChevronDown } from "lucide-react";
 import { ClassNameValue } from "tailwind-merge";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -38,14 +39,41 @@ export const ItinerarySearchDestinationClient = ({
 }: Props) => {
   const options = [{ value: "*", label: "All" }, ...items];
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<ItineraryDestination>("*");
-
-  type ItineraryDestination = (typeof options)[number]["value"];
-
   return (
     <>
       {label && <label className="text-sm font-semibold">Destination</label>}
+      <Suspense>
+        <Select className={className} options={options} />
+      </Suspense>
+    </>
+  );
+};
+
+const Select = ({ className, options }: Props) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>("*");
+
+  const searchParams = useSearchParams();
+
+  const defaultValue = searchParams.get("destination");
+
+  const [searchQuery, setSearchQuery] = useState<string | null>(defaultValue);
+
+  const handleValueChange = (selected: string) => {
+    setSearchQuery(selected);
+    setValue(selected);
+    setOpen(false);
+
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("destination", selected);
+
+    const queryString = searchParams.toString().replace(/%2C/g, ",");
+
+    window.history.pushState(null, "", `?${queryString}`);
+  };
+
+  return (
+    <>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -70,11 +98,8 @@ export const ItinerarySearchDestinationClient = ({
                   <CommandItem
                     key={item.value}
                     value={item.value}
-                    onSelect={(currentValue) => {
-                      const newValue = currentValue as ItineraryDestination;
-                      setValue(newValue === value ? "*" : newValue);
-                      setOpen(false);
-                    }}
+                    onSelect={handleValueChange}
+                    defaultValue={item.value === searchQuery ? item.value : "*"}
                   >
                     <Check
                       className={cn(

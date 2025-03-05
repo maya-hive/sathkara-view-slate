@@ -46,7 +46,7 @@ const fetchData = async (
   const query = queryString.stringify(
     {
       fields: ["id", "name", "status", "slug"],
-      by_destination: destination,
+      destination: destination,
     },
     { arrayFormat: "bracket" }
   );

@@ -10,15 +10,16 @@ type Args = {
   }>;
   searchParams: Promise<{
     query?: string;
-    "categories[]"?: string | string[];
+    destination?: string;
+    categories?: string;
   }>;
 };
 
 export default async function Page({ params, searchParams }: Args) {
   const { slug } = await params;
-  const { query, "categories[]": categories } = await searchParams;
+  const { query, destination, categories } = await searchParams;
 
-  const data = await fetchData("1", slug, query, categories);
+  const data = await fetchData("1", destination ?? slug, query, categories);
 
   return <ItineraryListing destination={slug} {...data} />;
 }
@@ -31,14 +32,14 @@ const fetchData = async (
   id: string,
   destination: string,
   search?: string,
-  categories?: string | string[]
+  categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      by_destination: destination,
+      destination: destination,
       search: search,
-      categories: Array.isArray(categories) ? categories : [categories],
+      categories: categories?.split(","),
     },
     { arrayFormat: "bracket" }
   );
