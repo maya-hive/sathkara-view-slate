@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { MultiSelect } from "@/components/MultiSelect";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   className?: string;
@@ -21,19 +22,47 @@ export const ItinerarySearchAudiencesClient = ({
   className,
   options,
 }: Props) => {
-  const [value, setValue] = useState<string[]>([]);
-
   return (
     <>
       {label && <label className="text-sm font-semibold">Audiences</label>}
+      <Select className={className} options={options} />
+    </>
+  );
+};
+
+const Select = ({ className, options }: Props) => {
+  const searchParams = useSearchParams();
+
+  const defaultValue = searchParams.get("audiences")?.split(",") ?? null;
+
+  const [searchQuery, setSearchQuery] = useState<string[] | null>(defaultValue);
+
+  const handleValueChange = (selected: string[]) => {
+    setSearchQuery(selected);
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (selected.length) {
+      searchParams.set("audiences", selected.join(","));
+    } else {
+      searchParams.delete("audiences");
+    }
+
+    const queryString = searchParams.toString().replace(/%2C/g, ",");
+
+    window.history.pushState(null, "", `?${queryString}`);
+  };
+
+  return (
+    <Suspense>
       <MultiSelect
         options={options}
-        onValueChange={setValue}
-        defaultValue={value}
+        defaultValue={searchQuery ?? undefined}
+        onValueChange={handleValueChange}
         placeholder="Select Audiences"
         className={cn("h-100 border", className)}
         maxCount={6}
       />
-    </>
+    </Suspense>
   );
 };

@@ -33,15 +33,20 @@ export const ItinerarySearchCategoriesClient = ({
 const Select = ({ className, options }: Props) => {
   const searchParams = useSearchParams();
 
-  const defaultValue = searchParams.getAll("categories[]");
+  const defaultValue = searchParams.get("categories")?.split(",") ?? null;
 
-  const [searchQuery, setSearchQuery] = useState<string[]>(defaultValue);
+  const [searchQuery, setSearchQuery] = useState<string[] | null>(defaultValue);
 
   const handleValueChange = (selected: string[]) => {
     setSearchQuery(selected);
 
     const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("categories", selected.join(","));
+
+    if (selected.length) {
+      searchParams.set("categories", selected.join(","));
+    } else {
+      searchParams.delete("categories");
+    }
 
     const queryString = searchParams.toString().replace(/%2C/g, ",");
 
@@ -52,7 +57,7 @@ const Select = ({ className, options }: Props) => {
     <Suspense>
       <MultiSelect
         options={options}
-        defaultValue={searchQuery}
+        defaultValue={searchQuery ?? undefined}
         onValueChange={handleValueChange}
         placeholder="Select Categories"
         className={cn("h-100 border", className)}

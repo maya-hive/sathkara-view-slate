@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   className?: ClassNameValue;
@@ -39,9 +40,26 @@ export const ItinerarySearchDurationClient = ({
   const options = [{ value: "*", label: "All" }, ...items];
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<ItineraryDuration>("*");
+  const [value, setValue] = useState<string>("*");
 
-  type ItineraryDuration = (typeof options)[number]["value"];
+  const searchParams = useSearchParams();
+
+  const defaultValue = searchParams.get("duration");
+
+  const [searchQuery, setSearchQuery] = useState<string | null>(defaultValue);
+
+  const handleValueChange = (selected: string) => {
+    setSearchQuery(selected);
+    setValue(selected);
+    setOpen(false);
+
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("duration", selected);
+
+    const queryString = searchParams.toString().replace(/%2C/g, ",");
+
+    window.history.pushState(null, "", `?${queryString}`);
+  };
 
   return (
     <>
@@ -70,11 +88,8 @@ export const ItinerarySearchDurationClient = ({
                   <CommandItem
                     key={item.value}
                     value={item.value}
-                    onSelect={(currentValue) => {
-                      const newValue = currentValue as ItineraryDuration;
-                      setValue(newValue === value ? "*" : newValue);
-                      setOpen(false);
-                    }}
+                    onSelect={handleValueChange}
+                    defaultValue={item.value === searchQuery ? item.value : "*"}
                   >
                     <Check
                       className={cn(
