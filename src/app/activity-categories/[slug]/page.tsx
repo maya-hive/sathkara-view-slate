@@ -21,6 +21,28 @@ export default async function Page({ params }: Args) {
   return <ActivityCategoryListing category={slug} {...data} />;
 }
 
+export async function generateStaticParams() {
+  const query = queryString.stringify(
+    { fields: ["slug"], limit: "1000" },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await fetch(
+    `${process.env.API_URL}/modules/activityCategory/index?${query}`
+  );
+
+  if (!response.ok) {
+    const errorMessage = `Failed to fetch: ${response.status} ${response.statusText}`;
+    throw new Error(errorMessage);
+  }
+
+  const { data } = await response.json();
+
+  return data.map(({ slug }: { slug: string }) => ({
+    slug: slug,
+  }));
+}
+
 const fetchData = async (
   id: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
