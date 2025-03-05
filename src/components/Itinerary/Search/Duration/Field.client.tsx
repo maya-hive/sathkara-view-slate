@@ -2,7 +2,7 @@
 
 import { Check, ChevronDown } from "lucide-react";
 import { ClassNameValue } from "tailwind-merge";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,17 @@ export const ItinerarySearchDurationClient = ({
 }: Props) => {
   const options = [{ value: "*", label: "All" }, ...items];
 
+  return (
+    <>
+      {label && <label className="text-sm font-semibold">Duration</label>}
+      <Suspense>
+        <Select className={className} options={options} />
+      </Suspense>
+    </>
+  );
+};
+
+const Select = ({ className, options }: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>("*");
 
@@ -63,7 +74,6 @@ export const ItinerarySearchDurationClient = ({
 
   return (
     <>
-      {label && <label className="text-sm font-semibold">Duration</label>}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
