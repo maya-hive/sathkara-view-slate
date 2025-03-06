@@ -1,6 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
+import { SearchActivities as Search } from "@/components/Activity/Search/Query/Field";
 import { type PaginationLink } from "@/components/Pagination";
 import { ActivityCard } from "@/components/Activity/Card";
 import { ListView } from "@/components/ListView";
@@ -31,6 +32,7 @@ export const ActivityListing = async ({ data, destination, links }: Props) => {
       content={pageData?.page_content}
       destination={destination}
       aside={<Aside />}
+      search={<Search className="bg-white h-100" />}
       cards={data.map((item) => (
         <ActivityCard key={item.id} slug={item.slug} />
       ))}

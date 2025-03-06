@@ -13,7 +13,7 @@ interface Props {
   className?: ClassNameValue;
 }
 
-export const SearchItineraries = (props: Props) => {
+export const SearchActivities = (props: Props) => {
   return (
     <form
       className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4"
@@ -72,7 +72,7 @@ const Search = ({ className }: Props) => {
   return (
     <>
       <Input
-        placeholder="Find Your Perfect Itinerary..."
+        placeholder="Find Your Perfect Activity..."
         className={cn("h-full font-medium bg-gray-100", className)}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
