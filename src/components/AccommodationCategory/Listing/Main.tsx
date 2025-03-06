@@ -20,8 +20,6 @@ export const AccommodationCategoryListing = async ({
   links,
   category,
 }: Props) => {
-  if (!data?.length) return null;
-
   const { data: pageData } = await fetchData(category);
 
   return (
@@ -33,7 +31,7 @@ export const AccommodationCategoryListing = async ({
       }}
       content={pageData?.description}
       aside={<Aside />}
-      cards={data.map((item) => (
+      cards={data?.map((item) => (
         <AccommodationCard key={item.id} slug={item.slug} />
       ))}
     />

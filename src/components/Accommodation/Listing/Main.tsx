@@ -1,6 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
+import { SearchAccommodations as Search } from "@/components/Accommodation/Search/Query/Field";
 import { type PaginationLink } from "@/components/Pagination";
 import { AccommodationCard } from "@/components/Accommodation/Card";
 import { ListView } from "@/components/ListView";
@@ -21,10 +22,6 @@ export const AccommodationListing = async ({
   destination,
   links,
 }: Props) => {
-  if (!data?.length) {
-    return null;
-  }
-
   const { data: pageData } = await fetchData();
 
   return (
@@ -37,7 +34,8 @@ export const AccommodationListing = async ({
       content={pageData?.page_content}
       destination={destination}
       aside={<Aside />}
-      cards={data.map((item) => (
+      search={<Search className="bg-white h-100" />}
+      cards={data?.map((item) => (
         <AccommodationCard key={item.id} slug={item.slug} />
       ))}
     />

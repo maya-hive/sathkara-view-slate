@@ -21,8 +21,6 @@ export const ItineraryCategoryListing = async ({
   links,
   category,
 }: Props) => {
-  if (!data?.length) return null;
-
   const { data: pageData } = await fetchData(category);
 
   return (
@@ -35,7 +33,7 @@ export const ItineraryCategoryListing = async ({
       content={pageData?.description}
       aside={<Aside />}
       search={<SearchItineraries className="bg-white h-100" />}
-      cards={data.map((item) => (
+      cards={data?.map((item) => (
         <ItineraryCard key={item.id} slug={item.slug} />
       ))}
     />

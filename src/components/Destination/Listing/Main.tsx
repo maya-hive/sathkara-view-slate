@@ -14,8 +14,6 @@ interface Props {
 }
 
 export const DestinationListing = async ({ data, links }: Props) => {
-  if (!data?.length) return null;
-
   const { data: pageData } = await fetchData();
 
   return (
@@ -26,7 +24,7 @@ export const DestinationListing = async ({ data, links }: Props) => {
         title: pageData?.page_title,
       }}
       content={pageData?.page_content}
-      cards={data.map((item) => (
+      cards={data?.map((item) => (
         <DestinationCard key={item.id} slug={item.slug} />
       ))}
     />
