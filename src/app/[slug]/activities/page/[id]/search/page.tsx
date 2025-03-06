@@ -1,55 +1,66 @@
+import { redirect } from "next/navigation";
 import queryString from "query-string";
+import type { Metadata } from "next";
 import { z } from "zod";
 
-import { redirect } from "next/navigation";
-import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
+import { generateStaticParams } from "../../../page/[id]/page";
+import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 type Args = {
   params: Promise<{
+    slug: string;
     id?: string;
+  }>;
+  searchParams: Promise<{
+    query?: string;
+    destination?: string;
+    categories?: string;
   }>;
 };
 
-export default async function Page({ params }: Args) {
-  const { id = "1" } = await params;
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default async function Page({ params, searchParams }: Args) {
+  const { slug, id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/accommodations`);
+    return redirect(`/${slug}/activities`);
   }
 
-  const data = await fetchData(id);
+  const { query, destination, categories } = await searchParams;
 
-  if (!data) {
-    return null;
-  }
+  const data = await fetchData(id, destination ?? slug, query, categories);
 
-  return <AccommodationListing {...data} />;
+  return <ActivityListing destination={slug} {...data} />;
 }
 
-export async function generateStaticParams() {
-  const { last_page } = await fetchData("1");
+export { generateStaticParams };
 
-  const pages = new Array(last_page).fill(0).map((_, i) => ++i);
-
-  return pages.map((id) => ({
-    id: id.toString(),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination?: string
+  destination: string,
+  search?: string,
+  categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
       destination: destination,
+      search: search,
+      categories: categories?.split(","),
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/accommodation/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/activity/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],

@@ -6,9 +6,6 @@ import { generateStaticParams } from "../page/[id]/page";
 import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
 
 type Args = {
-  params: Promise<{
-    slug: string;
-  }>;
   searchParams: Promise<{
     query?: string;
     destination?: string;
@@ -25,21 +22,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page({ params, searchParams }: Args) {
-  const { slug } = await params;
+export default async function Page({ searchParams }: Args) {
   const { query, destination, categories, audiences, duration } =
     await searchParams;
 
   const data = await fetchData(
     "1",
-    destination ?? slug,
+    destination,
     query,
     categories,
     audiences,
     duration
   );
 
-  return <ItineraryListing destination={slug} {...data} />;
+  return <ItineraryListing {...data} />;
 }
 
 export { generateStaticParams };
@@ -48,7 +44,7 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination: string,
+  destination?: string,
   search?: string,
   categories?: string,
   audiences?: string,

@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 import {
   Pagination as PaginationRoot,
   PaginationContent,
@@ -24,6 +28,19 @@ export const Pagination = ({ links, prefix }: Props) => {
   }
 
   return (
+    <Suspense>
+      <Links links={links} prefix={prefix} />
+    </Suspense>
+  );
+};
+
+const Links = ({ links, prefix }: Props) => {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.toString()
+    ? "/search?" + searchParams.toString()
+    : "";
+
+  return (
     <PaginationRoot className="mt-8 w-full flex justify-center">
       <PaginationContent>
         {links?.map(({ url, label, active }) =>
@@ -35,7 +52,11 @@ export const Pagination = ({ links, prefix }: Props) => {
                 className={cn({ "min-w-[120px]": isNaN(parseFloat(label)) })}
               >
                 <Link
-                  href={prefix ? "/" + prefix + url : url}
+                  href={
+                    prefix
+                      ? "/" + prefix + url + searchQuery
+                      : url + searchQuery
+                  }
                   dangerouslySetInnerHTML={{ __html: label }}
                 />
               </Button>

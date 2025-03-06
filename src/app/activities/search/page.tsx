@@ -6,9 +6,6 @@ import { generateStaticParams } from "../page/[id]/page";
 import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 type Args = {
-  params: Promise<{
-    slug: string;
-  }>;
   searchParams: Promise<{
     query?: string;
     destination?: string;
@@ -23,13 +20,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page({ params, searchParams }: Args) {
-  const { slug } = await params;
+export default async function Page({ searchParams }: Args) {
   const { query, destination, categories } = await searchParams;
 
-  const data = await fetchData("1", destination ?? slug, query, categories);
+  const data = await fetchData("1", destination, query, categories);
 
-  return <ActivityListing destination={slug} {...data} />;
+  return <ActivityListing {...data} />;
 }
 
 export { generateStaticParams };
@@ -38,7 +34,7 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination: string,
+  destination?: string,
   search?: string,
   categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {

@@ -6,18 +6,15 @@ import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
 
 type Args = {
   params: Promise<{
-    slug: string;
     id?: string;
   }>;
 };
 
 export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/${slug}/itineraries`);
+    return redirect(`/itineraries`);
   }
 
   const data = await fetchData(id);
@@ -26,7 +23,7 @@ export default async function Page({ params }: Args) {
     return null;
   }
 
-  return <AccommodationListing destination={slug} {...data} />;
+  return <AccommodationListing {...data} />;
 }
 
 export async function generateStaticParams() {

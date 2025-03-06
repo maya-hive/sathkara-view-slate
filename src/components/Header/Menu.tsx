@@ -45,7 +45,7 @@ export const Menu = ({ links }: Props) => {
               key={idx}
               className="block [&:not(:last-child)]:border-b [&:not(:last-child)]:border-b-slate-300 py-1"
             >
-              <Link href={value.value ?? ""}>{value.title}</Link>
+              <Link href={value.value ?? value.link ?? "#"}>{value.title}</Link>
             </li>
           ))}
         </ul>

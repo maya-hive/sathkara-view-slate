@@ -1,49 +1,59 @@
+import { redirect } from "next/navigation";
 import queryString from "query-string";
+import type { Metadata } from "next";
 import { z } from "zod";
 
-import { redirect } from "next/navigation";
+import { generateStaticParams } from "../../../page/[id]/page";
 import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
 
 type Args = {
   params: Promise<{
     id?: string;
   }>;
+  searchParams: Promise<{
+    query?: string;
+    destination?: string;
+    categories?: string;
+  }>;
 };
 
-export default async function Page({ params }: Args) {
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default async function Page({ params, searchParams }: Args) {
   const { id = "1" } = await params;
 
   if (id === "1") {
     return redirect(`/accommodations`);
   }
 
-  const data = await fetchData(id);
+  const { query, destination, categories } = await searchParams;
 
-  if (!data) {
-    return null;
-  }
+  const data = await fetchData(id, destination, query, categories);
 
   return <AccommodationListing {...data} />;
 }
 
-export async function generateStaticParams() {
-  const { last_page } = await fetchData("1");
+export { generateStaticParams };
 
-  const pages = new Array(last_page).fill(0).map((_, i) => ++i);
-
-  return pages.map((id) => ({
-    id: id.toString(),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination?: string
+  destination?: string,
+  search?: string,
+  categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
       destination: destination,
+      search: search,
+      categories: categories?.split(","),
     },
     { arrayFormat: "bracket" }
   );

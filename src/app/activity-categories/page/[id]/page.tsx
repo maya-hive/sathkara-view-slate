@@ -6,18 +6,15 @@ import { ActivityListing } from "@/components/Activity/Listing/Main";
 
 type Args = {
   params: Promise<{
-    slug: string;
     id?: string;
   }>;
 };
 
 export default async function Page({ params }: Args) {
-  const { slug } = await params;
-
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/${slug}/itineraries`);
+    return redirect(`/activity-categories`);
   }
 
   const data = await fetchData(id);
@@ -26,7 +23,7 @@ export default async function Page({ params }: Args) {
     return null;
   }
 
-  return <ActivityListing destination={slug} {...data} />;
+  return <ActivityListing {...data} />;
 }
 
 export async function generateStaticParams() {
