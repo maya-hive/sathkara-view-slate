@@ -2,8 +2,15 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 
-export const SearchButton = () => {
+export const SearchButton = () => (
+  <Suspense>
+    <ButtonElement />
+  </Suspense>
+);
+
+const ButtonElement = () => {
   const search = typeof window !== "undefined" ? window.location.search : "";
   const searchQuery = new URLSearchParams(search).get("query") || "";
 
