@@ -9,7 +9,7 @@ export const SearchButton = () => {
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace, push } = useRouter();
+  const { replace } = useRouter();
 
   const handleSubmit = () => {
     const params = new URLSearchParams(searchParams);
