@@ -2,10 +2,12 @@ import queryString from "query-string";
 import { Suspense } from "react";
 import { z } from "zod";
 
-import { Banner } from "@/components/Banner";
 import { Pagination, type PaginationLink } from "@/components/Pagination";
+import { SearchButton as Button } from "@/components/Search/Button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Banner } from "@/components/Banner";
 import { cn } from "@/lib/utils";
+import { SearchForm } from "./Search/Form";
 
 interface Props {
   banner: SkeletonProps["banner"];
@@ -45,7 +47,18 @@ export const ListView = ({
       >
         {aside}
         <div>
-          {search && <div className="mb-6">{search}</div>}
+          {search && (
+            <div className="mb-6">
+              <SearchForm>
+                <div className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
+                  <div className="flex-1 h-100">{search}</div>
+                  <div className="flex-1 h-full w-full xl:max-w-[200px]">
+                    <Button />
+                  </div>
+                </div>
+              </SearchForm>
+            </div>
+          )}
           {cards?.length ? (
             <div
               className={cn(

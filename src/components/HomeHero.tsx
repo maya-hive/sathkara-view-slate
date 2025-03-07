@@ -3,7 +3,8 @@ import Image from "next/image";
 
 import { toBase64 } from "@/utils/base64";
 import { shimmer } from "@/components/Shimmer";
-import { SearchForm } from "./Search/Form";
+
+import { SearchWidget } from "./Search/Widget";
 
 interface Props {
   image?: string | null;
@@ -56,7 +57,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
         </div>
       </div>
       <div className="container mx-auto relative -mt-2 -bottom-10">
-        <SearchForm title={title} />
+        <SearchWidget title={title} />
       </div>
     </section>
   );

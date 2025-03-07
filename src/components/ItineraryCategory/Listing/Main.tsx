@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { SearchItineraries as Search } from "@/components/Itinerary/Search/Query/Field";
+import { ItinerarySearchQuery as Search } from "@/components/Itinerary/Search/Query/Field";
 import { type PaginationLink } from "@/components/Pagination";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
@@ -33,7 +33,7 @@ export const ItineraryCategoryListing = async ({
       }}
       content={pageData?.description}
       aside={<Aside />}
-      search={<Search className="bg-white h-100" />}
+      search={<Search />}
       cards={data?.map((item) => (
         <ItineraryCard key={item.id} slug={item.slug} />
       ))}

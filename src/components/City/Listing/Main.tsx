@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { SearchCities as Search } from "@/components/City/Search/Query/Field";
+import { CitySearchQuery as Search } from "@/components/City/Search/Query/Field";
 import { type PaginationLink } from "@/components/Pagination";
 import { CityCard } from "@/components/City/Card";
 import { ListView } from "@/components/ListView";
@@ -30,7 +30,7 @@ export const CityListing = async ({ data, destination, links }: Props) => {
       content={pageData?.page_content}
       destination={destination}
       aside={<Aside />}
-      search={<Search className="bg-white h-100" />}
+      search={<Search />}
       cards={data?.map((item) => (
         <CityCard key={item.id} slug={item.slug} />
       ))}
