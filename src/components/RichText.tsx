@@ -1,5 +1,5 @@
 interface Props {
-  content: string | null;
+  content?: string | null;
 }
 
 export const RichText = ({ content }: Props) => {
