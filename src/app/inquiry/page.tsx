@@ -2,17 +2,17 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
-import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
+import { InquiryContentSection } from "@/components/Inquiry/ContentSection";
 
 export default async function Page() {
   const { data } = await fetchData();
-
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
-      <section className="container mx-auto">
-        <ItineraryInquiryForm />
-      </section>
+      <InquiryContentSection
+        image={data?.side_image}
+        content={data?.side_content}
+      />
     </article>
   );
 }
@@ -20,7 +20,7 @@ export default async function Page() {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_title", "banner_image"],
+      fields: ["page_title", "banner_image", "side_content", "side_image"],
     },
     { arrayFormat: "bracket" }
   );
@@ -58,6 +58,8 @@ const ApiResponseSchema = z.object({
     .object({
       page_title: z.string().nullable().optional(),
       banner_image: z.string().nullable().optional(),
+      side_content: z.string().nullable().optional(),
+      side_image: z.string().nullable().optional(),
     })
     .nullable(),
 });

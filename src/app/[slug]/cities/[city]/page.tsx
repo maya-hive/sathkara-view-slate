@@ -67,7 +67,9 @@ export default async function Page({
                   </div>
                 )}
               </div>
-              <ItineraryInquiryForm />
+              <div className="mt-8">
+                <ItineraryInquiryForm />
+              </div>
             </div>
           </div>
           <div className="top-[150px] w-full">

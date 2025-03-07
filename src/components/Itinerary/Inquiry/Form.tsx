@@ -12,7 +12,7 @@ export const ItineraryInquiryForm = async () => {
   }
 
   return (
-    <div className="mt-8 rounded-xl bg-indigo-50 p-6" id="inquiry_form">
+    <div className="rounded-xl bg-indigo-50 p-6" id="inquiry_form">
       <div className="flex justify-between flex-col xl:flex-row gap-4 border-b border-slate-300 pt-2 pb-5 mb-5">
         {data.itinerary_plan_title && (
           <div

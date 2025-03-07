@@ -59,7 +59,9 @@ export default async function Page({
                     <Component data={data} />
                   </TabsContent>
                 ))}
-                <ItineraryInquiryForm />
+                <div className="mt-8">
+                  <ItineraryInquiryForm />
+                </div>
               </div>
             </div>
             <Aside data={data} />
