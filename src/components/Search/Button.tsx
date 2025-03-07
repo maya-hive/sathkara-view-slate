@@ -11,37 +11,44 @@ export const SearchButton = () => (
 );
 
 const ButtonElement = () => {
-  const search = typeof window !== "undefined" ? window.location.search : "";
-  const searchQuery = new URLSearchParams(search).get("query") || "";
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const handleSubmit = () => {
-    const params = new URLSearchParams(searchParams);
+    const queryObject: Record<string, string[]> = {};
 
-    if (searchQuery) {
+    searchParams.forEach((value, key) => {
+      if (!queryObject[key]) {
+        queryObject[key] = [];
+      }
+      queryObject[key].push(value);
+    });
+
+    const queryString = Object.entries(queryObject)
+      .map(([key, values]) =>
+        values.map((value) => `${key}=${value}`).join("&")
+      )
+      .join("&");
+
+    if (queryString) {
       if (pathname.includes("/search")) {
-        replace(`${pathname}?${params.toString()}`, {
+        replace(`${pathname}?${queryString}`, {
           scroll: false,
         });
       } else if (pathname.includes("/page")) {
         replace(
-          `${pathname.replace(
-            /\/page\/\d+\/?$/,
-            ""
-          )}/search?${params.toString()}`,
+          `${pathname.replace(/\/page\/\d+\/?$/, "")}/search?${queryString}`,
           {
             scroll: false,
           }
         );
       } else if (pathname === "/") {
-        replace(`/itineraries/search?${params.toString()}`, {
+        replace(`/itineraries/search?${queryString}`, {
           scroll: false,
         });
       } else {
-        replace(`${pathname}/search?${params.toString()}`, {
+        replace(`${pathname}/search?${queryString}`, {
           scroll: false,
         });
       }
