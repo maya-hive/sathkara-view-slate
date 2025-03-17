@@ -32,8 +32,8 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
       )}
       <div className="bg-white relative">
         <div className="container mx-auto text-black flex md:flex-none items-center px-4 md:px-0">
-          <div className="flex py-2 w-full items-center lg:justify-center gap-5 text-md">
-            <div className="hidden lg:flex gap-10 w-full justify-start items-center">
+          <div className="flex py-2 w-full items-center lg:justify-center gap-5 text-sm xl:text-md">
+            <div className="hidden lg:flex gap-6 xl:gap-10 w-full justify-start items-center">
               {data.header_primary_left?.map(({ value, children }, idx) => (
                 <NavLink key={idx} value={value}>
                   {children}
@@ -49,7 +49,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               )}
             </div>
             <div className="min-w-[150px]">{children}</div>
-            <div className="hidden lg:flex gap-10 w-full justify-end items-center">
+            <div className="hidden lg:flex gap-6 xl:gap-10 w-full justify-end items-center">
               {data.header_primary_right?.map(({ value, children }, idx) => (
                 <NavLink key={idx} value={value}>
                   {children}

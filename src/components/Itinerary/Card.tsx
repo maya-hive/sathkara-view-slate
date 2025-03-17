@@ -120,7 +120,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               )}
             </div>
             <div className="border-l border-yellow-500 pl-3">
-              <div className="flex">
+              <div className="flex items-center">
                 <span className="text-sm font-semibold max-w-[70px]">
                   Starting From
                 </span>
