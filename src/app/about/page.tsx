@@ -2,18 +2,50 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
-import { AccordionItems } from "@/components/Accordion/Items";
 import { RichText } from "@/components/RichText";
+import { DefaultContent } from "@/components/DefaultContent";
 
 export default async function Page() {
   const { data } = await fetchData();
+
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
       <section className="container mx-auto mt-8">
         <RichText content={data?.page_content} />
       </section>
-      <AccordionItems items={data?.items} />
+      <DefaultContent
+        sections={[
+          {
+            content: data?.content_1,
+            image: data?.image_1,
+            link_title: data?.link_1_title,
+            link_url: data?.link_1_url,
+            image_position: data?.image_position_1,
+          },
+        ]}
+      />
+      <section className="container mx-auto my-20">
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-6 rounded-xl bg-muted p-8 flex items-center text-center">
+            <RichText content={data?.vision_content} />
+          </div>
+          <div className="col-span-12 md:col-span-6 rounded-xl bg-muted p-8 flex items-center text-center">
+            <RichText content={data?.mission_content} />
+          </div>
+        </div>
+      </section>
+      <DefaultContent
+        sections={[
+          {
+            content: data?.content_2,
+            image: data?.image_2,
+            link_title: data?.link_2_title,
+            link_url: data?.link_2_url,
+            image_position: data?.image_position_2,
+          },
+        ]}
+      />
     </article>
   );
 }
@@ -21,7 +53,23 @@ export default async function Page() {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["page_title", "page_content", "banner_image", "items"],
+      fields: [
+        "page_title",
+        "page_content",
+        "banner_image",
+        "content_1",
+        "image_1",
+        "link_1_title",
+        "link_1_url",
+        "image_position_1",
+        "content_2",
+        "image_2",
+        "link_2_title",
+        "link_2_url",
+        "image_position_2",
+        "vision_content",
+        "mission_content",
+      ],
     },
     { arrayFormat: "bracket" }
   );
@@ -60,17 +108,18 @@ const ApiResponseSchema = z.object({
       page_title: z.string().nullable().optional(),
       page_content: z.string().nullable().optional(),
       banner_image: z.string().nullable().optional(),
-      items: z
-        .array(
-          z
-            .object({
-              title: z.string().nullable().optional(),
-              content: z.string().nullable().optional(),
-            })
-            .nullable()
-        )
-        .nullable()
-        .optional(),
+      content_1: z.string().nullable().optional(),
+      image_1: z.string().nullable().optional(),
+      link_1_title: z.string().nullable().optional(),
+      link_1_url: z.string().nullable().optional(),
+      image_position_1: z.string().nullable().optional(),
+      content_2: z.string().nullable().optional(),
+      image_2: z.string().nullable().optional(),
+      link_2_title: z.string().nullable().optional(),
+      link_2_url: z.string().nullable().optional(),
+      image_position_2: z.string().nullable().optional(),
+      vision_content: z.string().nullable().optional(),
+      mission_content: z.string().nullable().optional(),
     })
     .nullable(),
 });
