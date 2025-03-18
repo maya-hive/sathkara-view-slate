@@ -11,6 +11,7 @@ import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { CityList } from "@/components/City/CityList";
+import { NoData } from "@/app/no-data";
 
 export default async function Page({
   params,
@@ -21,7 +22,7 @@ export default async function Page({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return (

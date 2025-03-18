@@ -7,6 +7,7 @@ import { AccommodationCard } from "@/components/Accommodation/Card";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { AccommodationListingAside as Aside } from "@/components/Accommodation/Listing/Aside";
+import { NoData } from "@/app/no-data";
 
 interface Props {
   data: BaseResource[] | null;
@@ -22,6 +23,10 @@ export const AccommodationCategoryListing = async ({
   category,
 }: Props) => {
   const { data: pageData } = await fetchData(category);
+
+  if (!pageData) {
+    return <NoData />;
+  }
 
   return (
     <ListView

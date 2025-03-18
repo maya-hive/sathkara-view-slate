@@ -2,12 +2,13 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
+import { NoData } from "../no-data";
 
 export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return <AccommodationListing {...data} />;

@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { generateStaticParams } from "./page/[id]/page";
 import { AccommodationListing } from "@/components/Accommodation/Listing/Main";
+import { NoData } from "@/app/no-data";
 
 type Args = {
   params: Promise<{
@@ -16,7 +17,7 @@ export default async function Page({ params }: Args) {
   const data = await fetchData("1", slug);
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return <AccommodationListing destination={slug} {...data} />;

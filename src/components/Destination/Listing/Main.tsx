@@ -5,6 +5,7 @@ import { type PaginationLink } from "@/components/Pagination";
 import { DestinationCard } from "@/components/Destination/Card";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
+import { NoData } from "@/app/no-data";
 
 interface Props {
   data: BaseResource[] | null;
@@ -15,6 +16,10 @@ interface Props {
 
 export const DestinationListing = async ({ data, links }: Props) => {
   const { data: pageData } = await fetchData();
+
+  if (!pageData) {
+    return <NoData />;
+  }
 
   return (
     <ListView

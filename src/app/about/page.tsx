@@ -4,9 +4,14 @@ import { z } from "zod";
 import { Banner } from "@/components/Banner";
 import { RichText } from "@/components/RichText";
 import { DefaultContent } from "@/components/DefaultContent";
+import { NoData } from "@/app/no-data";
 
 export default async function Page() {
   const { data } = await fetchData();
+
+  if (!data) {
+    return <NoData />;
+  }
 
   return (
     <article>

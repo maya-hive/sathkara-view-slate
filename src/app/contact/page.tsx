@@ -4,9 +4,15 @@ import { z } from "zod";
 import { ContactContentSection } from "@/components/Contact/ContentSection";
 import { RichText } from "@/components/RichText";
 import { Banner } from "@/components/Banner";
+import { NoData } from "@/app/no-data";
 
 export default async function Page() {
   const { data } = await fetchData();
+
+  if (!data) {
+    return <NoData />;
+  }
+
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
