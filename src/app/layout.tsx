@@ -1,5 +1,6 @@
 import queryString from "query-string";
 import { Poppins } from "next/font/google";
+import { Metadata } from "next";
 import { z } from "zod";
 
 import "swiper/css";
@@ -23,16 +24,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { data } = await fetchData();
-
   return (
     <html lang="en">
       <head>
-        <title>{data?.site_name}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {data?.site_favicon && (
-          <link rel="icon" href={data.site_favicon} sizes="any" />
-        )}
       </head>
       <body
         className={`${geistSans.variable} antialiased font-primary text-gray-700`}
@@ -45,10 +40,22 @@ export default async function RootLayout({
   );
 }
 
+export async function generateMetadata(): Promise<Metadata> {
+  const { data } = await fetchData();
+
+  if (!data) {
+    return {};
+  }
+
+  return {
+    icons: data.site_favicon,
+  };
+}
+
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["site_name", "site_logo", "site_favicon"],
+      fields: ["site_favicon"],
     },
     { arrayFormat: "bracket" }
   );
@@ -84,8 +91,6 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
-      site_name: z.string().nullable().optional(),
-      site_logo: z.string().nullable().optional(),
       site_favicon: z.string().nullable().optional(),
     })
     .nullable(),
