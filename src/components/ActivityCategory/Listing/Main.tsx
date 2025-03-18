@@ -7,6 +7,7 @@ import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { ActivityCard } from "@/components/Activity/Card";
 import { ActivityListingAside as Aside } from "@/components/Activity/Listing/Aside";
+import { NoData } from "@/app/no-data";
 
 interface Props {
   data: BaseResource[] | null;
@@ -22,6 +23,10 @@ export const ActivityCategoryListing = async ({
   category,
 }: Props) => {
   const { data: pageData } = await fetchData(category);
+
+  if (!pageData) {
+    return <NoData />;
+  }
 
   return (
     <ListView

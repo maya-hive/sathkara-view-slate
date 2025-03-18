@@ -3,9 +3,15 @@ import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
 import { InquiryContentSection } from "@/components/Inquiry/ContentSection";
+import { NoData } from "@/app/no-data";
 
 export default async function Page() {
   const { data } = await fetchData();
+
+  if (!data) {
+    return <NoData />;
+  }
+
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />

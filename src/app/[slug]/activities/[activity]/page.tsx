@@ -18,6 +18,7 @@ import {
 import { PriceTag } from "@/components/PriceTag";
 import { ActivityInquiryForm } from "@/components/Activity/Inquiry/Form";
 import { RichText } from "@/components/RichText";
+import { NoData } from "@/app/no-data";
 
 export default async function Page({
   params,
@@ -28,7 +29,7 @@ export default async function Page({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return (

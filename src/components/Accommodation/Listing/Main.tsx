@@ -8,6 +8,7 @@ import { ListView } from "@/components/ListView";
 
 import { AccommodationListingAside as Aside } from "./Aside";
 import { BaseResource } from "@/types/ApiResponse.types";
+import { NoData } from "@/app/no-data";
 
 interface Props {
   data: BaseResource[] | null;
@@ -23,6 +24,10 @@ export const AccommodationListing = async ({
   links,
 }: Props) => {
   const { data: pageData } = await fetchData();
+
+  if (!pageData) {
+    return <NoData />;
+  }
 
   return (
     <ListView

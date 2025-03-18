@@ -2,12 +2,13 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { ItineraryListing } from "@/components/Itinerary/Listing/Main";
+import { NoData } from "@/app/no-data";
 
 export default async function Page() {
   const data = await fetchData("1");
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return <ItineraryListing {...data} />;

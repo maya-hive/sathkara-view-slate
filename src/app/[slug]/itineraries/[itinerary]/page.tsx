@@ -16,6 +16,7 @@ import { toBase64 } from "@/utils/base64";
 import { ActivityCompactCard } from "@/components/Activity/CompactCard";
 import { ActivityCard } from "@/components/Activity/Card";
 import { RichText } from "@/components/RichText";
+import { NoData } from "@/app/no-data";
 
 export default async function Page({
   params,
@@ -26,7 +27,7 @@ export default async function Page({
   const { data } = await fetchData(slug);
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return (

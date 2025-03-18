@@ -9,12 +9,13 @@ import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSl
 import { CallToAction } from "@/components/CallToAction";
 import { ContentSection } from "@/components/ContentSection";
 import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
+import { NoData } from "@/app/no-data";
 
 export default async function Home() {
   const { data } = await fetchData();
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return (

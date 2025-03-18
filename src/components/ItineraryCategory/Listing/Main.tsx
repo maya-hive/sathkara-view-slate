@@ -8,6 +8,7 @@ import { type BaseResource } from "@/types/ApiResponse.types";
 
 import { ItineraryCard } from "@/components/Itinerary/Card";
 import { ItineraryListingAside as Aside } from "@/components/Itinerary/Listing/Aside";
+import { NoData } from "@/app/no-data";
 
 interface Props {
   data: BaseResource[] | null;
@@ -23,6 +24,10 @@ export const ItineraryCategoryListing = async ({
   category,
 }: Props) => {
   const { data: pageData } = await fetchData(category);
+
+  if (!pageData) {
+    return <NoData />;
+  }
 
   return (
     <ListView

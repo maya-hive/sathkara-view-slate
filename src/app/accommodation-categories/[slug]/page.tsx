@@ -2,6 +2,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { AccommodationCategoryListing } from "@/components/AccommodationCategory/Listing/Main";
+import { NoData } from "@/app/no-data";
 
 type Args = {
   params: Promise<{
@@ -15,7 +16,7 @@ export default async function Page({ params }: Args) {
   const data = await fetchData("1");
 
   if (!data) {
-    return null;
+    return <NoData />;
   }
 
   return <AccommodationCategoryListing category={slug} {...data} />;
