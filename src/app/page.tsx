@@ -1,4 +1,5 @@
 import queryString from "query-string";
+import { Metadata } from "next";
 import { z } from "zod";
 
 import { ItineraryCategorySlider } from "@/components/Itinerary/CategorySlider";
@@ -57,10 +58,25 @@ export default async function Home() {
   );
 }
 
+export async function generateMetadata(): Promise<Metadata> {
+  const { data } = await fetchData();
+
+  if (!data) {
+    return {};
+  }
+
+  return {
+    title: data.meta_title,
+    description: data.meta_description,
+  };
+}
+
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: [
+        "meta_title",
+        "meta_description",
         "hero_content",
         "hero_image",
         "hero_video",
@@ -116,6 +132,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
 const ApiResponseSchema = z.object({
   data: z
     .object({
+      meta_title: z.string().nullable().optional(),
+      meta_description: z.string().nullable().optional(),
       hero_content: z.string().nullable().optional(),
       hero_image: z.string().nullable().optional(),
       hero_video: z.string().nullable().optional(),
