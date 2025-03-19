@@ -26,17 +26,21 @@ export default async function sitemap() {
   }));
 
   const modules = [
-    "itinerary",
-    "activity",
-    "accommodation",
-    "destination",
-    "city",
-  ];
+    { name: "itinerary", route: "itineraries" },
+    { name: "activity", route: "activities" },
+    { name: "accommodation", route: "accommodations" },
+    { name: "destination", route: "destinations" },
+    { name: "city", route: "cities" },
+  ] as const;
 
   const moduleRoutePromises = modules.map(async (module) => {
-    const items = await fetchModuleRoutes(module);
-    return items.map((item: { slug: string }) => ({
-      url: `${baseUrl}/${module}s/${item.slug}`,
+    const items = await fetchModuleRoutes(module.name);
+    return items.map((item) => ({
+      url: `${baseUrl}/${
+        item.destination
+          ? `${item.destination.slug}/${module.route}/${item.slug}`
+          : `${module.route}/${item.slug}`
+      }`,
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.7,
@@ -54,7 +58,7 @@ async function fetchModuleRoutes(
 ): Promise<z.infer<typeof Schema>[]> {
   const query = queryString.stringify(
     {
-      fields: ["id", "status", "slug"],
+      fields: ["id", "status", "slug", "destination"],
     },
     { arrayFormat: "bracket" }
   );
@@ -99,6 +103,13 @@ const Schema = z.object({
   id: z.number(),
   status: z.number(),
   slug: z.string(),
+  destination: z
+    .object({
+      name: z.string(),
+      slug: z.string(),
+    })
+    .nullable()
+    .optional(),
 });
 
 const ApiResponseSchema = z.object({
