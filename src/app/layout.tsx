@@ -1,5 +1,6 @@
 import queryString from "query-string";
 import { Poppins } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Metadata } from "next";
 import { z } from "zod";
 
@@ -24,6 +25,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { data } = await fetchData();
+
   return (
     <html lang="en">
       <head>
@@ -36,6 +39,9 @@ export default async function RootLayout({
         {children}
         <Footer />
       </body>
+      {data?.google_analytics_tag_id && (
+        <GoogleAnalytics gaId={data.google_analytics_tag_id.toString()} />
+      )}
     </html>
   );
 }
@@ -55,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["site_favicon"],
+      fields: ["site_favicon", "google_analytics_tag_id"],
     },
     { arrayFormat: "bracket" }
   );
@@ -92,6 +98,10 @@ const ApiResponseSchema = z.object({
   data: z
     .object({
       site_favicon: z.string().nullable().optional(),
+      google_analytics_tag_id: z
+        .union([z.string(), z.number()])
+        .nullable()
+        .optional(),
     })
     .nullable(),
 });
