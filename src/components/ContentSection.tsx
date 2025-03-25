@@ -24,7 +24,7 @@ export const ContentSection = ({ content, link, image }: Props) => {
           <div />
           {image && (
             <Image
-              className="absolute w-[100vw] h-full top-0 left-0 md:-left-[46%] object-cover md:rounded-tr-2xl"
+              className="absolute md:w-[54%] h-full top-0 left-0 object-cover md:rounded-tr-2xl"
               src={image}
               alt={"content image"}
               width={1200}
@@ -39,12 +39,12 @@ export const ContentSection = ({ content, link, image }: Props) => {
             {link?.url && (
               <Link
                 href={link.url}
-                className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-4 text-center text-md font-semibold uppercase"
+                className="block rounded w-fit mt-8 bg-yellow-400 text-yellow-800 px-10 py-4 text-center text-md font-semibold uppercase"
               >
                 {link.title}
               </Link>
             )}
-            <div className="absolute left-[54%] top-0 bg-sky-100 w-[100vw] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
+            <div className="absolute right-0 top-0 bg-sky-100 md:w-[46%] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
           </div>
         </div>
       </div>

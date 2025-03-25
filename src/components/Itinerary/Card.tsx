@@ -152,7 +152,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
           <Link
             href={slug}
-            className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-300 p-3 flex flex-col justify-center items-center flex-1"
+            className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-400 p-3 flex flex-col justify-center items-center flex-1"
           >
             Learn More <br />
             About The Journey

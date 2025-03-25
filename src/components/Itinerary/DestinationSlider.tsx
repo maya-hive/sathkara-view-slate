@@ -41,7 +41,12 @@ export const ItineraryDestinationSlider = async ({
         </div>
         <Tabs defaultValue={data[0]?.slug}>
           <div className="mb-8 flex flex-col md:flex-row items-center justify-center gap-4">
-            <span className="font-semibold">{title}</span>
+            <span className="font-bold">
+              <span className="text-secondary">
+                {title?.split(" ").slice(0, 2).join(" ")}
+              </span>{" "}
+              {title?.split(" ").slice(2).join(" ")}
+            </span>
             <span className="flex gap-3">
               <TabsList>
                 {data?.map(
