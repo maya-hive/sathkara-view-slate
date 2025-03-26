@@ -70,7 +70,7 @@ const CardLayout = ({
             )}
             <Link
               href={slug}
-              className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+              className="block rounded w-fit mt-8 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
             >
               Plan Your Trip
             </Link>
