@@ -1,7 +1,8 @@
 import queryString from "query-string";
 import { z } from "zod";
-import { PriceTag } from "../PriceTag";
-import Link from "next/link";
+import { PriceTag } from "@/components/PriceTag";
+
+import { PayHereForm } from "./PayHereForm";
 
 interface Props {
   id: string;
@@ -9,12 +10,6 @@ interface Props {
 
 export const CheckoutForm = async ({ id }: Props) => {
   const { data } = await fetchData(id);
-
-  if (!data || !data.invoices || data.invoices.length === 0) {
-    return <div>No invoice data available.</div>;
-  }
-
-  const totalAmount = 100.0;
 
   return (
     <div className="container mx-auto mt-8">
@@ -24,53 +19,32 @@ export const CheckoutForm = async ({ id }: Props) => {
 
       <div className="mt-6 overflow-x-auto">
         <table className="mt-4 min-w-full border border-gray-200 rounded-lg shadow-md">
-          <thead className="bg-gray-100">
-            <tr className="text-left text-gray-700 border-b [&>th]:px-4 [&>th]:py-3">
-              <th className="py-3 px-4">Invoice Details</th>
+          <thead>
+            <tr className="text-center">
+              <th className="py-3 px-4">Invoice Number</th>
+              <th className="py-3 px-4">Payment Status</th>
+              <th className="py-3 px-4">Amount</th>
             </tr>
           </thead>
           <tbody>
-            {data.invoices.map((invoice) => (
-              <tr key={invoice.id} className="border-b">
-                <td className="py-3 px-4">
-                  <strong>Invoice Number:</strong> {invoice.number}
-                </td>
-              </tr>
-            ))}
-            {data.invoices.map((invoice) => (
-              <tr key={invoice.id} className="border-b">
-                <td className="py-3 px-4">
-                  <strong>Amount:</strong>{" "}
-                  <PriceTag amount={invoice.amount} cents="show" />
-                </td>
-              </tr>
-            ))}
-            {data.invoices.map((invoice) => (
-              <tr key={invoice.id} className="border-b">
-                <td className="py-3 px-4">
-                  <strong>Payment Status:</strong> {invoice.payment_status}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
+            <tr key={data.id} className="text-center border-b">
+              <td className="py-3 px-4">{data.number}</td>
+              <td className="py-3 px-4">{data.payment_status}</td>
               <td className="py-3 px-4 font-semibold text-lg">
-                <strong>Total Amount: </strong>
-                <PriceTag amount={totalAmount.toString()} cents="show" />
+                <PriceTag amount={data.amount} cents="show" />
               </td>
             </tr>
-          </tfoot>
+          </tbody>
         </table>
       </div>
 
       <div className="mt-6">
-        <Link
-          className="text-white bg-blue-600 px-6 py-2 rounded-lg hover:bg-blue-700"
-          href="/"
-        >
-          Pay Now
-        </Link>
+        <PayHereForm
+          id={data.id.toString()}
+          reference={data.number}
+          amount={parseFloat(data.amount)}
+          customer={data.order.customer}
+        />
       </div>
     </div>
   );
@@ -86,16 +60,19 @@ const fetchData = async (
         "status",
         "number",
         "date",
-        "customer",
-        "total_price",
-        "invoices",
+        "due_date",
+        "order",
+        "amount",
+        "payment_status",
+        "checkout_link",
+        "download_link",
       ],
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/order/${id}?${query}`,
+    `${process.env.API_URL}/modules/orderInvoice/${id}?${query}`,
     {
       next: {
         tags: ["global"],
@@ -121,19 +98,14 @@ const fetchData = async (
   }
 };
 
-const Invoices = z.array(
-  z.object({
-    id: z.number(),
-    status: z.number(),
-    number: z.string(),
-    date: z.string(),
-    due_date: z.string(),
-    amount: z.string(),
-    payment_status: z.number(),
-    checkout_link: z.string(),
-    download_link: z.string(),
-  })
-);
+const Customer = z.object({
+  id: z.number(),
+  status: z.number(),
+  name: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  address: z.string(),
+});
 
 const Order = z.object({
   id: z.number(),
@@ -141,9 +113,22 @@ const Order = z.object({
   number: z.string(),
   date: z.string(),
   total_price: z.string(),
-  invoices: Invoices.nullable(),
+  customer: Customer,
+});
+
+const Invoice = z.object({
+  id: z.number(),
+  status: z.number(),
+  number: z.string(),
+  date: z.string(),
+  due_date: z.string(),
+  amount: z.string(),
+  payment_status: z.number(),
+  checkout_link: z.string(),
+  download_link: z.string(),
+  order: Order,
 });
 
 const ApiResponseSchema = z.object({
-  data: Order,
+  data: Invoice,
 });
