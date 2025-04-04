@@ -49,7 +49,7 @@ export const OrderTable = async ({ id }: Props) => {
                   href={invoice.checkout_link}
                   className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
                 >
-                  Pay Now
+                  Checkout
                 </Link>
               </td>
             </tr>
@@ -65,7 +65,15 @@ const fetchData = async (
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["id", "status", "number", "date", "customer", "invoices"],
+      fields: [
+        "id",
+        "status",
+        "number",
+        "date",
+        "customer",
+        "total_price",
+        "invoices",
+      ],
     },
     { arrayFormat: "bracket" }
   );
@@ -117,6 +125,7 @@ const Order = z.object({
   status: z.number(),
   number: z.string(),
   date: z.string(),
+  total_price: z.string(),
   invoices: Invoices.nullable(),
 });
 

@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { NoData } from "@/app/no-data";
 import { Banner } from "@/components/Banner";
-import { OrderTable } from "@/components/Order/OrderTable";
+import { CheckoutForm } from "@/components/Checkout/CheckoutForm";
 
 type Args = {
   params: Promise<{
@@ -24,8 +24,8 @@ export default async function Page({ params }: Args) {
 
   return (
     <article>
-      <Banner image={data?.banner_image} title={data?.page_title} />
-      <OrderTable id={id.toString()} />
+      <Banner image={data?.banner_image} title={"Checkout"} />
+      <CheckoutForm id={id.toString()} />
     </article>
   );
 }
