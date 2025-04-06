@@ -1,5 +1,4 @@
 import queryString from "query-string";
-import Sqids from "sqids";
 import { z } from "zod";
 
 import { NoData } from "@/app/no-data";
@@ -20,12 +19,10 @@ export default async function Page({ params }: Args) {
     return <NoData />;
   }
 
-  const id = new Sqids().decode(encodedId);
-
   return (
     <article>
       <Banner image={data?.banner_image} title={"Checkout"} />
-      <CheckoutForm id={id.toString()} />
+      <CheckoutForm encodedId={encodedId} />
     </article>
   );
 }
