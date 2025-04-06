@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { Button } from "@/components/ui/button";
 
 interface Props {
-  id: string;
+  encodedId: string;
   reference: string;
   amount: number;
   customer: Customer;
@@ -17,7 +17,12 @@ type Customer = {
   address: string;
 };
 
-export const PayHereForm = ({ id, reference, amount, customer }: Props) => {
+export const PayHereForm = ({
+  encodedId,
+  reference,
+  amount,
+  customer,
+}: Props) => {
   const checkoutId = process.env.CHECKOUT_API_ID ?? "";
   const checkoutSecret = process.env.CHECKOUT_API_SECRET ?? "";
   const currency = process.env.CHECKOUT_API_CURRENCY ?? "";
@@ -32,7 +37,7 @@ export const PayHereForm = ({ id, reference, amount, customer }: Props) => {
 
   const checkoutUrl = process.env.CHECKOUT_API_URL;
   const callbackUrl = `${process.env.API_URL}/payments/payhere/notification`;
-  const checkoutPageUrl = `${process.env.BASE_URL}/orders/checkout/${id}`;
+  const checkoutPageUrl = `${process.env.BASE_URL}/orders/checkout/${encodedId}`;
 
   if (!checkoutUrl) {
     return;

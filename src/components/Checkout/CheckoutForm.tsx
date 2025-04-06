@@ -1,15 +1,24 @@
 import queryString from "query-string";
 import { z } from "zod";
+import Sqids from "sqids";
+
 import { PriceTag } from "@/components/PriceTag";
+import { NoData } from "@/app/no-data";
 
 import { PayHereForm } from "./PayHereForm";
 
 interface Props {
-  id: string;
+  encodedId: string;
 }
 
-export const CheckoutForm = async ({ id }: Props) => {
-  const { data } = await fetchData(id);
+export const CheckoutForm = async ({ encodedId }: Props) => {
+  if (!encodedId) {
+    return <NoData />;
+  }
+
+  const id = new Sqids().decode(encodedId)[0];
+
+  const { data } = await fetchData(id.toString());
 
   return (
     <div className="container mx-auto mt-8">
@@ -40,7 +49,7 @@ export const CheckoutForm = async ({ id }: Props) => {
 
       <div className="mt-6">
         <PayHereForm
-          id={id.toString()}
+          encodedId={encodedId}
           reference={data.number}
           amount={parseFloat(data.amount)}
           customer={data.order.customer}
