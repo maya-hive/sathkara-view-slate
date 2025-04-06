@@ -37,7 +37,9 @@ export const OrderTable = async ({ id }: Props) => {
               <td className="font-semibold text-green-600">
                 <PriceTag amount={invoice.amount} cents="show" />
               </td>
-              <td className={`font-medium`}>{invoice.payment_status}</td>
+              <td className={`font-medium`}>
+                {invoice.payment_status ? "Paid" : "Pending"}
+              </td>
               <td className="flex gap-3">
                 <Link
                   href={invoice.download_link}
@@ -45,12 +47,14 @@ export const OrderTable = async ({ id }: Props) => {
                 >
                   Download
                 </Link>
-                <Link
-                  href={invoice.checkout_link}
-                  className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
-                >
-                  Checkout
-                </Link>
+                {!invoice.payment_status && (
+                  <Link
+                    href={invoice.checkout_link}
+                    className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
+                  >
+                    Checkout
+                  </Link>
+                )}
               </td>
             </tr>
           ))}

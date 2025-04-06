@@ -38,7 +38,9 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
           <tbody>
             <tr key={data.id} className="text-center border-b">
               <td className="py-3 px-4">{data.number}</td>
-              <td className="py-3 px-4">{data.payment_status}</td>
+              <td className="py-3 px-4">
+                {data.payment_status ? "Paid" : "Pending"}
+              </td>
               <td className="py-3 px-4 font-semibold text-lg">
                 <PriceTag amount={data.amount} cents="show" />
               </td>
@@ -48,12 +50,14 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
       </div>
 
       <div className="mt-6">
-        <PayHereForm
-          encodedId={encodedId}
-          reference={data.number}
-          amount={parseFloat(data.amount)}
-          customer={data.order.customer}
-        />
+        {!data.payment_status && (
+          <PayHereForm
+            encodedId={encodedId}
+            reference={data.number}
+            amount={parseFloat(data.amount)}
+            customer={data.order.customer}
+          />
+        )}
       </div>
     </div>
   );
