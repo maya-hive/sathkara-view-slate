@@ -40,7 +40,7 @@ export const CheckoutForm = async ({ id }: Props) => {
 
       <div className="mt-6">
         <PayHereForm
-          id={data.id.toString()}
+          id={id.toString()}
           reference={data.number}
           amount={parseFloat(data.amount)}
           customer={data.order.customer}
