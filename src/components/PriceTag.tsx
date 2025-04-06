@@ -2,12 +2,13 @@ import { ComponentPropsWithoutRef } from "react";
 
 interface Props extends ComponentPropsWithoutRef<"span"> {
   amount?: string | null;
+  cents?: "show" | "hide";
 }
 
-export const PriceTag = ({ amount, ...props }: Props) => {
+export const PriceTag = ({ amount, cents = "hide", ...props }: Props) => {
   if (!amount) return null;
 
-  const price = numberFormat(parseFloat(amount));
+  const price = numberFormat(parseFloat(amount), cents);
 
   return (
     <span {...props}>
@@ -18,9 +19,10 @@ export const PriceTag = ({ amount, ...props }: Props) => {
 
 export const currencySymbol = "$";
 
-const numberFormat = (amount: number) =>
+const numberFormat = (amount: number, cents: "show" | "hide") =>
   new Intl.NumberFormat("en-US", {
     style: "decimal",
     currency: "USD",
-    maximumFractionDigits: 0,
+    minimumFractionDigits: cents === "show" ? 2 : 0,
+    maximumFractionDigits: cents === "show" ? 2 : 0,
   }).format(amount);
