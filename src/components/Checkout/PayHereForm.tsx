@@ -30,8 +30,9 @@ export const PayHereForm = ({ id, reference, amount, customer }: Props) => {
     currency,
   });
 
-  const checkoutUrl = process.env.NEXT_PUBLIC_CHECKOUT_API_URL;
-  const callbackUrl = process.env.API_URL + "/checkout/callback";
+  const checkoutUrl = process.env.CHECKOUT_API_URL;
+  const callbackUrl = `${process.env.API_URL}/payments/payhere/notification`;
+  const checkoutPageUrl = `${process.env.BASE_URL}/orders/checkout/${id}`;
 
   if (!checkoutUrl) {
     return;
@@ -39,15 +40,15 @@ export const PayHereForm = ({ id, reference, amount, customer }: Props) => {
 
   return (
     <form method="POST" action={checkoutUrl} className="text-center">
-      <input type="hidden" name="checkout_id" value={checkoutId} />
-      <input type="hidden" name="return_url" value={`/orders/checkout/${id}`} />
-      <input type="hidden" name="cancel_url" value={`/orders/checkout/${id}`} />
+      <input type="hidden" name="merchant_id" value={checkoutId} />
+      <input type="hidden" name="return_url" value={checkoutPageUrl} />
+      <input type="hidden" name="cancel_url" value={checkoutPageUrl} />
       <input type="hidden" name="notify_url" value={callbackUrl} />
 
       <input type="hidden" name="order_id" value={reference} />
       <input type="hidden" name="items" value="Door bell wireless" />
       <input type="hidden" name="currency" value={currency} />
-      <input type="hidden" name="amount" value={amount.toFixed(2)} />
+      <input type="hidden" name="amount" value={amount.toFixed(0)} />
 
       <input type="hidden" name="first_name" value={customer.name} />
       <input type="hidden" name="last_name" value={customer.name} />
