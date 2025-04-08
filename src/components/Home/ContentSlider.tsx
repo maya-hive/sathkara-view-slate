@@ -27,8 +27,8 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
   return (
     <section className="my-20">
       <div className="relative rounded-2xl overflow-hidden container mx-auto p-16">
-        <div className="absolute top-0 left-0 h-[350px] w-full bg-gradient-to-b from-slate-800 to-transparent -z-10" />
-        <div className="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-slate-800 to-transparent -z-10" />
+        <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-slate-800 via-slate-900/75 to-transparent -z-10" />
+        <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-l from-slate-800 via-slate-800/80 to-transparent -z-40 md:-z-10" />
         <div className="relative flex flex-col md:flex-row justify-between">
           {title && (
             <h2
@@ -36,7 +36,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}
-          <div className="relative">
+          <div className="mt-8 md:mt-0 relative">
             <Swiper
               modules={[Navigation]}
               navigation={{
@@ -52,20 +52,18 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
               }}
             >
               {contents?.map((item, index) => (
-                <SwiperSlide key={index} className="!w-auto">
+                <SwiperSlide key={index} className="!w-auto h-auto">
                   <button
                     onClick={() => setActiveIndex(index)}
-                    className={`rounded-[20px] overflow-hidden cursor-pointer text-center group ${
+                    className={`h-full overflow-hidden cursor-pointer text-center group ${
                       index === activeIndex
-                        ? "text-yellow-400"
-                        : "text-white hover:text-yellow-400"
+                        ? "text-yellow-500"
+                        : "text-white hover:text-yellow-500"
                     }`}
                   >
                     <div
-                      className={`p-4 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-yellow-400 after:transition-transform after:duration-300 ${
-                        index === activeIndex
-                          ? "after:scale-x-100"
-                          : "after:scale-x-0"
+                      className={`rounded-xl p-4 pt-0 relative border-b-2 border-b-[#ffffff00] ${
+                        index === activeIndex ? "!border-b-yellow-500" : ""
                       }`}
                     >
                       {item.icon && (
@@ -77,7 +75,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                           className="mx-auto h-12 w-[90px] object-contain"
                         />
                       )}
-                      <p className="mt-4 text-sm font-medium whitespace-nowrap uppercase tracking-wide">
+                      <p className="mt-4 max-w-[120px] text-sm font-medium uppercase">
                         {item.title}
                       </p>
                     </div>
@@ -85,11 +83,10 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="swiper-button-next text-yellow-400" />
-            <div className="swiper-button-prev text-yellow-400" />
+            <div className="swiper-button-next text-yellow-500" />
+            <div className="swiper-button-prev text-yellow-500" />
           </div>
         </div>
-
         <div className="pt-20 py-8 flex justify-end w-100">
           <div className="text-white max-w-[600px]">
             {contents?.[activeIndex]?.content && (
