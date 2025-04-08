@@ -12,7 +12,7 @@ type Link = {
   url: string | null;
 };
 
-export const ContentSection = ({ content, link, image }: Props) => {
+export const HomeContentSection = ({ content, link, image }: Props) => {
   if (!content) {
     return null;
   }

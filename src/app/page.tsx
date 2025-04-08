@@ -8,9 +8,10 @@ import { DestinationSection } from "@/components/Destination/Section";
 import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
 import { CallToAction } from "@/components/CallToAction";
-import { ContentSection } from "@/components/ContentSection";
+import { HomeContentSection } from "@/components/Home/ContentSection";
 import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
 import { NoData } from "@/app/no-data";
+import { HomeContentSlider } from "@/components/Home/ContentSlider";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -45,11 +46,15 @@ export default async function Home() {
         link={data.banner_link_1}
         image={data.banner_image_1}
       />
+      <HomeContentSlider
+        title={data.content_slider_title}
+        contents={data.content_slider}
+      />
       <AudienceTestimonialSlider
         items={data.audience_items}
         content={data.audience_title}
       />
-      <ContentSection
+      <HomeContentSection
         content={data.content_section_content_1}
         image={data.content_section_image_1}
         link={data.content_section_link_1}
@@ -96,6 +101,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "content_section_link_1",
         "audience_items",
         "audience_title",
+        "content_slider_title",
+        "content_slider",
       ],
     },
     { arrayFormat: "bracket" }
@@ -182,6 +189,17 @@ const ApiResponseSchema = z.object({
           })
         )
         .nullable(),
+      content_slider_title: z.string().nullable(),
+      content_slider: z.array(
+        z.object({
+          icon: z.string().nullable().optional(),
+          image: z.string().nullable().optional(),
+          title: z.string().nullable().optional(),
+          content: z.string().nullable().optional(),
+          link_title: z.string().nullable().optional(),
+          link_url: z.string().nullable().optional(),
+        })
+      ),
     })
     .nullable(),
 });
