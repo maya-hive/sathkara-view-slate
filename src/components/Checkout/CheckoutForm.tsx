@@ -21,7 +21,7 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
   const { data } = await fetchData(id.toString());
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto px-4 sm:px-6 mt-8">
       <h2 className="text-center text-2xl font-semibold">
         Checkout for Order: {data.number}
       </h2>

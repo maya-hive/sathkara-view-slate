@@ -112,7 +112,7 @@ const ListViewSkeleton = async ({
   return (
     <article>
       <Banner title={title} image={banner?.image} />
-      <div className="container mx-auto">{children}</div>
+      <div className="container mx-auto px-4 sm:px-6">{children}</div>
     </article>
   );
 };

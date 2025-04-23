@@ -12,7 +12,7 @@ export const InquiryContentSection = ({ content, image }: Props) => {
   const hasSideData = content || image;
 
   return (
-    <section className="container mx-auto">
+    <section className="container mx-auto px-4 sm:px-6">
       <div
         className={cn(
           {
