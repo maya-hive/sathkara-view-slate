@@ -39,7 +39,7 @@ const Content = ({ image, children, thumbnail, title }: Props) => (
       <Media image={image} thumbnail={thumbnail} />
       {children && (
         <>
-          <div className="container mx-auto relative w-full z-10 text-white flex justify-end">
+          <div className="container mx-auto px-4 sm:px-6 relative w-full z-10 text-white flex justify-end">
             <div className="md:max-w-[600px]">{children}</div>
           </div>
           <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent to-cyan-500 to-[70%]"></div>
@@ -77,7 +77,7 @@ const Media = ({ image, thumbnail }: Props) => (
 
 const MetaBar = ({ title }: { title: string }) => (
   <div className="relative z-10 bg-primary">
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto px-4 sm:px-6 py-4">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />

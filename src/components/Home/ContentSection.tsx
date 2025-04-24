@@ -20,7 +20,7 @@ export const HomeContentSection = ({ content, link, image }: Props) => {
   return (
     <section className="relative overflow-x-clip mt-16 mb-32">
       <div className="container mx-auto mb-20">
-        <div className="grid md:grid-cols-2 px-8 py-20 md:px-0 md:pt-12">
+        <div className="grid md:grid-cols-2 mx-8 my-20 md:mx-0 md:pt-12">
           <div />
           {image && (
             <Image
@@ -31,15 +31,15 @@ export const HomeContentSection = ({ content, link, image }: Props) => {
               height={800}
             />
           )}
-          <div className="rounded-xl md:rounded-none py-16 md:pb-0 md:pt-24 pr-16 pl-16 md:pr-0 md:pl-40 bg-sky-100 md:bg-transparent z-10">
-            <span
+          <div className="rounded-xl md:rounded-none py-16 my-12 md:my-0 md:pb-0 md:pt-24 pr-8 pl-8 md:pr-0 md:pl-40 bg-sky-100 md:bg-transparent z-10 text-center md:text-left">
+            <div
               dangerouslySetInnerHTML={{ __html: content }}
               className="[&>h2]:mb-4 [&>h2]:text-5xl [&>h2]:font-bold [&>p]:mt-6 [&>h4]:font-bold font-semibold"
             />
             {link?.url && (
               <Link
                 href={link.url}
-                className="block rounded w-fit mt-8 bg-yellow-400 text-yellow-800 px-10 py-4 text-center text-md font-semibold uppercase"
+                className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-yellow-400 text-yellow-800 px-10 py-4 text-center text-md font-semibold uppercase"
               >
                 {link.title}
               </Link>

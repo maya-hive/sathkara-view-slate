@@ -17,7 +17,7 @@ export default async function Page() {
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
       {data?.page_content && (
-        <section className="mt-12 container mx-auto">
+        <section className="mt-12 container mx-auto px-4 sm:px-6">
           <RichText content={data.page_content} />
         </section>
       )}
@@ -26,7 +26,7 @@ export default async function Page() {
         formContent={data?.form_content}
       />
       {data?.map && (
-        <section className="mt-12 container mx-auto">
+        <section className="mt-12 container mx-auto px-4 sm:px-6">
           <div
             className="w-full rounded-lg overflow-hidden [&>iframe]:w-full [&>iframe]:h-[460px]"
             dangerouslySetInnerHTML={{ __html: data.map }}

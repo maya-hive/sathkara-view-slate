@@ -47,10 +47,12 @@ const CardLayout = ({
 
   return (
     <div className="rounded-2xl overflow-hidden">
-      <div className="relative h-full py-[25px] md:py-[50px] flex items-end text-white">
-        <div className="relative w-full z-20 p-8 flex flex-col md:flex-row gap-8 md:items-end">
+      <div className="relative h-full py-[25px] md:py-[50px] flex items-end text-white text-center md:text-left">
+        <div className="relative w-full z-20 p-8 flex flex-col md:flex-row gap-8 items-center md:items-end">
           <div className="flex-1">
-            <h3 className="text-5xl font-semibold">{props.title}</h3>
+            <h3 className="text-5xl font-semibold leading-tight">
+              {props.title}
+            </h3>
             <p className="mt-3 text-sky-400 text-xl font-semibold">
               {props.description?.replace(
                 "[count]",
@@ -70,7 +72,7 @@ const CardLayout = ({
             )}
             <Link
               href={slug}
-              className="block rounded w-fit mt-8 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+              className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
             >
               Plan Your Trip
             </Link>

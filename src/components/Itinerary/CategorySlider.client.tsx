@@ -15,8 +15,8 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
 
   return (
-    <section className="mt-8 p-8">
-      <div className="container mx-auto">
+    <section className="my-8">
+      <div className="container mx-auto px-4 sm:px-6">
         <Swiper
           modules={[Navigation, A11y]}
           loop={true}

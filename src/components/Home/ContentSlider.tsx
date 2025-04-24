@@ -26,7 +26,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
 
   return (
     <section className="my-20">
-      <div className="relative rounded-2xl overflow-hidden container mx-auto p-16">
+      <div className="relative rounded-2xl overflow-hidden container mx-auto px-4 sm:px-6 p-16">
         <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-slate-800 via-slate-900/75 to-transparent -z-10" />
         <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-l from-slate-800 via-slate-800/80 to-transparent -z-40 md:-z-10" />
         <div className="relative flex flex-col md:flex-row justify-between">

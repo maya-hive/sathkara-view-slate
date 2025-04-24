@@ -83,7 +83,7 @@ export default async function Page({
         </div>
       </Banner>
       <TopBar data={data} />
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row gap-12 md:pt-12">
           <div className="md:min-w-[calc(100%-400px)] xl:max-w-[calc(100%-400px)]">
             <div className="mt-8">
@@ -148,7 +148,7 @@ export default async function Page({
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="bg-primary">
-    <div className="container mx-auto py-4 flex flex-col md:flex-row justify-between gap-8">
+    <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />

@@ -15,7 +15,7 @@ export const OrderTable = async ({ id }: Props) => {
   }
 
   return (
-    <div className="container mx-auto overflow-x-auto mt-8">
+    <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
       <h2 className="text-center text-2xl font-semibold">{data.number}</h2>
       <table className="mt-6 min-w-full border border-gray-200 rounded-lg shadow-md">
         <thead className="bg-gray-100">

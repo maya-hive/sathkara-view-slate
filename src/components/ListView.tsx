@@ -50,7 +50,7 @@ export const ListView = ({
           {search && (
             <div className="mb-6">
               <SearchForm>
-                <div className="rounded-lg flex flex-row gap-4 bg-slate-100 p-4">
+                <div className="rounded-lg flex flex-col lg:flex-row gap-4 bg-slate-100 p-4">
                   <div className="flex-1 h-100">{search}</div>
                   <div className="flex-1 h-full w-full xl:max-w-[200px]">
                     <Button />
@@ -112,7 +112,7 @@ const ListViewSkeleton = async ({
   return (
     <article>
       <Banner title={title} image={banner?.image} />
-      <div className="container mx-auto">{children}</div>
+      <div className="container mx-auto px-4 sm:px-6">{children}</div>
     </article>
   );
 };
