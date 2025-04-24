@@ -49,7 +49,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
           <div className="relative text-white pt-[380px] xl:pt-[480px] z-10 pointer-events-none">
             {content && (
               <div
-                className="[&>h1]:text-5xl [&>h1]:xl:text-7xl [&>h1]:font-bold text-center xl:text-left "
+                className="[&>h1]:text-5xl [&>h1]:xl:text-7xl [&>h1]:font-bold [&>h1>span]:block [&>h1>span]:mt-3 [&>h1>span]:md:inline [&>h1>span]:md:mt-0 text-center xl:text-left"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             )}
