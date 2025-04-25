@@ -26,33 +26,31 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
 
   return (
     <section className="my-20">
-      <div className="relative rounded-2xl overflow-hidden container mx-auto px-4 sm:px-6 p-16">
+      <div className="relative sm:rounded-2xl overflow-hidden container mx-auto px-4 sm:px-6 p-16">
         <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-slate-800 via-slate-900/75 to-transparent -z-10" />
         <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-l from-slate-800 via-slate-800/80 to-transparent -z-40 md:-z-10" />
         <div className="relative flex flex-col md:flex-row justify-between">
           {title && (
             <h2
-              className="text-3xl md:text-3xl text-center md:text-left font-semibold text-white md:max-w-[250px]"
+              className="text-3xl md:text-3xl text-center md:text-left font-semibold text-white md:max-w-[250px] flex-1"
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}
-          <div className="mt-8 md:mt-0 relative">
+          <div className="mt-8 md:mt-0 relative flex-1">
             <Swiper
               modules={[Navigation]}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
+              navigation={true}
               spaceBetween={30}
-              loop={true}
+              loop={false}
+              className="[&>div]:xl:justify-end"
               breakpoints={{
-                0: { slidesPerView: 1 },
-                768: { slidesPerView: 1 },
+                0: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
                 1024: { slidesPerView: 6 },
               }}
             >
               {contents?.map((item, index) => (
-                <SwiperSlide key={index} className="!w-auto h-auto">
+                <SwiperSlide key={index} className="flex justify-center">
                   <button
                     onClick={() => setActiveIndex(index)}
                     className={`h-full overflow-hidden cursor-pointer text-center group ${
@@ -83,12 +81,10 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="swiper-button-next text-yellow-500" />
-            <div className="swiper-button-prev text-yellow-500" />
           </div>
         </div>
         <div className="pt-20 py-8 flex justify-end w-100">
-          <div className="text-white max-w-[600px]">
+          <div className="text-white max-w-[600px] text-center md:text-left">
             {contents?.[activeIndex]?.content && (
               <div
                 className="prose text-white prose-h2:text-4xl prose-h3:text-lg"
