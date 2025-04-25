@@ -1,17 +1,40 @@
+import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
 import { DestinationListing } from "@/components/Destination/Listing/Main";
-import { NoData } from "../no-data";
+import { NoData } from "@/app/no-data";
 
-export default async function Page() {
-  const data = await fetchData("1");
+type Args = {
+  params: Promise<{
+    id?: string;
+  }>;
+};
+
+export default async function Page({ params }: Args) {
+  const { id = "1" } = await params;
+
+  if (id === "1") {
+    return redirect(`/destinations`);
+  }
+
+  const data = await fetchData(id);
 
   if (!data) {
     return <NoData />;
   }
 
   return <DestinationListing {...data} />;
+}
+
+export async function generateStaticParams() {
+  const { last_page } = await fetchData("1");
+
+  const pages = new Array(last_page).fill(0).map((_, i) => ++i);
+
+  return pages.map((id) => ({
+    id: id.toString(),
+  }));
 }
 
 const fetchData = async (
@@ -53,14 +76,14 @@ const fetchData = async (
   }
 };
 
-const ApiSchema = z.object({
+const Schema = z.object({
   id: z.number(),
   status: z.number(),
   slug: z.string(),
 });
 
 const ApiResponseSchema = z.object({
-  data: z.array(ApiSchema).nullable(),
+  data: z.array(Schema).nullable(),
   current_page: z.number().nullable(),
   last_page: z.number().nullable(),
   links: z
