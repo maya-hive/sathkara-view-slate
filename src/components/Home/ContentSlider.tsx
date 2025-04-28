@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import { Swiper as SwiperType } from "swiper";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,6 +24,7 @@ type ContentSlide = {
 
 export const HomeContentSlider = ({ title, contents }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef<SwiperType>(null);
 
   return (
     <section className="my-20">
@@ -36,21 +38,26 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}
-          <div className="mt-8 md:mt-0 relative flex-1">
+          <div className="pt-8 md:pt-0 relative flex-1 lg:max-w-[800px]">
             <Swiper
               modules={[Navigation]}
-              navigation={true}
               spaceBetween={30}
               loop={false}
               className="[&>div]:xl:justify-end"
+              onBeforeInit={(swiper) => {
+                swiperRef.current = swiper;
+              }}
               breakpoints={{
-                0: { slidesPerView: 2 },
+                0: { slidesPerView: 1 },
                 768: { slidesPerView: 3 },
                 1024: { slidesPerView: 6 },
               }}
             >
               {contents?.map((item, index) => (
-                <SwiperSlide key={index} className="flex justify-center">
+                <SwiperSlide
+                  key={index}
+                  className="flex justify-center lg:flex-1"
+                >
                   <button
                     onClick={() => setActiveIndex(index)}
                     className={`h-full overflow-hidden cursor-pointer text-center group ${
@@ -81,13 +88,35 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="md:hidden absolute w-full top-[25%] flex gap-5 justify-center">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="absolute z-10 top-full left-0"
+              >
+                <FontAwesomeIcon
+                  className="rounded-full text-orange-500 p-3 left-0"
+                  icon={faArrowLeft}
+                  size="lg"
+                />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="absolute z-10 top-full right-0"
+              >
+                <FontAwesomeIcon
+                  className="rounded-full text-orange-500 p-3 right-0"
+                  icon={faArrowRight}
+                  size="lg"
+                />
+              </button>
+            </div>
           </div>
         </div>
-        <div className="pt-20 py-8 flex justify-end w-100">
+        <div className="pt-8 md:pt-20 py-8 flex justify-end w-100">
           <div className="text-white max-w-[600px] text-center md:text-left">
             {contents?.[activeIndex]?.content && (
               <div
-                className="prose text-white prose-h2:text-4xl prose-h3:text-lg"
+                className="prose text-white prose-h2:text-2xl prose-h2:md:text-4xl prose-h3:text-lg"
                 dangerouslySetInnerHTML={{
                   __html: contents[activeIndex].content!,
                 }}

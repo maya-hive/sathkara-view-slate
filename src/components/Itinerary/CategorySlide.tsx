@@ -25,9 +25,9 @@ export const ItineraryCategorySlide = async ({
   if (!data) return null;
 
   return (
-    <div className="mx-5 flex flex-col md:flex-row border rounded-2xl overflow-hidden gap-5">
+    <div className="flex flex-col lg:flex-row justify-between border rounded-2xl overflow-hidden gap-5 h-full lg:h-auto">
       <div className="flex items-end relative xl:w-[650px]">
-        <div className="bg-gradient-to-b from-transparent to-black">
+        <div className="bg-gradient-to-b from-transparent to-black text-center md:text-left">
           <Image
             className="absolute -z-10 w-full h-full left-0 top-0 object-cover"
             src={data.featured_image}
@@ -46,14 +46,14 @@ export const ItineraryCategorySlide = async ({
             )}
             <Link
               href={cn(`/itinerary-categories/${category}`)}
-              className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+              className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
             >
               Plan Your Trip
             </Link>
           </div>
         </div>
       </div>
-      <div className="p-8 w-full">
+      <div className="p-4 md:p-8 w-full">
         <div className="grid xl:grid-cols-2 gap-5">
           {itineraries.map((itinerary, idx) => {
             return itinerary && <ItineraryCard key={idx} slug={itinerary} />;

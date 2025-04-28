@@ -15,17 +15,7 @@ export const AudienceSliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
 
   return (
-    <div className="relative px-8 md:px-0">
-      <button
-        onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute z-10 left-3 md:-left-5 top-0 bottom-0"
-      >
-        <FontAwesomeIcon
-          className="rounded-full bg-orange-500 text-white p-3"
-          icon={faArrowLeft}
-          size="lg"
-        />
-      </button>
+    <div className="relative lg:mx-5">
       <Swiper
         modules={[Navigation, A11y]}
         spaceBetween={20}
@@ -40,19 +30,33 @@ export const AudienceSliderClient = ({ children }: Props) => {
         }}
       >
         {Children.map(children, (child, index) => (
-          <SwiperSlide key={index}>{child}</SwiperSlide>
+          <SwiperSlide key={index} className="h-auto">
+            {child}
+          </SwiperSlide>
         ))}
       </Swiper>
-      <button
-        onClick={() => swiperRef.current?.slideNext()}
-        className="absolute z-10 right-3 md:-right-5 top-0 bottom-0"
-      >
-        <FontAwesomeIcon
-          className="rounded-full bg-orange-500 text-white p-3"
-          icon={faArrowRight}
-          size="lg"
-        />
-      </button>
+      <div className="mt-4 relative lg:absolute lg:top-0 lg:bottom-0 w-full flex gap-5 justify-center">
+        <button
+          onClick={() => swiperRef.current?.slidePrev()}
+          className="lg:absolute lg:-left-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10 "
+        >
+          <FontAwesomeIcon
+            className="rounded-full bg-orange-500 text-white p-3"
+            icon={faArrowLeft}
+            size="lg"
+          />
+        </button>
+        <button
+          onClick={() => swiperRef.current?.slideNext()}
+          className="lg:absolute lg:-right-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10 "
+        >
+          <FontAwesomeIcon
+            className="rounded-full bg-orange-500 text-white p-3"
+            icon={faArrowRight}
+            size="lg"
+          />
+        </button>
+      </div>
     </div>
   );
 };

@@ -15,8 +15,8 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
 
   return (
-    <section className="my-8">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section className="container mx-auto px-4 md:px-0 my-8">
+      <div className="relative lg:mx-5">
         <Swiper
           modules={[Navigation, A11y]}
           loop={true}
@@ -26,9 +26,16 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
             swiperRef.current = swiper;
           }}
         >
+          {Children.map(children, (child, index) => (
+            <SwiperSlide key={index} className="h-auto">
+              {child}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="mt-4 md:mt-4 relative lg:absolute lg:top-0 lg:bottom-0 w-full flex gap-5 justify-center">
           <button
             onClick={() => swiperRef.current?.slidePrev()}
-            className="absolute z-10 left-0 top-0 bottom-0"
+            className="lg:absolute lg:-left-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10"
           >
             <FontAwesomeIcon
               className="rounded-full bg-orange-500 text-white p-3"
@@ -36,12 +43,9 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
               size="lg"
             />
           </button>
-          {Children.map(children, (child, index) => (
-            <SwiperSlide key={index}>{child}</SwiperSlide>
-          ))}
           <button
             onClick={() => swiperRef.current?.slideNext()}
-            className="absolute z-10 right-0 top-0 bottom-0"
+            className="lg:absolute lg:-right-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10"
           >
             <FontAwesomeIcon
               className="rounded-full bg-orange-500 text-white p-3"
@@ -49,7 +53,7 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
               size="lg"
             />
           </button>
-        </Swiper>
+        </div>
       </div>
     </section>
   );

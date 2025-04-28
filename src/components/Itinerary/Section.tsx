@@ -13,7 +13,7 @@ export const ItinerarySection = async ({ items, title, content }: Props) => {
 
   return (
     <section>
-      <div className="container mx-auto px-4 sm:px-6 py-12">
+      <div className="container mx-auto px-4 md:px-0 py-12">
         <h2 className="text-center text-2xl font-semibold">{title}</h2>
         {content && <span dangerouslySetInnerHTML={{ __html: content }} />}
         <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
