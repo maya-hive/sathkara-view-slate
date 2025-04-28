@@ -46,11 +46,11 @@ const CardLayout = ({
   const slug = `/itineraries?audiences=${data.slug}`;
 
   return (
-    <div className="rounded-2xl overflow-hidden">
-      <div className="relative h-full py-[25px] md:py-[50px] flex items-end text-white text-center md:text-left">
+    <div className="rounded-2xl overflow-hidden h-full">
+      <div className="relative h-full py-[5px] md:py-[50px] flex items-end text-white text-center md:text-left">
         <div className="relative w-full z-20 p-8 flex flex-col md:flex-row gap-8 items-center md:items-end">
           <div className="flex-1">
-            <h3 className="text-5xl font-semibold leading-tight">
+            <h3 className="text-3xl lg:text-5xl font-semibold leading-tight">
               {props.title}
             </h3>
             <p className="mt-3 text-sky-400 text-xl font-semibold">

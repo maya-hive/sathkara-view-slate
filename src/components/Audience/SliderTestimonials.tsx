@@ -23,7 +23,7 @@ export const AudienceTestimonialSlider = ({ content, items }: Props) => {
 
   return (
     <section className="my-16 relative overflow-x-clip">
-      <div className="container mx-auto px-4 sm:px-6 pt-16 py-8">
+      <div className="container mx-auto px-4 md:px-0 pt-16">
         <div className="text-center text-3xl font-bold">
           {content && <h2 dangerouslySetInnerHTML={{ __html: content }} />}
         </div>

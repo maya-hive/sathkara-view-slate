@@ -25,12 +25,12 @@ export const CallToAction = ({ content, link, image }: Props) => {
           <div className="text-white z-10">
             <div
               dangerouslySetInnerHTML={{ __html: content }}
-              className="[&>h2]:text-5xl [&>h2]:font-bold [&>p]:mt-6 [&>p]:font-semibold"
+              className="[&>h2]:text-5xl [&>h2]:font-bold [&>p]:mt-6 [&>p]:font-semibold text-center md:text-left"
             />
             {link?.url && (
               <Link
                 href={link.url}
-                className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+                className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
               >
                 {link.title}
               </Link>
@@ -45,7 +45,7 @@ export const CallToAction = ({ content, link, image }: Props) => {
               height={800}
             />
           )}
-          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent/10 to-cyan-400/100 to-[60%]"></div>
+          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent/10 to-cyan-400/100 to-[50%]"></div>
         </div>
       </div>
     </section>

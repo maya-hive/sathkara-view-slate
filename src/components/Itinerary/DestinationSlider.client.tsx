@@ -15,17 +15,7 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
 
   return (
-    <div className="px-6 relative">
-      <button
-        onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute z-10 left-0 top-[270px]"
-      >
-        <FontAwesomeIcon
-          className="rounded-full bg-orange-500 text-white p-3"
-          icon={faArrowLeft}
-          size="lg"
-        />
-      </button>
+    <div className="relative lg:mx-5">
       <Swiper
         modules={[Navigation, A11y]}
         loop={true}
@@ -46,16 +36,28 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button
-        onClick={() => swiperRef.current?.slideNext()}
-        className="absolute z-10 right-0 top-[270px]"
-      >
-        <FontAwesomeIcon
-          className="rounded-full bg-orange-500 text-white p-3"
-          icon={faArrowRight}
-          size="lg"
-        />
-      </button>
+      <div className="mt-4 md:mt-4 relative lg:absolute lg:top-0 lg:bottom-0 w-full flex gap-5 justify-center">
+        <button
+          onClick={() => swiperRef.current?.slidePrev()}
+          className="lg:absolute lg:-left-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10"
+        >
+          <FontAwesomeIcon
+            className="rounded-full bg-orange-500 text-white p-3"
+            icon={faArrowLeft}
+            size="lg"
+          />
+        </button>
+        <button
+          onClick={() => swiperRef.current?.slideNext()}
+          className="lg:absolute lg:-right-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10"
+        >
+          <FontAwesomeIcon
+            className="rounded-full bg-orange-500 text-white p-3"
+            icon={faArrowRight}
+            size="lg"
+          />
+        </button>
+      </div>
     </div>
   );
 };
