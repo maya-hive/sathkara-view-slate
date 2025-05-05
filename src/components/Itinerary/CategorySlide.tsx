@@ -5,7 +5,6 @@ import Link from "next/link";
 import queryString from "query-string";
 import Image from "next/image";
 import { ItineraryCard } from "./Card";
-import { cn } from "@/lib/utils";
 
 interface Props {
   category: string;
@@ -45,7 +44,7 @@ export const ItineraryCategorySlide = async ({
               />
             )}
             <Link
-              href={cn(`/itinerary-categories/${category}`)}
+              href={"/inquiry"}
               className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
             >
               Plan Your Trip
@@ -60,7 +59,7 @@ export const ItineraryCategorySlide = async ({
           })}
         </div>
         <Link
-          href="/itineraries"
+          href={`/itinerary-categories/${category}`}
           className="mt-6 rounded-md p-4 block bg-slate-800 text-slate-50 text-center text-sm font-semibold uppercase"
         >
           View All Itineraries

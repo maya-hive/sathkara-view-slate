@@ -89,7 +89,7 @@ export default async function Page({
 }
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div className="bg-primary">
+  <div style={{ backgroundColor: data?.color }}>
     <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
@@ -136,6 +136,7 @@ const fetchData = async (
         "description",
         "short_description",
         "cities",
+        "color",
         "meta_title",
         "meta_description",
       ],
@@ -186,6 +187,7 @@ const Schema = z.object({
     .nullable()
     .optional(),
   cities: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
+  color: z.string(),
 });
 
 const ApiResponseSchema = z.object({

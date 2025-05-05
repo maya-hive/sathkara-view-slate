@@ -31,7 +31,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
 
   return (
     <div className="h-full border rounded-lg overflow-hidden flex flex-col justify-between">
-      <div className="relative pt-[260px]">
+      <div className="relative pt-[60%]">
         <Link href={slug}>
           <Image
             className="w-full h-full object-cover absolute top-0 left-0"
@@ -134,11 +134,14 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                         />
                         <PriceTag
                           amount={data.sale_price}
-                          className="text-3xl"
+                          className="text-2xl md:text-3xl"
                         />
                       </>
                     ) : (
-                      <PriceTag amount={data?.price} className="text-3xl" />
+                      <PriceTag
+                        amount={data?.price}
+                        className="text-2xl md:text-3xl"
+                      />
                     )}
                   </p>
                 </div>
@@ -154,8 +157,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
             href={slug}
             className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-400 p-3 flex flex-col justify-center items-center flex-1"
           >
-            Learn More <br />
-            About The Journey
+            Learn About the Journey
           </Link>
           <Link
             href={slug + "#inquiry_form"}

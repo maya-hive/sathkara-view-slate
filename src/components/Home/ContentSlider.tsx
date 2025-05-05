@@ -31,19 +31,19 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
       <div className="relative sm:rounded-2xl overflow-hidden container mx-auto px-4 sm:px-6 p-16">
         <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-slate-800 via-slate-900/75 to-transparent -z-10" />
         <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-l from-slate-800 via-slate-800/80 to-transparent -z-40 md:-z-10" />
-        <div className="relative flex flex-col md:flex-row justify-between">
+        <div className="relative flex flex-col xl:flex-row justify-between">
           {title && (
             <h2
-              className="text-3xl md:text-3xl text-center md:text-left font-semibold text-white md:max-w-[250px] flex-1"
+              className="text-3xl xl:text-3xl text-center xl:text-left font-semibold text-white xl:max-w-[250px] flex-1"
               dangerouslySetInnerHTML={{ __html: title }}
             />
           )}
-          <div className="pt-8 md:pt-0 relative flex-1 lg:max-w-[800px]">
+          <div className="pt-8 xl:pt-0 relative flex-1 xl:max-w-[800px]">
             <Swiper
               modules={[Navigation]}
               spaceBetween={30}
               loop={false}
-              className="[&>div]:xl:justify-end"
+              className="[&>div]:2xl:justify-end"
               onBeforeInit={(swiper) => {
                 swiperRef.current = swiper;
               }}
@@ -88,7 +88,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="md:hidden absolute w-full top-[25%] flex gap-5 justify-center">
+            <div className="xl:hidden absolute w-full top-[25%] flex gap-5 justify-center">
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
                 className="absolute z-10 top-full left-0"
@@ -112,11 +112,11 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
             </div>
           </div>
         </div>
-        <div className="pt-8 md:pt-20 py-8 flex justify-end w-100">
-          <div className="text-white max-w-[600px] text-center md:text-left">
+        <div className="pt-8 xl:pt-20 py-8 flex justify-center xl:justify-end w-100">
+          <div className="text-white max-w-[600px] text-center xl:text-left">
             {contents?.[activeIndex]?.content && (
               <div
-                className="prose text-white prose-h2:text-2xl prose-h2:md:text-4xl prose-h3:text-lg"
+                className="prose text-white prose-h2:text-2xl prose-h2:xl:text-4xl prose-h3:text-lg"
                 dangerouslySetInnerHTML={{
                   __html: contents[activeIndex].content!,
                 }}
@@ -125,7 +125,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
 
             {contents?.[activeIndex]?.link_url && (
               <Link
-                className="inline-block mt-8 px-6 py-3 bg-yellow-400 text-black rounded-md font-semibold uppercase tracking-wide text-sm"
+                className="inline-block mt-8 px-6 py-3 bg-yellow-400 text-black rounded-xl font-semibold uppercase tracking-wide text-sm"
                 href={contents[activeIndex].link_url}
               >
                 {contents[activeIndex].link_title || "Plan Your Trip"}
