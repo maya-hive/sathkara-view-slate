@@ -13,7 +13,7 @@ interface Props {
 
 export const SearchWidget = ({ title }: Props) => (
   <SearchForm>
-    <div className="rounded-xl shadow-lg bg-white py-6 px-6 md:px-12 flex flex-col xl:flex-row gap-4 items-center">
+    <div className="rounded-xl shadow-lg bg-white py-6 px-6 xl:px-8 2xl:px-12 flex flex-col xl:flex-row gap-4 items-center">
       <h2 className="text-lg font-bold xl:max-w-[120px] leading-tight">
         {title ? (
           <>
@@ -33,13 +33,13 @@ export const SearchWidget = ({ title }: Props) => (
             className={cn("h-full font-medium bg-gray-100 border-none")}
           />
         </div>
-        <div className="flex-1 w-full xl:min-w-[350px]">
+        <div className="flex-1 w-full xl:min-w-[250px]">
           <Categories
             label={false}
             className="h-full bg-gray-100 border-none"
           />
         </div>
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full xl:min-w-[100px]">
           <Duration label={false} className="h-full bg-gray-100 border-none" />
         </div>
         <div className="flex-1 w-full xl:max-w-[200px]">

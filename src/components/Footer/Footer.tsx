@@ -38,7 +38,7 @@ export const Footer = async () => {
               </Link>
             )}
           </div>
-          <div className="border-y border-sky-800 flex flex-col lg:flex-row items-center lg:items-start justify-between py-8 lg:pt-12 lg:pb-20 text-center lg:text-start text-md">
+          <div className="border-y border-sky-800 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 py-8 lg:pt-12 lg:pb-20 text-center lg:text-start text-md">
             <div className="text-3xl font-extralight">
               <p className="max-w-[300px] mb-4">{data.footer_contact_title}</p>
               {data.footer_contact_number && (
