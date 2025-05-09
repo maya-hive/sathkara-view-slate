@@ -1,31 +1,33 @@
 import queryString from "query-string";
 import Link from "next/link";
 import { z } from "zod";
+
 import { PriceTag } from "../PriceTag";
+import { notFound } from "next/navigation";
 
 interface Props {
   id: string;
 }
 
-export const OrderTable = async ({ id }: Props) => {
+export const OrderInvoices = async ({ id }: Props) => {
   const { data } = await fetchData(id);
 
   if (!data) {
-    return null;
+    return notFound();
   }
 
   return (
     <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
-      <h2 className="text-center text-2xl font-semibold">{data.number}</h2>
+      <h2 className="text-center text-2xl font-semibold">Invoices</h2>
       <table className="mt-6 min-w-full border border-gray-200 rounded-lg shadow-md">
-        <thead className="bg-gray-100">
+        <thead className="bg-gray-100 ">
           <tr className="text-left text-gray-700 border-b [&>th]:px-4 [&>th]:py-3">
             <th>Invoice Number</th>
             <th>Date</th>
             <th>Due Date</th>
             <th>Amount</th>
-            <th>Payment Status</th>
-            <th>Actions</th>
+            <th className="text-center">Payment Status</th>
+            <th className="text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -37,20 +39,20 @@ export const OrderTable = async ({ id }: Props) => {
               <td className="font-semibold text-green-600">
                 <PriceTag amount={invoice.amount} cents="show" />
               </td>
-              <td className={`font-medium`}>
+              <td className="font-medium text-center">
                 {invoice.payment_status ? "Paid" : "Pending"}
               </td>
-              <td className="flex gap-3">
+              <td className="flex gap-3 justify-end">
                 <Link
                   href={invoice.download_link}
-                  className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
+                  className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
                 >
                   Download
                 </Link>
                 {!invoice.payment_status && (
                   <Link
                     href={invoice.checkout_link}
-                    className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
+                    className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
                   >
                     Checkout
                   </Link>
@@ -134,5 +136,5 @@ const Order = z.object({
 });
 
 const ApiResponseSchema = z.object({
-  data: Order,
+  data: Order.nullable(),
 });
