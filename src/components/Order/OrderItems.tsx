@@ -2,6 +2,8 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { PriceTag } from "../PriceTag";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface Props {
   id: string;
@@ -11,7 +13,7 @@ export const OrderItems = async ({ id }: Props) => {
   const { data } = await fetchData(id);
 
   if (!data) {
-    return null;
+    return notFound();
   }
 
   return (
@@ -45,8 +47,24 @@ export const OrderItems = async ({ id }: Props) => {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr className="border-b [&>td]:px-4 [&>td]:py-3">
+              <td colSpan={5} className="font-semibold">
+                Order Total
+              </td>
+              <td className="text-right font-semibold">
+                <PriceTag amount={data.total_price} cents="show" />
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
+      <Link
+        href={data.download_link}
+        className="mx-auto block rounded w-fit mt-5 px-10 py-2 text-white bg-blue-600  text-center text-md font-semibold uppercase"
+      >
+        Download Order
+      </Link>
     </div>
   );
 };
@@ -63,6 +81,7 @@ const fetchData = async (
         "date",
         "customer",
         "total_price",
+        "download_link",
         "items",
       ],
     },
@@ -114,6 +133,7 @@ const Order = z.object({
   date: z.string(),
   total_price: z.string(),
   items: z.array(OrderItem).nullable(),
+  download_link: z.string(),
 });
 
 const ApiResponseSchema = z.object({

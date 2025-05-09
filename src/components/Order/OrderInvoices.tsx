@@ -3,6 +3,7 @@ import Link from "next/link";
 import { z } from "zod";
 
 import { PriceTag } from "../PriceTag";
+import { notFound } from "next/navigation";
 
 interface Props {
   id: string;
@@ -12,7 +13,7 @@ export const OrderInvoices = async ({ id }: Props) => {
   const { data } = await fetchData(id);
 
   if (!data) {
-    return null;
+    return notFound();
   }
 
   return (
@@ -44,14 +45,14 @@ export const OrderInvoices = async ({ id }: Props) => {
               <td className="flex gap-3 justify-end">
                 <Link
                   href={invoice.download_link}
-                  className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
+                  className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
                 >
                   Download
                 </Link>
                 {!invoice.payment_status && (
                   <Link
                     href={invoice.checkout_link}
-                    className="text-white bg-blue-600 px-3 py-1 rounded-lg hover:bg-blue-700"
+                    className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
                   >
                     Checkout
                   </Link>

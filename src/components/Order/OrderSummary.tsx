@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -11,7 +12,7 @@ export const OrderSummary = async ({ id }: Props) => {
   const { data } = await fetchData(id);
 
   if (!data) {
-    return null;
+    return notFound();
   }
 
   return (
@@ -43,7 +44,7 @@ type OrderItemRowProps = {
 type OrderItemRowType = {
   name: string;
   short_description: string;
-  slug: string;
+  url: string;
   featured_image?: string | null;
 };
 
@@ -52,31 +53,23 @@ const OrderItemRow = ({ type, item }: OrderItemRowProps) => (
     <h3 className="font-semibold capitalize">{type}</h3>
     <div className="py-4">
       <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 lg:items-center">
-        <div className="lg:col-span-2">
-          <Image
-            src={
-              "http://localhost:3000/_next/image?url=https%3A%2F%2Fsathkara-backoffice.mayadev.xyz%2Fmedia%2F408%2F53ce21306029c-8311.webp&w=1920&q=75"
-            }
-            alt={"item image"}
-            width={300}
-            height={200}
-            className="w-full h-[240px] object-cover rounded-lg mr-4"
-          />
+        <div className="lg:col-span-1">
           {item.featured_image && (
             <Image
               src={item.featured_image}
               alt={item.name}
               width={300}
               height={200}
-              className="w-full h-[240px] object-cover rounded-lg mr-4"
+              className="w-full h-[160px] object-cover rounded-lg mr-4"
             />
           )}
         </div>
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-5">
           <h3 className="text-lg font-semibold">{item.name}</h3>
           <p className="text-gray-500">{item.short_description}</p>
           <Link
-            href={`/${type}/${item.slug}`}
+            href={item.url}
+            target="_blank"
             className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
           >
             Read More
@@ -154,6 +147,7 @@ const OrderItemType = z.object({
   slug: z.string(),
   short_description: z.string(),
   featured_image: z.string().nullable().optional(),
+  url: z.string(),
 });
 
 const OrderItem = z.object({

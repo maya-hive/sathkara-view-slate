@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
@@ -9,7 +10,7 @@ export const OrderDetails = async ({ id }: Props) => {
   const { data } = await fetchData(id);
 
   if (!data) {
-    return null;
+    return notFound();
   }
 
   return (
