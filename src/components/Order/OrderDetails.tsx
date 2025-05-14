@@ -2,6 +2,20 @@ import { notFound } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import { Badge } from "../ui/badge";
+import { Card, CardContent } from "../ui/card";
+import { PriceTag } from "../PriceTag";
+import Link from "next/link";
+
 interface Props {
   id: string;
 }
@@ -14,22 +28,164 @@ export const OrderDetails = async ({ id }: Props) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
-      <div className="mt-6 grid lg:grid-cols-2 gap-6">
-        <div className="bg-muted rounded-lg p-4">
-          <h3 className="mb-2 font-semibold">Order Details</h3>
-          <p>Order Number: {data.number}</p>
-          <p>Check-out Date: {data.checkin_date}</p>
-          <p>Check-in Date: {data.checkout_date}</p>
+    <div className="container mx-auto px-4 sm:px-6 mt-8">
+      <div className="border rounded-md">
+        <div className="grid gap-4 md:grid-cols-2">
+          <OrderCard order={data} />
+          <CustomerCard customer={data.customer} />
         </div>
-        <div className="bg-muted rounded-lg p-4">
-          <h3 className="mb-2 font-semibold">Customer Details</h3>
-          <p>{data.customer?.name}</p>
-          <p>{data.customer?.email}</p>
-          <p>{data.customer?.phone}</p>
-          <p>{data.customer?.address}</p>
-        </div>
+        <DataTable data={data} />
       </div>
+    </div>
+  );
+};
+
+const CustomerCard = ({
+  customer,
+}: {
+  customer: z.infer<typeof Customer> | null;
+}) => {
+  if (!customer) {
+    return null;
+  }
+
+  return (
+    <Card className="border-none shadow-none">
+      <CardContent className="p-4">
+        <h2 className="text-lg font-semibold mb-4">Customer Details</h2>
+        <div className="space-y-3">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <p className="text-sm text-muted-foreground">Name</p>
+              <p className="text-md">{customer.name}</p>
+            </div>
+
+            {customer.email && (
+              <div>
+                <p className="text-sm text-muted-foreground">Email</p>
+                <p className="text-md">{customer.email}</p>
+              </div>
+            )}
+
+            {customer.phone && (
+              <div>
+                <p className="text-sm text-muted-foreground">Phone</p>
+                <p className="text-md">{customer.phone}</p>
+              </div>
+            )}
+
+            {customer.address && (
+              <div>
+                <p className="text-sm text-muted-foreground">Address</p>
+                <p className="text-md">{customer.address}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const OrderCard = ({ order }: { order: z.infer<typeof Order> | null }) => {
+  if (!order) {
+    return null;
+  }
+
+  return (
+    <Card className="border-none shadow-none">
+      <CardContent className="p-4">
+        <h2 className="text-lg font-semibold mb-4">Order Information</h2>
+        <div className="space-y-3">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <p className="text-sm text-muted-foreground">Name</p>
+              <p className="text-md">{order.number}</p>
+            </div>
+
+            {order.checkin_date && (
+              <div>
+                <p className="text-sm text-muted-foreground">Check-in Date</p>
+                <p className="text-md">{order.checkin_date}</p>
+              </div>
+            )}
+
+            {order.checkout_date && (
+              <div>
+                <p className="text-sm text-muted-foreground">Check-out Date</p>
+                <p className="text-md">{order.checkout_date}</p>
+              </div>
+            )}
+
+            <div>
+              <p className="text-sm text-muted-foreground">Order PDF</p>
+              <Link
+                href={order.download_link}
+                className="inline-block text-secondary text-md font-semibold uppercase"
+              >
+                Download
+              </Link>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const DataTable = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data?.items) {
+    return null;
+  }
+
+  return (
+    <div className="mt-2 border-t shadow-sm overflow-x-auto">
+      <Table>
+        <TableHeader className="bg-slate-50">
+          <TableRow>
+            <TableHead className="min-w-[350px]">Item</TableHead>
+            <TableHead className="min-w-[200px] text-right">
+              Unit Price & Qty
+            </TableHead>
+            <TableHead className="min-w-[150px] text-right">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.items.map((invoice) => (
+            <TableRow key={invoice.id} className="text-md">
+              <TableCell>
+                <div className="text-[16px]">
+                  <Badge className="bg-gray-100 text-muted-foreground">
+                    {invoice.type}
+                  </Badge>
+                  <div className="mt-2">{invoice.title}</div>
+                </div>
+                <p className="mt-1 max-w-[450px] text-muted-foreground">
+                  {invoice.description}
+                </p>
+              </TableCell>
+              <TableCell className="text-right">
+                <div className="flex items-center justify-end gap-2">
+                  <PriceTag amount={invoice.unit_price} cents="show" />
+                  <span className="text-muted-foreground">×</span>
+                  <span>{invoice.quantity}</span>
+                </div>
+              </TableCell>
+              <TableCell className="text-right">
+                <PriceTag amount={invoice.amount} cents="show" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow className="text-lg">
+            <TableCell colSpan={2}>Order Total</TableCell>
+            <TableCell className="text-right">
+              <PriceTag amount={data.total_price} cents="show" />
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
     </div>
   );
 };
@@ -42,10 +198,14 @@ const fetchData = async (
       fields: [
         "id",
         "status",
+        "date",
         "number",
         "checkin_date",
         "checkout_date",
+        "download_link",
+        "total_price",
         "customer",
+        "items",
       ],
     },
     { arrayFormat: "bracket" }
@@ -87,6 +247,16 @@ const Customer = z.object({
   address: z.string(),
 });
 
+const OrderItem = z.object({
+  id: z.number(),
+  type: z.string(),
+  title: z.string(),
+  description: z.string(),
+  unit_price: z.string(),
+  quantity: z.number(),
+  amount: z.string(),
+});
+
 const Order = z.object({
   id: z.number(),
   status: z.number(),
@@ -94,6 +264,9 @@ const Order = z.object({
   checkin_date: z.string(),
   checkout_date: z.string(),
   customer: Customer.nullable(),
+  total_price: z.string(),
+  download_link: z.string(),
+  items: z.array(OrderItem).nullable(),
 });
 
 const ApiResponseSchema = z.object({

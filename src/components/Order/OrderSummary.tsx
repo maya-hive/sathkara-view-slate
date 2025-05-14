@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
+import { Badge } from "../ui/badge";
 
 interface Props {
   id: string;
@@ -17,6 +18,7 @@ export const OrderSummary = async ({ id }: Props) => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
+      <h2 className="text-xl font-semibold">Summary</h2>
       <div className="mt-6">
         {data.items?.map((item) => (
           <div key={item.id}>
@@ -49,28 +51,30 @@ type OrderItemRowType = {
 };
 
 const OrderItemRow = ({ type, item }: OrderItemRowProps) => (
-  <div className="mb-4">
-    <h3 className="font-semibold capitalize">{type}</h3>
-    <div className="py-4">
-      <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 lg:items-center">
-        <div className="lg:col-span-1">
-          {item.featured_image && (
-            <Image
-              src={item.featured_image}
-              alt={item.name}
-              width={300}
-              height={200}
-              className="w-full h-[160px] object-cover rounded-lg mr-4"
-            />
-          )}
-        </div>
-        <div className="lg:col-span-5">
-          <h3 className="text-lg font-semibold">{item.name}</h3>
-          <p className="text-gray-500">{item.short_description}</p>
+  <div className="mb-6">
+    <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 lg:items-center">
+      {item.featured_image && (
+        <Image
+          src={item.featured_image}
+          alt={item.name}
+          width={300}
+          height={200}
+          className="lg:col-span-1 w-full h-min-[160px] h-full object-cover rounded-lg mr-4"
+        />
+      )}
+      <div className="lg:col-span-5">
+        <div className="prose">
+          <h3 className="mt-0 font-semibold">
+            <Badge className="bg-gray-100 text-muted-foreground">
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </Badge>
+            <div className="mt-2 text-lg">{item.name}</div>
+          </h3>
+          <p className="text-gray-500 mb-3">{item.short_description}</p>
           <Link
             href={item.url}
+            className="text-secondary no-underline"
             target="_blank"
-            className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
           >
             Read More
           </Link>
