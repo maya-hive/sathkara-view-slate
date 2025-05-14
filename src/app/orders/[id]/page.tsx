@@ -6,7 +6,6 @@ import { NoData } from "@/app/no-data";
 import { Banner } from "@/components/Banner";
 import { OrderDetails } from "@/components/Order/OrderDetails";
 import { OrderInvoices } from "@/components/Order/OrderInvoices";
-import { OrderItems } from "@/components/Order/OrderItems";
 import { OrderSummary } from "@/components/Order/OrderSummary";
 
 type Args = {
@@ -30,7 +29,6 @@ export default async function Page({ params }: Args) {
       <Banner image={data?.banner_image} title={data?.page_title} />
       <OrderDetails id={id.toString()} />
       <OrderInvoices id={id.toString()} />
-      <OrderItems id={id.toString()} />
       <OrderSummary id={id.toString()} />
     </article>
   );

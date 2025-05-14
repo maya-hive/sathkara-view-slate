@@ -4,6 +4,9 @@ import { z } from "zod";
 
 import { PriceTag } from "../PriceTag";
 import { notFound } from "next/navigation";
+import { Card, CardContent, CardFooter } from "../ui/card";
+import { Calendar, CreditCard, Download } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 interface Props {
   id: string;
@@ -16,54 +19,88 @@ export const OrderInvoices = async ({ id }: Props) => {
     return notFound();
   }
 
+  if (!data?.invoices) {
+    return null;
+  }
+
   return (
     <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
-      <h2 className="text-center text-2xl font-semibold">Invoices</h2>
-      <table className="mt-6 min-w-full border border-gray-200 rounded-lg shadow-md">
-        <thead className="bg-gray-100 ">
-          <tr className="text-left text-gray-700 border-b [&>th]:px-4 [&>th]:py-3">
-            <th>Invoice Number</th>
-            <th>Date</th>
-            <th>Due Date</th>
-            <th>Amount</th>
-            <th className="text-center">Payment Status</th>
-            <th className="text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.invoices?.map((invoice) => (
-            <tr key={invoice.id} className="border-b [&>td]:px-4 [&>td]:py-3">
-              <td>{invoice.number}</td>
-              <td>{invoice.date}</td>
-              <td>{invoice.due_date}</td>
-              <td className="font-semibold text-green-600">
-                <PriceTag amount={invoice.amount} cents="show" />
-              </td>
-              <td className="font-medium text-center">
-                {invoice.payment_status ? "Paid" : "Pending"}
-              </td>
-              <td className="flex gap-3 justify-end">
+      <h2 className="text-xl font-semibold">Invoices</h2>
+      <div className="grid gap-6 xl:grid-cols-2 mt-6">
+        {data.invoices.map((invoice) => (
+          <Card key={invoice.id} className="overflow-hidden">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center">
+                  <h2 className="text-lg font-semibold">{invoice.number}</h2>
+                </div>
+                {getStatusBadge(invoice.payment_status)}
+              </div>
+
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-md">
+                <div className="flex items-center">
+                  <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span className="text-muted-foreground mr-1">Date:</span>
+                  <span>{invoice.date}</span>
+                </div>
+
+                <div className="flex items-center">
+                  <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span className="text-muted-foreground mr-1">Due:</span>
+                  <span>{invoice.due_date}</span>
+                </div>
+              </div>
+            </CardContent>
+
+            <CardContent className="p-0 border-t pb-2">
+              <div className="px-4 py-2">
+                <div className="mt-2 flex justify-between items-center">
+                  <div className="flex items-center">Invoice Amount</div>
+                  <div className="text-lg font-semibold ml-2">
+                    <PriceTag amount={invoice.amount} cents="show" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+
+            <CardFooter className="border-t pb-4 bg-slate-50 px-4">
+              <div className="mt-4 w-full flex justify-end space-x-2">
                 <Link
                   href={invoice.download_link}
-                  className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
+                  className="rounded w-fit flex items-center justify-center bg-white border text-secondary px-10 py-2 text-center text-md font-semibold uppercase"
                 >
+                  <Download className="h-4 w-4 mr-1" />
                   Download
                 </Link>
-                {!invoice.payment_status && (
+                {invoice.payment_status !== 2 && (
                   <Link
                     href={invoice.checkout_link}
-                    className="block rounded w-fit px-10 py-2 text-white bg-blue-600 text-md font-semibold uppercase"
+                    className="rounded w-fit flex items-center justify-center bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
                   >
-                    Checkout
+                    <CreditCard className="h-4 w-4 mr-1" />
+                    {invoice.payment_status === 0 ? "Pay Now" : "Checkout"}
                   </Link>
                 )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
+};
+
+const getStatusBadge = (paymentStatus: number) => {
+  switch (paymentStatus) {
+    case 3:
+      return <Badge className="bg-red-500">Payment Declined</Badge>;
+    case 1:
+      return <Badge className="bg-green-500">Paid</Badge>;
+    case 0:
+      return <Badge className="bg-gray-200 text-black">Payment Pending</Badge>;
+    default:
+      return <Badge className="bg-gray-500">Unknown</Badge>;
+  }
 };
 
 const fetchData = async (
