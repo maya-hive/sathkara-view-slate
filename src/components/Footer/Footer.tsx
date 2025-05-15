@@ -200,7 +200,8 @@ const ApiResponseSchema = z.object({
           youtube: z.string().nullable(),
           linkedin: z.string().nullable(),
         })
-        .nullable(),
+        .nullable()
+        .optional(),
       phone_numbers: z
         .array(z.object({ number: z.string().nullable() }))
         .nullable()
@@ -210,7 +211,7 @@ const ApiResponseSchema = z.object({
         .nullable()
         .optional(),
       address: z.string().nullable().optional(),
-      collaborations_title: z.string().nullable(),
+      collaborations_title: z.string().nullable().optional(),
       itinerary_collaborations: z
         .array(
           z.object({ icon: z.string().nullable(), link: z.string().nullable() })

@@ -97,7 +97,8 @@ const ApiResponseSchema = z.object({
           youtube: z.string().nullable(),
           linkedin: z.string().nullable(),
         })
-        .nullable(),
+        .nullable()
+        .optional(),
     })
     .nullable(),
 });
