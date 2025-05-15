@@ -2,10 +2,8 @@ import queryString from "query-string";
 import { z } from "zod";
 import Sqids from "sqids";
 
-import { PriceTag } from "@/components/PriceTag";
 import { NoData } from "@/app/no-data";
-
-import { PayHereForm } from "./PayHereForm";
+import { InvoiceCard } from "@/components/Invoice/Card";
 
 interface Props {
   encodedId: string;
@@ -22,43 +20,27 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 mt-8">
-      <h2 className="text-center text-2xl font-semibold">
-        Checkout for Order: {data.number}
-      </h2>
-
-      <div className="mt-6 overflow-x-auto">
-        <table className="mt-4 min-w-full border border-gray-200 rounded-lg shadow-md">
-          <thead>
-            <tr className="text-center">
-              <th className="py-3 px-4">Invoice Number</th>
-              <th className="py-3 px-4">Payment Status</th>
-              <th className="py-3 px-4">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr key={data.id} className="text-center border-b">
-              <td className="py-3 px-4">{data.number}</td>
-              <td className="py-3 px-4">
-                {data.payment_status ? "Paid" : "Pending"}
-              </td>
-              <td className="py-3 px-4 font-semibold text-lg">
-                <PriceTag amount={data.amount} cents="show" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div className="mt-6">
-        {!data.payment_status && (
-          <PayHereForm
-            encodedId={encodedId}
-            reference={data.number}
-            amount={parseFloat(data.amount)}
-            customer={data.order.customer}
-          />
-        )}
-      </div>
+      <InvoiceCard
+        key={data.id}
+        invoice={{
+          id: data.id,
+          number: data.number,
+          date: data.date,
+          due_date: data.due_date,
+          amount: data.amount,
+          payment_status: data.payment_status,
+          download_link: data.download_link,
+        }}
+        customer={{
+          id: data.order.customer.id,
+          status: data.order.customer.status,
+          name: data.order.customer.name,
+          email: data.order.customer.email,
+          phone: data.order.customer.phone,
+          address: data.order.customer.address,
+        }}
+        encodedId={id.toString()}
+      />
     </div>
   );
 };
@@ -125,7 +107,6 @@ const Order = z.object({
   status: z.number(),
   number: z.string(),
   date: z.string(),
-  total_price: z.string(),
   customer: Customer,
 });
 
