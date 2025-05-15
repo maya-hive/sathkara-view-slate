@@ -10,10 +10,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import { Badge } from "../ui/badge";
-import { Card, CardContent } from "../ui/card";
-import { PriceTag } from "../PriceTag";
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { PriceTag } from "@/components/PriceTag";
 import Link from "next/link";
 
 interface Props {
@@ -103,6 +103,16 @@ const OrderCard = ({ order }: { order: z.infer<typeof Order> | null }) => {
               <p className="text-md">{order.number}</p>
             </div>
 
+            <div>
+              <p className="text-sm text-muted-foreground">Order PDF</p>
+              <Link
+                href={order.download_link}
+                className="inline-block text-secondary text-md font-semibold uppercase"
+              >
+                Download
+              </Link>
+            </div>
+
             {order.checkin_date && (
               <div>
                 <p className="text-sm text-muted-foreground">Check-in Date</p>
@@ -116,16 +126,6 @@ const OrderCard = ({ order }: { order: z.infer<typeof Order> | null }) => {
                 <p className="text-md">{order.checkout_date}</p>
               </div>
             )}
-
-            <div>
-              <p className="text-sm text-muted-foreground">Order PDF</p>
-              <Link
-                href={order.download_link}
-                className="inline-block text-secondary text-md font-semibold uppercase"
-              >
-                Download
-              </Link>
-            </div>
           </div>
         </div>
       </CardContent>
@@ -178,10 +178,16 @@ const DataTable = ({ data }: z.infer<typeof ApiResponseSchema>) => {
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow className="text-lg">
-            <TableCell colSpan={2}>Order Total</TableCell>
+          <TableRow className="text-md">
+            <TableCell colSpan={2}>Total</TableCell>
             <TableCell className="text-right">
-              <PriceTag amount={data.total_price} cents="show" />
+              <PriceTag amount={data.amount_total} cents="show" />
+            </TableCell>
+          </TableRow>
+          <TableRow className="border-t text-lg">
+            <TableCell colSpan={2}>Due Amount</TableCell>
+            <TableCell className="text-right">
+              <PriceTag amount={data.amount_due} cents="show" />
             </TableCell>
           </TableRow>
         </TableFooter>
@@ -203,7 +209,8 @@ const fetchData = async (
         "checkin_date",
         "checkout_date",
         "download_link",
-        "total_price",
+        "amount_total",
+        "amount_due",
         "customer",
         "items",
       ],
@@ -242,6 +249,7 @@ const fetchData = async (
 const Customer = z.object({
   id: z.number(),
   name: z.string(),
+  status: z.number(),
   email: z.string(),
   phone: z.string(),
   address: z.string(),
@@ -264,7 +272,8 @@ const Order = z.object({
   checkin_date: z.string(),
   checkout_date: z.string(),
   customer: Customer.nullable(),
-  total_price: z.string(),
+  amount_total: z.string(),
+  amount_due: z.string(),
   download_link: z.string(),
   items: z.array(OrderItem).nullable(),
 });

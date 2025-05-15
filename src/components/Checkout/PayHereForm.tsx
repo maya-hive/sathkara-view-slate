@@ -1,11 +1,10 @@
 import crypto from "crypto";
-import { Button } from "@/components/ui/button";
-
 interface Props {
   encodedId: string;
   reference: string;
   amount: number;
   customer: Customer;
+  children?: React.ReactNode | null;
 }
 
 type Customer = {
@@ -22,6 +21,7 @@ export const PayHereForm = ({
   reference,
   amount,
   customer,
+  children,
 }: Props) => {
   const checkoutId = process.env.CHECKOUT_API_ID ?? "";
   const checkoutSecret = process.env.CHECKOUT_API_SECRET ?? "";
@@ -64,9 +64,7 @@ export const PayHereForm = ({
       <input type="hidden" name="country" value={customer.address} />
       <input type="hidden" name="hash" value={hash} />
 
-      <Button type="submit" variant="secondary">
-        Pay Now
-      </Button>
+      {children}
     </form>
   );
 };

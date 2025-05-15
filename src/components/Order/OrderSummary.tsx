@@ -95,7 +95,7 @@ const fetchData = async (
         "number",
         "date",
         "customer",
-        "total_price",
+        "amount_total",
         "invoices",
         "items",
       ],
@@ -166,7 +166,7 @@ const Order = z.object({
   status: z.number(),
   number: z.string(),
   date: z.string(),
-  total_price: z.string(),
+  amount_total: z.string(),
   invoices: Invoices.nullable(),
   items: z.array(OrderItem).nullable().optional(),
 });
