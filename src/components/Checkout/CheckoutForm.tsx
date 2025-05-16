@@ -1,8 +1,8 @@
+import { notFound } from "next/navigation";
 import queryString from "query-string";
-import { z } from "zod";
 import Sqids from "sqids";
+import { z } from "zod";
 
-import { NoData } from "@/app/no-data";
 import { InvoiceCard } from "@/components/Invoice/Card";
 
 interface Props {
@@ -11,10 +11,14 @@ interface Props {
 
 export const CheckoutForm = async ({ encodedId }: Props) => {
   if (!encodedId) {
-    return <NoData />;
+    return notFound();
   }
 
   const id = new Sqids().decode(encodedId)[0];
+
+  if (!id) {
+    return notFound();
+  }
 
   const { data } = await fetchData(id.toString());
 
