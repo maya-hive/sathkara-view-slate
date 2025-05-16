@@ -13,15 +13,15 @@ jobs:
       - name: Trigger Vercel Deploy Hook
         run: |
           if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
-            if [[ -n "${{ secrets.VERCEL_PROD_DEPLOY_HOOK }}" ]]; then
-              curl -X POST "${{ secrets.VERCEL_PROD_DEPLOY_HOOK }}"
+            if [[ -n "${{ vars.VERCEL_PROD_DEPLOY_HOOK }}" ]]; then
+              curl -X POST "${{ vars.VERCEL_PROD_DEPLOY_HOOK }}"
             else
               echo "VERCEL_PROD_DEPLOY_HOOK is not set"
               exit 1
             fi
           elif [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
-            if [[ -n "${{ secrets.VERCEL_STAGING_DEPLOY_HOOK }}" ]]; then
-              curl -X POST "${{ secrets.VERCEL_STAGING_DEPLOY_HOOK }}"
+            if [[ -n "${{ vars.VERCEL_STAGING_DEPLOY_HOOK }}" ]]; then
+              curl -X POST "${{ vars.VERCEL_STAGING_DEPLOY_HOOK }}"
             else
               echo "VERCEL_STAGING_DEPLOY_HOOK is not set"
               exit 1
