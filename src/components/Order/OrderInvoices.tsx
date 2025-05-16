@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { notFound } from "next/navigation";
 import { InvoiceCard } from "@/components/Invoice/Card";
+import Sqids from "sqids";
 
 interface Props {
   id: string;
@@ -19,6 +20,8 @@ export const OrderInvoices = async ({ id }: Props) => {
     return null;
   }
 
+  const encodedId = new Sqids({ minLength: 10 }).encode([parseInt(id)]);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
       <h2 className="text-xl font-semibold">Invoices</h2>
@@ -28,7 +31,7 @@ export const OrderInvoices = async ({ id }: Props) => {
             key={invoice.id}
             invoice={invoice}
             customer={data.customer}
-            encodedId={id}
+            encodedId={encodedId}
           />
         ))}
       </div>
