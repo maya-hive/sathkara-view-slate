@@ -53,7 +53,7 @@ const CardLayout = ({
             <h3 className="text-3xl lg:text-5xl font-semibold leading-tight">
               {props.title}
             </h3>
-            <p className="mt-3 text-sky-400 text-xl font-semibold">
+            <p className="mt-3 text-primary text-xl font-semibold">
               {props.description?.replace(
                 "[count]",
                 data.itineraries?.length.toString() ?? ""
@@ -72,7 +72,7 @@ const CardLayout = ({
             )}
             <Link
               href={slug}
-              className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+              className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-primary text-white px-10 py-2 text-center text-md font-medium uppercase"
             >
               Plan Your Trip
             </Link>

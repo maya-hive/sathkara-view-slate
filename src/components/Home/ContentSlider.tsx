@@ -62,13 +62,13 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                     onClick={() => setActiveIndex(index)}
                     className={`h-full overflow-hidden cursor-pointer text-center group ${
                       index === activeIndex
-                        ? "text-yellow-500"
-                        : "text-white hover:text-yellow-500"
+                        ? "text-primary"
+                        : "text-white hover:text-primary"
                     }`}
                   >
                     <div
                       className={`rounded-xl p-4 pt-0 relative border-b-2 border-b-[#ffffff00] ${
-                        index === activeIndex ? "!border-b-yellow-500" : ""
+                        index === activeIndex ? "!border-b-primary" : ""
                       }`}
                     >
                       {item.icon && (
@@ -125,7 +125,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
 
             {contents?.[activeIndex]?.link_url && (
               <Link
-                className="inline-block mt-8 px-6 py-3 bg-yellow-400 text-black rounded-xl font-semibold uppercase tracking-wide text-sm"
+                className="inline-block mt-8 px-6 py-3 bg-primary text-white rounded font-semibold uppercase tracking-wide text-sm"
                 href={contents[activeIndex].link_url}
               >
                 {contents[activeIndex].link_title || "Plan Your Trip"}

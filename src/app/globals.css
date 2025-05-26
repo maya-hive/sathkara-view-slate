@@ -6,16 +6,19 @@
 
 @layer base {
   :root {
+    --primary: #589bff;
+    --primary-foreground: #f0f6ff;
+
+    --secondary: #232a46;
+    --secondary-foreground: #fff;
+
     --background: #ffffff;
     --foreground: #1c1c28;
     --card: #ffffff;
     --card-foreground: #1c1c28;
     --popover: #ffffff;
     --popover-foreground: #1c1c28;
-    --primary: #ffc60d;
-    --primary-foreground: #f0f6ff;
-    --secondary: #589bff;
-    --secondary-foreground: #fff;
+
     --muted: #e2e8f0;
     --muted-foreground: #6b7280;
     --accent: #e2e8f0;

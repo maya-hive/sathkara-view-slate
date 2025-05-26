@@ -32,7 +32,7 @@ export const Footer = async () => {
             {data.footer_top_link?.url && (
               <Link
                 href={data.footer_top_link.url}
-                className="h-fit rounded w-fit bg-yellow-300 text-cyan-950 px-16 py-4 text-center text-md font-semibold uppercase"
+                className="h-fit rounded w-fit bg-primary px-16 py-4 text-center text-md font-semibold uppercase"
               >
                 {data.footer_top_link?.title}
               </Link>
@@ -51,7 +51,7 @@ export const Footer = async () => {
               )}
               <div className="mt-6">
                 <SocialMediaIcons
-                  color="text-sky-400"
+                  color="text-primary"
                   links={data.social_media}
                   size="sm"
                 />

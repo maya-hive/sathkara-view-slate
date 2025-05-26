@@ -41,7 +41,7 @@ export const AudienceSliderClient = ({ children }: Props) => {
           className="lg:absolute lg:-left-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10 "
         >
           <FontAwesomeIcon
-            className="rounded-full bg-orange-500 text-white p-3"
+            className="rounded-full bg-primary text-white p-3"
             icon={faArrowLeft}
             size="lg"
           />
@@ -51,7 +51,7 @@ export const AudienceSliderClient = ({ children }: Props) => {
           className="lg:absolute lg:-right-5 lg:top-0 lg:bottom-0 h-fit my-auto z-10 "
         >
           <FontAwesomeIcon
-            className="rounded-full bg-orange-500 text-white p-3"
+            className="rounded-full bg-primary text-white p-3"
             icon={faArrowRight}
             size="lg"
           />

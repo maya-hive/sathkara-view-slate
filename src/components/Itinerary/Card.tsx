@@ -103,25 +103,25 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               {data?.tags?.map(({ name }, idx) => (
                 <span
                   key={idx}
-                  className="border rounded border-sky-400 text-sky-400 py-1 px-3 font-semibold text-xs uppercase"
+                  className="border rounded border-primary text-primary py-1 px-3 font-semibold text-xs uppercase"
                 >
                   {name}
                 </span>
               ))}
             </div>
           </div>
-          <div className="mt-2 rounded bg-yellow-300 p-4 flex items-center font-bold">
+          <div className="mt-2 rounded bg-secondary text-white p-4 flex items-center font-bold">
             <div className="text-lg min-w-[80px]">
               {data?.days_count_html && (
                 <div
                   dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-                  className="font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+                  className="font-bold [&>span]:block [&>span]:text-sm [&>span]:font-medium [&>span]:leading-[16px]"
                 />
               )}
             </div>
-            <div className="border-l border-yellow-500 pl-3">
+            <div className="border-l border-muted-foreground pl-3">
               <div className="flex items-center">
-                <span className="text-sm font-semibold max-w-[70px]">
+                <span className="text-sm font-medium max-w-[70px]">
                   Starting From
                 </span>
                 <div>
@@ -152,19 +152,18 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
             </div>
           </div>
         </div>
-        <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-md text-center font-semibold uppercase">
+        <div className="mt-2 border-t w-100 pt-2 flex gap-3 text-white text-sm text-center font-semibold uppercase">
           <Link
             href={slug}
-            className="rounded bg-gradient-to-b from-neutral-500 via-neutral-400 to-neutral-400 p-3 flex flex-col justify-center items-center flex-1"
+            className="rounded bg-muted-foreground p-3 flex flex-col justify-center items-center flex-1"
           >
             Learn About the Journey
           </Link>
           <Link
             href={slug + "#inquiry_form"}
-            className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center flex-1"
+            className="rounded w-full bg-primary px-3 py-6 flex flex-col justify-center items-center flex-1"
           >
-            Start Your <br />
-            Journey
+            Start Your Journey
           </Link>
         </div>
       </div>

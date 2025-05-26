@@ -18,7 +18,7 @@ export const SearchWidget = ({ title }: Props) => (
         {title ? (
           <>
             {title.split(" ").slice(0, -2).join(" ")}{" "}
-            <span className="text-secondary">
+            <span className="text-primary">
               {title.split(" ").slice(-2, -1)}
             </span>{" "}
             {title.split(" ").slice(-1)}

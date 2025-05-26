@@ -39,7 +39,7 @@ export const HomeContentSection = ({ content, link, image }: Props) => {
             {link?.url && (
               <Link
                 href={link.url}
-                className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-yellow-400 text-yellow-800 px-10 py-4 text-center text-md font-semibold uppercase"
+                className="block rounded w-fit mt-8 mx-auto md:mx-0 bg-primary text-white px-10 py-4 text-center text-md font-semibold uppercase"
               >
                 {link.title}
               </Link>
