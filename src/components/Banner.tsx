@@ -42,7 +42,7 @@ const Content = ({ image, children, thumbnail, title }: Props) => (
           <div className="container mx-auto px-4 sm:px-6 relative w-full z-10 text-white flex justify-end">
             <div className="md:max-w-[600px]">{children}</div>
           </div>
-          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent to-cyan-500 to-[70%]"></div>
+          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent to-secondary to-[70%]"></div>
         </>
       )}
     </div>

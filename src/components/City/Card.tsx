@@ -48,7 +48,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
           <p className="text-md">{data.short_description}</p>
         </div>
         <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
-          <div className="rounded w-full bg-blue-400 p-3 flex flex-col justify-center items-center">
+          <div className="rounded w-full bg-primary p-3 flex flex-col justify-center items-center">
             Learn More About The City
           </div>
         </div>

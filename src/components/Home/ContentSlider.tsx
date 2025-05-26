@@ -94,7 +94,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 className="absolute z-10 top-full left-0"
               >
                 <FontAwesomeIcon
-                  className="rounded-full text-orange-500 p-3 left-0"
+                  className="rounded-full text-primary p-3 left-0"
                   icon={faArrowLeft}
                   size="lg"
                 />
@@ -104,7 +104,7 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 className="absolute z-10 top-full right-0"
               >
                 <FontAwesomeIcon
-                  className="rounded-full text-orange-500 p-3 right-0"
+                  className="rounded-full text-primary p-3 right-0"
                   icon={faArrowRight}
                   size="lg"
                 />

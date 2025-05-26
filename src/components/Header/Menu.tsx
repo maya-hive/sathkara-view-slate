@@ -35,7 +35,7 @@ export const Menu = ({ links }: Props) => {
       <span onClick={() => setIsOpen(!isOpen)}>
         <FontAwesomeIcon
           icon={faBars}
-          className="rounded p-3 bg-orange-400 text-white cursor-pointer"
+          className="rounded p-3 bg-primary text-white cursor-pointer"
         />
       </span>
       {isOpen && (

@@ -25,7 +25,7 @@ export const CityList = ({ cities, destination }: Props) => {
         <div className="mt-4 text-center">
           <Link
             href={`/${destination}/cities`}
-            className="text-blue-500 hover:underline"
+            className="text-primary hover:underline"
           >
             <Button variant="ghost">View All Cities</Button>
           </Link>

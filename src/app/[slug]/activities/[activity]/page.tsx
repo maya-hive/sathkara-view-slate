@@ -37,11 +37,11 @@ export default async function Page({
       <Banner image={data.featured_image}>
         <div>
           <h1 className="text-5xl font-bold">{data.name}</h1>
-          <div className="my-6 border-y border-cyan-600 py-4">
+          <div className="my-6 border-y border-secondary-foreground py-4">
             {(data.duration || data.best_time || data.approximate_charge) && (
               <div className="flex flex-col md:flex-row md:space-x-4 md:items-center">
                 {data.duration && (
-                  <div className="border-b md:border-b-0 md:border-r border-cyan-600 pb-4 md:pb-0 md:pr-4">
+                  <div className="border-b md:border-b-0 md:border-r border-secondary-foreground pb-4 md:pb-0 md:pr-4">
                     <div className="flex items-center gap-2 text-md font-medium uppercase">
                       <FontAwesomeIcon icon={faStopwatch} />
                       Duration
@@ -50,7 +50,7 @@ export default async function Page({
                   </div>
                 )}
                 {data.best_time && (
-                  <div className="border-b md:border-b-0 md:border-r border-cyan-600 py-4 md:py-0 md:pr-4">
+                  <div className="border-b md:border-b-0 md:border-r border-secondary-foreground py-4 md:py-0 md:pr-4">
                     <div className="flex items-center gap-2 text-md font-medium uppercase">
                       <FontAwesomeIcon icon={faCalendar} />
                       Best Time
@@ -76,7 +76,7 @@ export default async function Page({
           <p className="mt-4">{data.short_description}</p>
           <Link
             href="/itineraries"
-            className="block rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+            className="block rounded w-fit mt-5 bg-primary text-white px-10 py-2 text-center text-md font-semibold uppercase"
           >
             Plan Your Trip
           </Link>

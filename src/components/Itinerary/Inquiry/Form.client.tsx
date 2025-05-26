@@ -200,7 +200,7 @@ export const ItineraryInquiryFormClient = ({ itineraryCategories }: Props) => {
                         <Button
                           variant={"input"}
                           className={cn(
-                            "w-full h-14 font-semibold ext-left",
+                            "w-full h-14 font-semibold text-left hover:bg-white",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -242,7 +242,7 @@ export const ItineraryInquiryFormClient = ({ itineraryCategories }: Props) => {
                         <Button
                           variant={"input"}
                           className={cn(
-                            "w-full h-14 font-semibold text-left",
+                            "w-full h-14 font-semibold text-left hover:bg-white",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -320,7 +320,7 @@ export const ItineraryInquiryFormClient = ({ itineraryCategories }: Props) => {
                         variant="input"
                         role="combobox"
                         aria-expanded={open}
-                        className="w-full h-14 font-semibold justify-between"
+                        className="w-full h-14 font-semibold justify-between hover:bg-white"
                       >
                         {form.getValues().trip_type
                           ? itineraryCategories?.find(
