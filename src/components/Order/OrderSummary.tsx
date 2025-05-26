@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 
 interface Props {
   id: string;
@@ -19,9 +20,12 @@ export const OrderSummary = async ({ id }: Props) => {
   return (
     <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
       <h2 className="text-xl font-semibold">Summary</h2>
-      <div className="mt-6">
-        {data.items?.map((item) => (
-          <div key={item.id}>
+      <div className="mt-6 space-y-4">
+        {data.items?.map((item, idx, arr) => (
+          <div
+            key={item.id}
+            className={cn(idx !== arr.length - 1 && "border-b")}
+          >
             {item.itinerary && (
               <OrderItemRow type="itinerary" item={item.itinerary} />
             )}

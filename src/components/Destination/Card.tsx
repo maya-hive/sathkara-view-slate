@@ -37,7 +37,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
               ? `${data.itineraries.length} Tour Options`
               : `Upcoming tours`}
           </p>
-          <div className="mt-6 block mx-auto md:mx-0 w-fit border-2 border-sky-500 text-sky-500 rounded py-1 px-6 font-medium text-sm uppercase">
+          <div className="mt-6 block mx-auto md:mx-0 w-fit border-2 border-primary text-primary rounded py-1 px-6 font-medium text-sm uppercase">
             Plan Your Trip
           </div>
         </div>

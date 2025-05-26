@@ -41,7 +41,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               ))}
               {data.header_primary_left_call_to_action_url && (
                 <Link
-                  className="rounded bg-yellow-400 py-2 px-6 text-yellow-800 font-semibold"
+                  className="rounded bg-secondary py-2 px-6 text-white font-medium"
                   href={data.header_primary_left_call_to_action_url}
                 >
                   {data.header_primary_right_call_to_action_title}
@@ -57,7 +57,7 @@ export const Navigation = async ({ children, phone, socials }: Props) => {
               ))}
               {data.header_primary_right_call_to_action_url && (
                 <Link
-                  className="rounded bg-yellow-400 py-2 px-6 text-yellow-800 font-semibold"
+                  className="rounded bg-secondary py-2 px-6 text-white font-medium"
                   href={data.header_primary_right_call_to_action_url}
                 >
                   {data.header_primary_right_call_to_action_title}
@@ -84,13 +84,12 @@ type TopBarProps = {
 };
 
 const TopBar = ({ phone, links, socials }: TopBarProps) => (
-  <small className="border-b bg-blue-950 text-white py-2 w-full flex items-center justify-between gap-5">
-    <div className="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center justify-between gap-2 text-blue-400 text-sm font-medium">
+  <small className="border-b bg-secondary text-white py-2 w-full flex items-center justify-between gap-5">
+    <div className="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center justify-between gap-2 text-sm font-medium">
       <div className="flex gap-5">
         {phone?.number && (
           <a href={"tel:" + phone.number.replace(/\s/g, "")}>
-            {phone.title}{" "}
-            <span className="text-yellow-400">{phone.number}</span>
+            {phone.title} <span className="text-primary">{phone.number}</span>
           </a>
         )}
       </div>

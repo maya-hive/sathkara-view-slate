@@ -42,7 +42,7 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
           className="xl:absolute xl:-left-6 xl:top-0 xl:bottom-0 h-fit my-auto z-10"
         >
           <FontAwesomeIcon
-            className="rounded-full bg-orange-500 text-white p-3"
+            className="rounded-full bg-primary text-white p-3"
             icon={faArrowLeft}
           />
         </button>
@@ -51,7 +51,7 @@ export const ItineraryDestinationSliderClient = ({ children }: Props) => {
           className="xl:absolute xl:-right-6 xl:top-0 xl:bottom-0 h-fit my-auto z-10"
         >
           <FontAwesomeIcon
-            className="rounded-full bg-orange-500 text-white p-3"
+            className="rounded-full bg-primary text-white p-3"
             icon={faArrowRight}
           />
         </button>

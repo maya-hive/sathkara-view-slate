@@ -45,7 +45,7 @@ export const ItineraryCategorySlide = async ({
             )}
             <Link
               href={"/inquiry"}
-              className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+              className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-primary text-white px-10 py-2 text-center text-md font-medium uppercase"
             >
               Plan Your Trip
             </Link>
@@ -60,7 +60,7 @@ export const ItineraryCategorySlide = async ({
         </div>
         <Link
           href={`/itinerary-categories/${category}`}
-          className="mt-6 rounded-md p-4 block bg-slate-800 text-slate-50 text-center text-sm font-semibold uppercase"
+          className="mt-6 rounded-md p-4 block bg-slate-900 text-slate-50 text-center text-sm font-semibold uppercase"
         >
           View All Itineraries
         </Link>

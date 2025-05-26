@@ -30,7 +30,7 @@ export const CallToAction = ({ content, link, image }: Props) => {
             {link?.url && (
               <Link
                 href={link.url}
-                className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-yellow-400 text-yellow-800 px-10 py-2 text-center text-md font-semibold uppercase"
+                className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-secondary text-white px-10 py-2 text-center text-md font-medium uppercase"
               >
                 {link.title}
               </Link>
