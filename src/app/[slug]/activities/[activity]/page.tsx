@@ -263,7 +263,6 @@ const Schema = z.object({
   destination: z.object({
     name: z.string(),
     slug: z.string(),
-    color: z.string(),
   }),
   categories: z.array(z.object({ name: z.string(), slug: z.string() })),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),

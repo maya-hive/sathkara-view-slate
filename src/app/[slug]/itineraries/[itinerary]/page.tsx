@@ -47,7 +47,7 @@ export default async function Page({
                     <TabsTrigger
                       key={idx}
                       value={name}
-                      className="rounded-t-xl rounded-b-none flex-1 lg:flex-none bg-muted border-none data-[state=active]:bg-secondary py-3 px-12 text-slate-600 text-sm uppercase font-semibold"
+                      className="rounded-t-xl rounded-b-none flex-1 lg:flex-none bg-muted border-none data-[state=active]:bg-primary py-3 px-12 text-muted-foreground text-sm uppercase font-semibold"
                     >
                       {title}
                     </TabsTrigger>
@@ -344,14 +344,14 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
 );
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div style={{ backgroundColor: data?.destination?.color }}>
+  <div className="bg-secondary">
     <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />
           <h1 className="text-3xl text-white">{data?.name}</h1>
         </div>
-        <div className="border-l border-l-slate-600 px-4">
+        <div className="border-l border-muted-foreground px-4">
           <div className="px-2 text-lg min-w-[100px]">
             {data?.days_count_html && (
               <div
@@ -499,7 +499,6 @@ const Schema = z.object({
   destination: z.object({
     name: z.string(),
     slug: z.string(),
-    color: z.string(),
   }),
   itinerary_milestones: z
     .array(

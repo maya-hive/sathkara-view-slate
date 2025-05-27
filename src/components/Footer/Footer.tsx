@@ -20,7 +20,7 @@ export const Footer = async () => {
         logos={data.itinerary_collaborations}
         content={data.collaborations_title}
       />
-      <div className="relative border-t mt-8 pt-8 bg-sky-950 text-black">
+      <div className="relative border-t mt-8 pt-8 bg-secondary text-black">
         <div className="container mx-auto px-4 sm:px-6 relative z-10 text-white">
           <div className="py-6 lg:py-12 flex gap-5 flex-col lg:flex-row justify-between items-center lg:items-start text-center lg:text-start">
             {data.footer_top_content && (
@@ -38,7 +38,7 @@ export const Footer = async () => {
               </Link>
             )}
           </div>
-          <div className="border-y border-sky-800 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 py-8 lg:pt-12 lg:pb-20 text-center lg:text-start text-md">
+          <div className="border-y border-white/20 flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 py-8 lg:pt-12 lg:pb-20 text-center lg:text-start text-md">
             <div className="text-3xl font-extralight">
               <p className="max-w-[300px] mb-4">{data.footer_contact_title}</p>
               {data.footer_contact_number && (

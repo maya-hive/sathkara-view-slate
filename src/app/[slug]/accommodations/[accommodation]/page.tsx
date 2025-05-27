@@ -206,7 +206,6 @@ const Schema = z.object({
   destination: z.object({
     name: z.string(),
     slug: z.string(),
-    color: z.string(),
   }),
 });
 

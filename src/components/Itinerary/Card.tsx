@@ -47,10 +47,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         </Link>
         <div className="p-4">
           <div className="absolute bottom-0 right-5 z-10">
-            <h4
-              className="rounded-t text-white text-sm font-semibold w-fit py-2 px-5 uppercase"
-              style={{ backgroundColor: data.destination.color }}
-            >
+            <h4 className="rounded-t bg-secondary text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
               {data.destination.name}
             </h4>
           </div>
@@ -245,7 +242,6 @@ const ApiResponseSchema = z.object({
       destination: z.object({
         name: z.string(),
         slug: z.string(),
-        color: z.string(),
       }),
       tags: z
         .array(z.object({ name: z.string(), slug: z.string() }))

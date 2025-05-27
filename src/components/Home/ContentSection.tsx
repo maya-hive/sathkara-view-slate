@@ -31,7 +31,7 @@ export const HomeContentSection = ({ content, link, image }: Props) => {
               height={800}
             />
           )}
-          <div className="rounded-xl md:rounded-none py-16 my-12 md:my-0 md:pb-0 md:pt-24 pr-8 pl-8 md:pr-0 lg:pl-32 xl:pl-40 bg-sky-100 md:bg-transparent z-10 text-center md:text-left">
+          <div className="rounded-xl md:rounded-none py-16 my-12 md:my-0 md:pb-0 md:pt-24 pr-8 pl-8 md:pr-0 lg:pl-32 xl:pl-40 bg-white md:bg-transparent z-10 text-center md:text-left">
             <div
               dangerouslySetInnerHTML={{ __html: content }}
               className="[&>h2]:mb-4 [&>h2]:text-4xl [&>h2]:md:text-5xl [&>h2]:font-bold [&>p]:mt-6 [&>h4]:font-bold font-semibold"
@@ -44,7 +44,7 @@ export const HomeContentSection = ({ content, link, image }: Props) => {
                 {link.title}
               </Link>
             )}
-            <div className="absolute right-0 top-0 bg-sky-100 w-[50%] lg:w-[46%] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
+            <div className="absolute right-0 top-0 bg-primary/20 w-[50%] lg:w-[46%] h-full -z-10 mt-12 rounded-bl-2xl invisible md:visible" />
           </div>
         </div>
       </div>
