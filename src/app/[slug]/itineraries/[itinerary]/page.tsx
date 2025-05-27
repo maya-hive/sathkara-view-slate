@@ -317,7 +317,7 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           {data?.days_count_html && (
             <div
               dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-              className="text-slate-600 text-xl font-semibold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+              className="text-secondary text-xl font-semibold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
             />
           )}
         </div>

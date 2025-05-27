@@ -30,7 +30,7 @@ export const CallToAction = ({ content, link, image }: Props) => {
             {link?.url && (
               <Link
                 href={link.url}
-                className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-secondary text-white px-10 py-2 text-center text-md font-medium uppercase"
+                className="block mx-auto md:mx-0 rounded w-fit mt-5 bg-primary text-white px-10 py-2 text-center text-md font-medium uppercase"
               >
                 {link.title}
               </Link>
@@ -45,7 +45,7 @@ export const CallToAction = ({ content, link, image }: Props) => {
               height={800}
             />
           )}
-          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent/10 to-cyan-400/100 to-[50%]"></div>
+          <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b md:bg-gradient-to-r from-transparent via-transparent/60 to-secondary to-[60%]"></div>
         </div>
       </div>
     </section>

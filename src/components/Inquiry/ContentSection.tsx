@@ -38,7 +38,7 @@ export const InquiryContentSection = ({ content, image }: Props) => {
                 className="prose absolute left-0 bottom-0 p-8 text-white z-10"
               />
             )}
-            <div className="absolute bottom-0 left-0 h-[70%] w-full bg-gradient-to-b from-transparent via-transparent/50 to-slate-900 to-[70%]"></div>
+            <div className="absolute bottom-0 left-0 h-[70%] w-full bg-gradient-to-b from-transparent via-transparent/50 to-secondary to-[70%]"></div>
           </div>
         )}
         <ItineraryInquiryForm />

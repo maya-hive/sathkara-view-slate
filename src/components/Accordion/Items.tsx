@@ -29,7 +29,7 @@ export const AccordionItems = ({ items }: Props) => {
           item?.content && (
             <div key={idx} className="mb-5 border rounded-md overflow-hidden">
               <button
-                className="bg-muted w-full flex justify-between items-center text-left px-6 py-4 hover:bg-slate-50 rounded-t-md"
+                className="bg-muted w-full flex justify-between items-center text-left px-6 py-4 rounded-t-md"
                 onClick={() => toggleAccordion(idx)}
               >
                 <h5 className="font-medium">{item.title}</h5>

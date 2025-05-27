@@ -28,9 +28,9 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
 
   return (
     <section className="my-20">
-      <div className="relative sm:rounded-2xl overflow-hidden container mx-auto px-4 sm:px-6 p-16">
-        <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-slate-800 via-slate-900/75 to-transparent -z-10" />
-        <div className="absolute top-0 right-0 w-[80%] h-full bg-gradient-to-l from-slate-800 via-slate-800/80 to-transparent -z-40 md:-z-10" />
+      <div className="relative sm:rounded-2xl overflow-hidden container mx-auto px-4 sm:px-12 py-16">
+        <div className="absolute top-0 left-0 h-full md:h-[300px] w-full bg-gradient-to-b from-secondary to-transparent -z-10" />
+        <div className="absolute top-0 right-0 w-[90%] h-full bg-gradient-to-l from-secondary via-secondary/75 to-transparent -z-40 md:-z-10" />
         <div className="relative flex flex-col xl:flex-row justify-between">
           {title && (
             <h2
@@ -50,13 +50,13 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
               breakpoints={{
                 0: { slidesPerView: 1 },
                 768: { slidesPerView: 3 },
-                1024: { slidesPerView: 6 },
+                1024: { slidesPerView: 6, spaceBetween: 0 },
               }}
             >
               {contents?.map((item, index) => (
                 <SwiperSlide
                   key={index}
-                  className="flex justify-center lg:flex-1"
+                  className="flex justify-center xl:justify-end lg:flex-1"
                 >
                   <button
                     onClick={() => setActiveIndex(index)}

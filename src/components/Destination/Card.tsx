@@ -52,7 +52,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
           width={500}
           height={400}
         />
-        <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-black"></span>
+        <span className="absolute bottom-0 left-0 h-[280px] w-full bg-gradient-to-b from-transparent to-secondary"></span>
       </div>
     </Link>
   );
