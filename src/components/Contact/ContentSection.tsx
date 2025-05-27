@@ -22,12 +22,12 @@ export const ContactContentSection = async ({
   return (
     <section className="container mx-auto px-4 sm:px-6">
       <div className="mt-12 flex flex-col lg:flex-row gap-8">
-        <div className="flex-1 rounded-xl bg-indigo-50 p-8">
+        <div className="flex-1 rounded-xl bg-muted p-8">
           <div className="flex justify-between flex-col xl:flex-row gap-4 pt-2 pb-5 mb-5">
             <RichText content={content} />
           </div>
           <div>
-            <div className="mt-4 pb-4 border-b border-slate-300">
+            <div className="mt-4 pb-4 border-b">
               <div className="font-semibold">Phone</div>
               {data.phone_numbers?.length && (
                 <div className="flex gap-2">
@@ -40,7 +40,7 @@ export const ContactContentSection = async ({
                 </div>
               )}
             </div>
-            <div className="mt-4 pb-4 border-b border-slate-300">
+            <div className="mt-4 pb-4 border-b">
               <div className="font-semibold">Email</div>
               <div className="flex flex-col gap-2">
                 {data.email_address?.map(({ email }, idx) => (

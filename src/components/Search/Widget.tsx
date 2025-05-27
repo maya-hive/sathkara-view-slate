@@ -13,7 +13,7 @@ interface Props {
 
 export const SearchWidget = ({ title }: Props) => (
   <SearchForm>
-    <div className="rounded-xl shadow-lg bg-white py-6 px-6 xl:px-8 2xl:px-12 flex flex-col xl:flex-row gap-4 items-center">
+    <div className="rounded-xl shadow-lg bg-white py-6 px-6 xl:px-8 flex flex-col xl:flex-row gap-4 items-center">
       <h2 className="text-lg font-bold xl:max-w-[120px] leading-tight">
         {title ? (
           <>

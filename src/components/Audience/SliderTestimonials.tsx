@@ -38,7 +38,7 @@ export const AudienceTestimonialSlider = ({ content, items }: Props) => {
           </AudienceSliderClient>
         </div>
       </div>
-      <div className="absolute top-0 left-0 h-[65%] w-full bg-sky-100 -z-50"></div>
+      <div className="absolute top-0 left-0 h-[65%] w-full bg-primary/20 -z-50"></div>
     </section>
   );
 };

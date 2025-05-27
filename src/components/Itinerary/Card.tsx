@@ -47,10 +47,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         </Link>
         <div className="p-4">
           <div className="absolute bottom-0 right-5 z-10">
-            <h4
-              className="rounded-t text-white text-sm font-semibold w-fit py-2 px-5 uppercase"
-              style={{ backgroundColor: data.destination.color }}
-            >
+            <h4 className="rounded-t bg-secondary text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
               {data.destination.name}
             </h4>
           </div>
@@ -73,15 +70,15 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
                 >
                   <path
                     d="M13 7.81818C13 11.9545 7.5 15.5 7.5 15.5C7.5 15.5 2 11.9545 2 7.81818C2 6.40771 2.57946 5.05501 3.61091 4.05766C4.64236 3.06031 6.04131 2.5 7.5 2.5C8.95869 2.5 10.3576 3.06031 11.3891 4.05766C12.4205 5.05501 13 6.40771 13 7.81818Z"
-                    stroke="#FFC60D"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="stroke-secondary"
                   />
                   <path
                     d="M7.5 9.5C8.32843 9.5 9 8.82843 9 8C9 7.17157 8.32843 6.5 7.5 6.5C6.67157 6.5 6 7.17157 6 8C6 8.82843 6.67157 9.5 7.5 9.5Z"
-                    stroke="#FFC60D"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    className="stroke-secondary"
                   />
                 </svg>
                 <p className="text-sm font-semibold inline-flex gap-1">
@@ -245,7 +242,6 @@ const ApiResponseSchema = z.object({
       destination: z.object({
         name: z.string(),
         slug: z.string(),
-        color: z.string(),
       }),
       tags: z
         .array(z.object({ name: z.string(), slug: z.string() }))

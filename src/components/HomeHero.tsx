@@ -20,7 +20,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
 
   return (
     <section className="mb-10 relative">
-      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-secondary"></div>
       <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
         {video ? (
           <video
@@ -45,7 +45,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
             height={800}
           />
         )}
-        <div className="container mx-auto px-4 sm:px-6">
+        <div className="container mx-auto px-4 md:px-0">
           <div className="relative text-white pt-[380px] xl:pt-[480px] z-10 pointer-events-none">
             {content && (
               <div
@@ -56,7 +56,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 sm:px-6 relative -mt-2 -bottom-10">
+      <div className="container mx-auto px-4 md:px-0 relative -mt-2 -bottom-10">
         <SearchWidget title={title} />
       </div>
     </section>

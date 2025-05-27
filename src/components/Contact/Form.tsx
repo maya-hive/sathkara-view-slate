@@ -6,7 +6,10 @@ interface Props {
 
 export const ContactForm = async ({ content }: Props) => {
   return (
-    <div className="rounded-xl bg-primary p-6" id="inquiry_form">
+    <div
+      className="rounded-xl bg-muted border border-secondary p-6"
+      id="inquiry_form"
+    >
       <div className="flex justify-between flex-col xl:flex-row gap-4 pt-2 pb-8">
         {content && (
           <div

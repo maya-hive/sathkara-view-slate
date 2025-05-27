@@ -10,7 +10,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-6 rounded block w-fit mx-auto bg-yellow-400 py-2 px-6 text-yellow-800 font-semibold"
+        className="mt-6 rounded block w-fit mx-auto bg-primary py-2 px-6 text-white font-semibold"
       >
         Back to Home
       </Link>

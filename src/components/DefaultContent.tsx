@@ -66,8 +66,8 @@ export const DefaultContent = ({ sections }: Props) => (
             >
               {section?.content && <RichText content={section?.content} />}
               {section?.link_url && (
-                <Link href={section.link_url} className="block mt-4">
-                  <Button variant="secondary">{section.link_title}</Button>
+                <Link href={section.link_url} className="block w-fit mt-4">
+                  <Button variant="outline">{section.link_title}</Button>
                 </Link>
               )}
             </div>

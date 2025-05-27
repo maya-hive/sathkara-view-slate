@@ -80,7 +80,7 @@ const fetchData = async (
   slugs: string[]
 ): Promise<z.infer<typeof ApiResponseSchema>[]> => {
   const query = queryString.stringify(
-    { fields: ["id", "name", "slug", "color", "featured_itineraries"] },
+    { fields: ["id", "name", "slug", "featured_itineraries"] },
     { arrayFormat: "bracket" }
   );
 
@@ -140,7 +140,6 @@ const ApiResponseSchema = z.object({
       slug: z.string(),
       name: z.string(),
       featured_itineraries: z.array(Itinerary).nullable(),
-      color: z.string(),
     })
     .nullable(),
 });

@@ -12,7 +12,7 @@ export const Breadcrumb = () => {
   }
 
   return (
-    <nav className="text-md">
+    <nav className="text-md text-gray-300 font-medium">
       <span className="text-md capitalize">
         <Link href="/">Home</Link>
       </span>

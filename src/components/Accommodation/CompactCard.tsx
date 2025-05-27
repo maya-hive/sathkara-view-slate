@@ -52,7 +52,7 @@ const CardLayout = ({ data }: { data: Accommodation }) => (
         width={500}
         height={400}
       />
-      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-sky-600"></div>
+      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-secondary"></div>
     </div>
   </div>
 );
@@ -72,7 +72,7 @@ const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
         width={200}
         height={100}
       />
-      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-sky-600"></div>
+      <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-b from-transparent to-secondary"></div>
     </div>
   </div>
 );

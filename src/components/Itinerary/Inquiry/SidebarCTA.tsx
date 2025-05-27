@@ -13,7 +13,7 @@ export const ItineraryInquirySidebarCTA = async ({ children }: Props) => {
     return null;
   }
   return (
-    <div className="rounded-lg bg-blue-100 p-6">
+    <div className="rounded-lg bg-muted p-6">
       {data.inquiry_title && (
         <div
           className="text-center border-b border-slate-400 px-4 pb-4 [&>h3]:text-2xl [&>h3]:text-slate-900 [&>h3]:font-semibold [&>p]:mt-3 [&>p]:text-md [&>p]:font-semibold"
@@ -23,7 +23,7 @@ export const ItineraryInquirySidebarCTA = async ({ children }: Props) => {
       {children}
       <Link
         href="#inquiry_form"
-        className="mt-4 block rounded bg-black text-white p-3 uppercase text-md text-center font-medium"
+        className="mt-4 block rounded bg-secondary text-white p-3 uppercase text-md text-center font-medium"
       >
         Plan your trip
       </Link>

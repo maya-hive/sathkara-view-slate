@@ -47,7 +47,7 @@ export default async function Page({
                     <TabsTrigger
                       key={idx}
                       value={name}
-                      className="rounded-t-xl rounded-b-none flex-1 lg:flex-none bg-muted border-none data-[state=active]:bg-secondary py-3 px-12 text-slate-600 text-sm uppercase font-semibold"
+                      className="rounded-t-xl rounded-b-none flex-1 lg:flex-none bg-muted border-none data-[state=active]:bg-primary py-3 px-12 text-muted-foreground text-sm uppercase font-semibold"
                     >
                       {title}
                     </TabsTrigger>
@@ -99,8 +99,8 @@ const Overview = ({ data }: z.infer<typeof ApiResponseSchema>) => (
             {data.tour_highlights.map(
               ({ content }, idx) =>
                 content && (
-                  <li key={idx} className="rounded-lg bg-sky-200 p-6">
-                    <p className="text-md font-medium text-sky-800">
+                  <li key={idx} className="rounded-lg bg-muted p-6">
+                    <p className="text-md font-medium text-secondary">
                       {content}
                     </p>
                   </li>
@@ -282,17 +282,16 @@ const tabs = [
 
 const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="top-[150px] w-full">
-    <div className="rounded-lg bg-primary p-6">
-      <div className="text-center border-b border-slate-400 px-4 pb-4">
-        <h3 className="text-3xl text-slate-900 font-semibold">
-          Ready to start your journey?
-        </h3>
+    <div className="rounded-lg bg-muted p-6">
+      <div className="text-center border-b border-muted-foreground px-4 pb-4">
+        <h3 className="text-3xl font-semibold">Ready to start your journey?</h3>
         <p className="mt-3 text-md font-semibold">
-          Choose dates, passengers, and we will take care of your dream vacation
+          Choose dates, passengers, and we will take care of your dream
+          vacation.
         </p>
       </div>
       <div className="mt-3 rounded-lg bg-white py-6 px-8 flex items-center">
-        <div className="border-r border-slate-600 text-orange-800">
+        <div className="border-r border-slate-600 text-secondary">
           <span className="text-sm font-semibold">Starting From</span>
           <p className="pr-3">
             {data?.is_sale_active ? (
@@ -318,7 +317,7 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
           {data?.days_count_html && (
             <div
               dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-              className="text-slate-600 text-xl font-semibold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
+              className="text-secondary text-xl font-semibold [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
             />
           )}
         </div>
@@ -328,7 +327,7 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
       </p>
       <Link
         href="#inquiry_form"
-        className="mt-4 block rounded bg-black text-white p-3 uppercase text-md text-center font-medium"
+        className="mt-4 block rounded bg-secondary text-white p-3 uppercase text-md text-center font-medium"
       >
         Plan your trip
       </Link>
@@ -345,19 +344,19 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
 );
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
-  <div style={{ backgroundColor: data?.destination?.color }}>
+  <div className="bg-secondary">
     <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />
           <h1 className="text-3xl text-white">{data?.name}</h1>
         </div>
-        <div className="border-l border-l-slate-600 px-4">
+        <div className="border-l border-muted-foreground px-4">
           <div className="px-2 text-lg min-w-[100px]">
             {data?.days_count_html && (
               <div
                 dangerouslySetInnerHTML={{ __html: data?.days_count_html }}
-                className="text-2xl font-extrabold [&>span]:block [&>span]:text-sm [&>span]:font-bold [&>span]:leading-[16px]"
+                className="text-2xl font-bold text-white [&>span]:block [&>span]:text-sm [&>span]:font-semibold [&>span]:leading-[16px]"
               />
             )}
           </div>
@@ -500,7 +499,6 @@ const Schema = z.object({
   destination: z.object({
     name: z.string(),
     slug: z.string(),
-    color: z.string(),
   }),
   itinerary_milestones: z
     .array(

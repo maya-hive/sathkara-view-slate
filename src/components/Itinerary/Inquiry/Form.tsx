@@ -12,7 +12,7 @@ export const ItineraryInquiryForm = async () => {
   }
 
   return (
-    <div className="rounded-xl bg-indigo-50 p-6" id="inquiry_form">
+    <div className="rounded-xl bg-muted p-6" id="inquiry_form">
       <div className="flex justify-between flex-col xl:flex-row gap-4 border-b border-slate-300 pt-2 pb-5 mb-5">
         {data.itinerary_plan_title && (
           <div
@@ -22,7 +22,7 @@ export const ItineraryInquiryForm = async () => {
         )}
         {data.contact_details?.itinerary_inquiry_phone?.number && (
           <div className="pr-2">
-            <p className="text-md font-medium text-sky-700">
+            <p className="text-md font-medium text-primary">
               {data.contact_details.itinerary_inquiry_phone?.title}
             </p>
             <a
