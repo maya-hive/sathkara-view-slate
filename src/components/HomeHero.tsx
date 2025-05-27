@@ -20,7 +20,7 @@ export const HomeHero = async ({ image, video, title, content }: Props) => {
 
   return (
     <section className="mb-10 relative">
-      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-black"></div>
+      <div className="absolute bottom-0 left-0 h-[150px] w-full bg-gradient-to-b from-transparent to-secondary"></div>
       <div className="aboslute top-0 left-0 flex flex-col justify-center h-full">
         {video ? (
           <video
