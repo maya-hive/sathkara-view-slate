@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode[] | ReactNode;
 }
 
-export const ItineraryDestinationSliderClient = ({ children }: Props) => {
+export const ItineraryCountrySliderClient = ({ children }: Props) => {
   const swiperRef = useRef<SwiperType>(null);
 
   return (

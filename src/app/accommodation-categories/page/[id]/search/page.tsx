@@ -12,7 +12,7 @@ type Args = {
   }>;
   searchParams: Promise<{
     query?: string;
-    destination?: string;
+    country?: string;
     categories?: string;
   }>;
 };
@@ -31,9 +31,9 @@ export default async function Page({ params, searchParams }: Args) {
     return redirect(`/accommodation-categories`);
   }
 
-  const { query, destination, categories } = await searchParams;
+  const { query, country, categories } = await searchParams;
 
-  const data = await fetchData(id, destination, query, categories);
+  const data = await fetchData(id, country, query, categories);
 
   return <AccommodationListing {...data} />;
 }
@@ -44,14 +44,14 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination?: string,
+  country?: string,
   search?: string,
   categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
       search: search,
       categories: categories?.split(","),
     },

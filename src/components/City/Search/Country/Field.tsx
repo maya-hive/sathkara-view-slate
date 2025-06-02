@@ -1,14 +1,14 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { CitySearchDestinationClient as Client } from "./Field.client";
+import { CitySearchCountryClient as Client } from "./Field.client";
 
 interface Props {
   className?: string;
   label?: boolean;
 }
 
-export const CitySearchDestination = async (props: Props) => {
+export const CitySearchCountry = async (props: Props) => {
   const { data } = await fetchData();
 
   if (!data) {
@@ -32,7 +32,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/index?${query}`,
+    `${process.env.API_URL}/modules/country/index?${query}`,
     {
       next: {
         tags: ["global"],

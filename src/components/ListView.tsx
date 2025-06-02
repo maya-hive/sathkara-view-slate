@@ -16,7 +16,7 @@ interface Props {
   aside?: React.ReactNode | null;
   search?: React.ReactNode | null;
   content?: string | null;
-  destination?: string;
+  country?: string;
   resource?: string;
 }
 
@@ -24,13 +24,13 @@ export const ListView = ({
   banner,
   links,
   cards,
-  destination,
+  country,
   aside,
   search,
   content,
 }: Props) => {
   return (
-    <ListViewSkeleton banner={banner} destination={destination}>
+    <ListViewSkeleton banner={banner} country={country}>
       {content && (
         <div className="mt-12 prose">
           <div
@@ -80,7 +80,7 @@ export const ListView = ({
               No Resources Found
             </div>
           )}
-          <Pagination prefix={destination} links={links} />
+          <Pagination prefix={country} links={links} />
         </div>
       </div>
     </ListViewSkeleton>
@@ -90,7 +90,7 @@ export const ListView = ({
 type SkeletonProps = {
   children: React.ReactNode;
   banner: BannerData | null;
-  destination?: string;
+  country?: string;
 };
 
 type BannerData = {
@@ -101,9 +101,9 @@ type BannerData = {
 const ListViewSkeleton = async ({
   children,
   banner,
-  destination,
+  country,
 }: SkeletonProps) => {
-  const response = await fetchData(destination);
+  const response = await fetchData(country);
 
   const title = response?.data
     ? `${banner?.title} in ${response.data.name}`
@@ -130,7 +130,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+    `${process.env.API_URL}/modules/country/${slug}?${query}`,
     {
       next: {
         tags: ["global"],

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import queryString from "query-string";
 import { z } from "zod";
 
-import { DestinationListing } from "@/components/Destination/Listing/Main";
+import { CountryListing } from "@/components/Country/Listing/Main";
 import { NoData } from "@/app/no-data";
 
 type Args = {
@@ -15,7 +15,7 @@ export default async function Page({ params }: Args) {
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/destinations`);
+    return redirect(`/countries`);
   }
 
   const data = await fetchData(id);
@@ -24,7 +24,7 @@ export default async function Page({ params }: Args) {
     return <NoData />;
   }
 
-  return <DestinationListing {...data} />;
+  return <CountryListing {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -49,7 +49,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/country/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],

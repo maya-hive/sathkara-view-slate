@@ -6,11 +6,11 @@ import { z } from "zod";
 import { ItineraryCard } from "./Card";
 
 interface Props {
-  destination: string;
+  country: string;
 }
 
-export const ItineraryDestinationSlide = async ({ destination }: Props) => {
-  const { data } = await fetchData(destination);
+export const ItineraryCountrySlide = async ({ country }: Props) => {
+  const { data } = await fetchData(country);
 
   if (!data?.featured_itineraries) {
     return null;
@@ -34,7 +34,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+    `${process.env.API_URL}/modules/country/${slug}?${query}`,
     {
       next: {
         tags: ["global"],
@@ -72,7 +72,7 @@ const Itinerary = z.object({
   listing_image: z.string().nullable().optional(),
   sale_price: z.string().nullable(),
   duration: z.string().nullable(),
-  destination: z
+  country: z
     .object({
       name: z.string(),
     })

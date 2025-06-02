@@ -2,7 +2,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { type PaginationLink } from "@/components/Pagination";
-import { DestinationCard } from "@/components/Destination/Card";
+import { CountryCard } from "@/components/Country/Card";
 import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { NoData } from "@/app/no-data";
@@ -14,7 +14,7 @@ interface Props {
   links: PaginationLink[] | null;
 }
 
-export const DestinationListing = async ({ data, links }: Props) => {
+export const CountryListing = async ({ data, links }: Props) => {
   const { data: pageData } = await fetchData();
 
   if (!pageData) {
@@ -30,7 +30,7 @@ export const DestinationListing = async ({ data, links }: Props) => {
       }}
       content={pageData?.page_content}
       cards={data?.map((item) => (
-        <DestinationCard key={item.id} slug={item.slug} />
+        <CountryCard key={item.id} slug={item.slug} />
       ))}
     />
   );
@@ -45,7 +45,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/settings/page_destination_listing?${query}`,
+    `${process.env.API_URL}/settings/page_country_listing?${query}`,
     {
       next: {
         tags: ["global"],

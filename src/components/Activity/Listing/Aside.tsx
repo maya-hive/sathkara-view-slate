@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ActivityListingAsideClient as FormClient } from "@/components/Activity/Listing/Aside.client";
 import { ActivitySearchCategories as Categories } from "@/components/Activity/Search/Categories/Field";
-import { ActivitySearchDestination as Destination } from "@/components/Activity/Search/Destination/Field";
+import { ActivitySearchCountry as Country } from "@/components/Activity/Search/Country/Field";
 
 export const ActivityListingAside = () => (
   <aside>
@@ -16,7 +16,7 @@ export const ActivityListingAside = () => (
             <Categories className="bg-white border" />
           </div>
           <div>
-            <Destination className="bg-white border" />
+            <Country className="bg-white border" />
           </div>
         </>
       </FormClient>

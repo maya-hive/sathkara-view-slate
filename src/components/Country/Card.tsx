@@ -10,7 +10,7 @@ interface Props {
   slug: string;
 }
 
-export const DestinationCard = async ({ slug }: Props) => {
+export const CountryCard = async ({ slug }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
@@ -25,7 +25,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/destinations/${data.slug}`;
+  const slug = `/countries/${data.slug}`;
 
   return (
     <Link href={slug} className="rounded-md overflow-hidden">
@@ -78,7 +78,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+    `${process.env.API_URL}/modules/country/${slug}?${query}`,
     {
       next: {
         tags: ["global"],

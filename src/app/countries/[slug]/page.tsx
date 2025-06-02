@@ -37,13 +37,13 @@ export default async function Page({
                 {data.description && (
                   <div className="mt-4">
                     <h2 className="text-xl font-bold mb-4">
-                      About The Destination
+                      About The Country
                     </h2>
                     <RichText content={data.description} />
                   </div>
                 )}
                 <div className="mt-8">
-                  <CityList cities={data.cities} destination={slug} />
+                  <CityList cities={data.cities} country={slug} />
                 </div>
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
@@ -107,7 +107,7 @@ export async function generateStaticParams() {
     { arrayFormat: "bracket" }
   );
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/index?${query}`
+    `${process.env.API_URL}/modules/country/index?${query}`
   );
 
   if (!response.ok) {
@@ -144,7 +144,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+    `${process.env.API_URL}/modules/country/${slug}?${query}`,
     {
       next: {
         tags: ["global"],

@@ -14,20 +14,20 @@ type Args = {
 export default async function Page({ params }: Args) {
   const { slug } = await params;
 
-  const destinations = await fetchData("1");
+  const countries = await fetchData("1");
 
   const pages = await fetchPages();
 
   const contentPage = pages.data?.find((page) => page.slug === slug);
 
-  const destination = destinations.data?.find((page) => page.slug === slug);
+  const country = countries.data?.find((page) => page.slug === slug);
 
   if (contentPage) {
     return <ContentPage {...contentPage} />;
   }
 
-  if (destination) {
-    return redirect(`/destinations/${slug}`);
+  if (country) {
+    return redirect(`/countries/${slug}`);
   }
 
   return <NotFound />;
@@ -39,24 +39,24 @@ export async function generateStaticParams() {
     { arrayFormat: "bracket" }
   );
 
-  const [pagesResponse, destinationsResponse] = await Promise.all([
+  const [pagesResponse, countriesResponse] = await Promise.all([
     fetch(`${process.env.API_URL}/modules/page/index?${query}`),
-    fetch(`${process.env.API_URL}/modules/destination/index?${query}`),
+    fetch(`${process.env.API_URL}/modules/country/index?${query}`),
   ]);
 
-  if (!pagesResponse.ok || !destinationsResponse.ok) {
+  if (!pagesResponse.ok || !countriesResponse.ok) {
     throw new Error(
       `Failed to fetch: ${pagesResponse.status} ${pagesResponse.statusText}, ` +
-        `${destinationsResponse.status} ${destinationsResponse.statusText}`
+        `${countriesResponse.status} ${countriesResponse.statusText}`
     );
   }
 
-  const [pagesData, destinationsData] = await Promise.all([
+  const [pagesData, countriesData] = await Promise.all([
     pagesResponse.json(),
-    destinationsResponse.json(),
+    countriesResponse.json(),
   ]);
 
-  return [...pagesData.data, ...destinationsData.data].map(
+  return [...pagesData.data, ...countriesData.data].map(
     ({ slug }: { slug: string }) => ({
       slug,
     })
@@ -117,7 +117,7 @@ const fetchData = async (
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/country/index?page=${id}&${query}`,
     {
       next: {
         tags: ["global"],

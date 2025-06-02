@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { CityListingAsideClient as FormClient } from "@/components/City/Listing/Aside.client";
-import { CitySearchDestination as Destination } from "@/components/City/Search/Destination/Field";
+import { CitySearchCountry as Country } from "@/components/City/Search/Country/Field";
 
 export const CityListingAside = () => (
   <aside>
@@ -12,7 +12,7 @@ export const CityListingAside = () => (
       <FormClient>
         <>
           <div>
-            <Destination className="bg-white border" />
+            <Country className="bg-white border" />
           </div>
         </>
       </FormClient>

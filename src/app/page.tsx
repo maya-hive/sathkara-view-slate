@@ -4,9 +4,9 @@ import { z } from "zod";
 
 import { ItineraryCategorySlider } from "@/components/Itinerary/CategorySlider";
 import { HomeHero } from "@/components/HomeHero";
-import { DestinationSection } from "@/components/Destination/Section";
+import { CountrySection } from "@/components/Country/Section";
 import { ItinerarySection } from "@/components/Itinerary/Section";
-import { ItineraryDestinationSlider } from "@/components/Itinerary/DestinationSlider";
+import { ItineraryCountrySlider } from "@/components/Itinerary/CountrySlider";
 import { CallToAction } from "@/components/CallToAction";
 import { HomeContentSection } from "@/components/Home/ContentSection";
 import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
@@ -28,17 +28,14 @@ export default async function Home() {
         content={data.hero_content}
         title={data.hero_filter_title}
       />
-      <DestinationSection
-        items={data.destination_items}
-        content={data.destination_title}
-      />
+      <CountrySection items={data.country_items} content={data.country_title} />
       <ItinerarySection
         items={data.featured_itineraries}
         title={data.featured_itineraries_title}
       />
-      <ItineraryDestinationSlider
-        destinations={data.itineraries_by_destination_items}
-        title={data.itineraries_by_destination_title}
+      <ItineraryCountrySlider
+        countries={data.itineraries_by_country_items}
+        title={data.itineraries_by_country_title}
       />
       <ItineraryCategorySlider items={data.itineraries} />
       <CallToAction
@@ -89,10 +86,10 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "itineraries",
         "featured_itineraries",
         "featured_itineraries_title",
-        "destination_title",
-        "destination_items",
-        "itineraries_by_destination_title",
-        "itineraries_by_destination_items",
+        "country_title",
+        "country_items",
+        "itineraries_by_country_title",
+        "itineraries_by_country_items",
         "banner_image_1",
         "banner_link_1",
         "banner_content_1",
@@ -156,15 +153,12 @@ const ApiResponseSchema = z.object({
             .nullable()
         )
         .nullable(),
-      destination_title: z.string().nullable(),
-      destination_items: z.array(z.string()).nullable().optional(),
+      country_title: z.string().nullable(),
+      country_items: z.array(z.string()).nullable().optional(),
       featured_itineraries: z.array(z.string()).nullable().optional(),
       featured_itineraries_title: z.string().nullable().optional(),
-      itineraries_by_destination_title: z.string().nullable(),
-      itineraries_by_destination_items: z
-        .array(z.string())
-        .nullable()
-        .optional(),
+      itineraries_by_country_title: z.string().nullable(),
+      itineraries_by_country_items: z.array(z.string()).nullable().optional(),
       banner_image_1: z.string().nullable(),
       banner_link_1: z.object({
         title: z.string().nullable(),

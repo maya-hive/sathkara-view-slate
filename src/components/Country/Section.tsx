@@ -1,11 +1,11 @@
-import { DestinationCard } from "./Card";
+import { CountryCard } from "./Card";
 
 interface Props {
   content?: TrustedHTML | null;
   items?: string[] | null;
 }
 
-export const DestinationSection = ({ content, items }: Props) => {
+export const CountrySection = ({ content, items }: Props) => {
   if (!items) {
     return null;
   }
@@ -17,8 +17,8 @@ export const DestinationSection = ({ content, items }: Props) => {
           {content && <span dangerouslySetInnerHTML={{ __html: content }} />}
         </div>
         <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {items?.map((destination, idx: number) => (
-            <DestinationCard key={idx} slug={destination} />
+          {items?.map((country, idx: number) => (
+            <CountryCard key={idx} slug={country} />
           ))}
         </div>
       </div>

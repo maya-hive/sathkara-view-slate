@@ -32,7 +32,7 @@ type Option = {
   label: string;
 };
 
-export const AccommodationSearchDestinationClient = ({
+export const CitySearchCountryClient = ({
   label = true,
   className,
   options: items,
@@ -41,7 +41,7 @@ export const AccommodationSearchDestinationClient = ({
 
   return (
     <>
-      {label && <label className="text-sm font-semibold">Destination</label>}
+      {label && <label className="text-sm font-semibold">Country</label>}
       <Suspense>
         <Select className={className} options={options} />
       </Suspense>
@@ -54,7 +54,7 @@ const Select = ({ className, options }: Props) => {
   const params = useParams();
 
   const defaultValue =
-    searchParams.get("destination") ??
+    searchParams.get("country") ??
     options.find((item) => item.value === params?.slug?.toString())?.value ??
     "*";
 
@@ -69,7 +69,7 @@ const Select = ({ className, options }: Props) => {
     setOpen(false);
 
     const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("destination", selected);
+    searchParams.set("country", selected);
 
     const queryString = searchParams.toString().replace(/%2C/g, ",");
 
@@ -90,7 +90,7 @@ const Select = ({ className, options }: Props) => {
           >
             {selectedValue
               ? options.find((item) => item.value === selectedValue)?.label
-              : "Destination"}
+              : "Country"}
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>

@@ -1,32 +1,38 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { DestinationListing } from "@/components/Destination/Listing/Main";
-import { NoData } from "../no-data";
+import { ActivitySearchCountryClient as Client } from "./Field.client";
 
-export default async function Page() {
-  const data = await fetchData("1");
-
-  if (!data) {
-    return <NoData />;
-  }
-
-  return <DestinationListing {...data} />;
+interface Props {
+  className?: string;
+  label?: boolean;
 }
 
-const fetchData = async (
-  id: string
-): Promise<z.infer<typeof ApiResponseSchema>> => {
+export const ActivitySearchCountry = async (props: Props) => {
+  const { data } = await fetchData();
+
+  if (!data) {
+    return null;
+  }
+
+  const options = data.map((item) => ({
+    value: item.slug,
+    label: item.name,
+  }));
+  return <Client options={options} {...props} />;
+};
+
+const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["id", "status", "slug"],
-      limit: "16",
+      fields: ["id", "status", "slug", "name"],
+      limit: "1000",
     },
     { arrayFormat: "bracket" }
   );
 
   const response = await fetch(
-    `${process.env.API_URL}/modules/destination/index?page=${id}&${query}`,
+    `${process.env.API_URL}/modules/country/index?${query}`,
     {
       next: {
         tags: ["global"],
@@ -57,19 +63,9 @@ const ApiSchema = z.object({
   id: z.number(),
   status: z.number(),
   slug: z.string(),
+  name: z.string(),
 });
 
 const ApiResponseSchema = z.object({
   data: z.array(ApiSchema).nullable(),
-  current_page: z.number().nullable(),
-  last_page: z.number().nullable(),
-  links: z
-    .array(
-      z.object({
-        url: z.string().nullable(),
-        label: z.string(),
-        active: z.boolean(),
-      })
-    )
-    .nullable(),
 });

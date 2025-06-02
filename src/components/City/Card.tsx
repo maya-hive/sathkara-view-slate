@@ -25,7 +25,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.destination.slug}/cities/${data.slug}`;
+  const slug = `/${data.country.slug}/cities/${data.slug}`;
 
   return (
     <Link
@@ -34,7 +34,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     >
       <div className="absolute top-0 right-4 z-10">
         <h4 className="rounded-b bg-secondary text-white text-sm font-semibold w-fit py-2 px-5 uppercase">
-          {data.destination.name}
+          {data.country.name}
         </h4>
       </div>
       <div className="text-white relative z-10 p-4 flex flex-col h-full">
@@ -77,7 +77,7 @@ const fetchData = async (
         "featured_image",
         "listing_image",
         "short_description",
-        "destination",
+        "country",
       ],
     },
     { arrayFormat: "bracket" }
@@ -121,7 +121,7 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
-      destination: z.object({
+      country: z.object({
         name: z.string(),
         slug: z.string(),
       }),

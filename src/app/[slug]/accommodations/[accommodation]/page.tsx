@@ -149,7 +149,7 @@ const fetchData = async (
         "short_description",
         "map",
         "city",
-        "destination",
+        "country",
         "category",
         "meta_title",
         "meta_description",
@@ -203,7 +203,7 @@ const Schema = z.object({
   map: z.string().nullable(),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),
   category: z.object({ name: z.string(), slug: z.string() }),
-  destination: z.object({
+  country: z.object({
     name: z.string(),
     slug: z.string(),
   }),

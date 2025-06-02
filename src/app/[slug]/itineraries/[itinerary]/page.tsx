@@ -428,7 +428,7 @@ const fetchData = async (
         "featured_cities",
         "featured_accommodations",
         "tour_highlights",
-        "destination",
+        "country",
         "itinerary_milestones",
         "tags",
       ],
@@ -496,7 +496,7 @@ const Schema = z.object({
     .nullable()
     .optional(),
   tags: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
-  destination: z.object({
+  country: z.object({
     name: z.string(),
     slug: z.string(),
   }),

@@ -30,7 +30,7 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.destination.slug}/cities/${data.slug}`;
+  const slug = `/${data.country.slug}/cities/${data.slug}`;
 
   return (
     <Link href={slug} className="block rounded-md overflow-hidden">
@@ -60,7 +60,7 @@ const CardLayoutHorizontal = ({ data }: z.infer<typeof ApiResponseSchema>) => {
     return null;
   }
 
-  const slug = `/${data.destination.slug}/itineraries?city=${data.slug}`;
+  const slug = `/${data.country.slug}/itineraries?city=${data.slug}`;
 
   return (
     <Link href={slug} className="rounded-md border border-slate-900">
@@ -82,7 +82,7 @@ const fetchData = async (
         "featured_image",
         "listing_image",
         "short_description",
-        "destination",
+        "country",
       ],
     },
     { arrayFormat: "bracket" }
@@ -126,7 +126,7 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
-      destination: z.object({
+      country: z.object({
         name: z.string(),
         slug: z.string(),
       }),

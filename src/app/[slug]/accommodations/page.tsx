@@ -20,19 +20,19 @@ export default async function Page({ params }: Args) {
     return <NoData />;
   }
 
-  return <AccommodationListing destination={slug} {...data} />;
+  return <AccommodationListing country={slug} {...data} />;
 }
 
 export { generateStaticParams };
 
 const fetchData = async (
   id: string,
-  destination: string
+  country: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
     },
     { arrayFormat: "bracket" }
   );

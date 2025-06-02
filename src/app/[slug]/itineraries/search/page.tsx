@@ -11,7 +11,7 @@ type Args = {
   }>;
   searchParams: Promise<{
     query?: string;
-    destination?: string;
+    country?: string;
     categories?: string;
     audiences?: string;
     duration?: string;
@@ -27,19 +27,19 @@ export const metadata: Metadata = {
 
 export default async function Page({ params, searchParams }: Args) {
   const { slug } = await params;
-  const { query, destination, categories, audiences, duration } =
+  const { query, country, categories, audiences, duration } =
     await searchParams;
 
   const data = await fetchData(
     "1",
-    destination ?? slug,
+    country ?? slug,
     query,
     categories,
     audiences,
     duration
   );
 
-  return <ItineraryListing destination={slug} {...data} />;
+  return <ItineraryListing country={slug} {...data} />;
 }
 
 export { generateStaticParams };
@@ -48,7 +48,7 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination: string,
+  country: string,
   search?: string,
   categories?: string,
   audiences?: string,
@@ -57,7 +57,7 @@ const fetchData = async (
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
       search: search,
       categories: categories?.split(","),
       audiences: audiences?.split(","),
