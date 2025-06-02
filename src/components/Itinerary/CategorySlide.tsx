@@ -26,7 +26,7 @@ export const ItineraryCategorySlide = async ({
   return (
     <div className="flex flex-col lg:flex-row justify-between border rounded-2xl overflow-hidden gap-5 h-full lg:h-auto">
       <div className="flex items-end relative xl:w-[650px]">
-        <div className="bg-gradient-to-b from-transparent to-black text-center md:text-left">
+        <div className="w-full bg-gradient-to-b from-transparent to-black text-center md:text-left">
           <Image
             className="absolute -z-10 w-full h-full left-0 top-0 object-cover"
             src={data.featured_image}

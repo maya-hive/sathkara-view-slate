@@ -26,6 +26,10 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperType>(null);
 
+  if (!contents?.some((item) => item.content && item.icon)) {
+    return null;
+  }
+
   return (
     <section className="my-20">
       <div className="relative sm:rounded-2xl overflow-hidden container mx-auto px-4 sm:px-12 py-16">
@@ -53,40 +57,43 @@ export const HomeContentSlider = ({ title, contents }: Props) => {
                 1024: { slidesPerView: 6, spaceBetween: 0 },
               }}
             >
-              {contents?.map((item, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="flex justify-center xl:justify-end lg:flex-1"
-                >
-                  <button
-                    onClick={() => setActiveIndex(index)}
-                    className={`h-full overflow-hidden cursor-pointer text-center group ${
-                      index === activeIndex
-                        ? "text-primary"
-                        : "text-white hover:text-primary"
-                    }`}
-                  >
-                    <div
-                      className={`rounded-xl p-4 pt-0 relative border-b-2 border-b-[#ffffff00] ${
-                        index === activeIndex ? "!border-b-primary" : ""
-                      }`}
+              {contents?.map(
+                (item, index) =>
+                  item.icon && (
+                    <SwiperSlide
+                      key={index}
+                      className="flex justify-center xl:justify-end lg:flex-1"
                     >
-                      {item.icon && (
-                        <Image
-                          src={item.icon}
-                          alt="icon"
-                          width={80}
-                          height={80}
-                          className="mx-auto h-12 w-[90px] object-contain"
-                        />
-                      )}
-                      <p className="mt-4 max-w-[120px] text-sm font-medium uppercase">
-                        {item.title}
-                      </p>
-                    </div>
-                  </button>
-                </SwiperSlide>
-              ))}
+                      <button
+                        onClick={() => setActiveIndex(index)}
+                        className={`h-full overflow-hidden cursor-pointer text-center group ${
+                          index === activeIndex
+                            ? "text-primary"
+                            : "text-white hover:text-primary"
+                        }`}
+                      >
+                        <div
+                          className={`rounded-xl p-4 pt-0 relative border-b-2 border-b-[#ffffff00] ${
+                            index === activeIndex ? "!border-b-primary" : ""
+                          }`}
+                        >
+                          {item.icon && (
+                            <Image
+                              src={item.icon}
+                              alt="icon"
+                              width={80}
+                              height={80}
+                              className="mx-auto h-12 w-[90px] object-contain"
+                            />
+                          )}
+                          <p className="mt-4 max-w-[120px] text-sm font-medium uppercase">
+                            {item.title}
+                          </p>
+                        </div>
+                      </button>
+                    </SwiperSlide>
+                  )
+              )}
             </Swiper>
             <div className="xl:hidden absolute w-full top-[25%] flex gap-5 justify-center">
               <button
