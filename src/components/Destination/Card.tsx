@@ -32,11 +32,6 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
       <div className="relative h-full pt-[300px] flex items-end text-white">
         <div className="relative z-20 p-8 w-full text-center md:text-left">
           <h3 className="text-4xl font-semibold">{data.name}</h3>
-          <p className="mt-1 font-medium">
-            {data.itineraries?.length
-              ? `${data.itineraries.length} Tour Options`
-              : `Upcoming tours`}
-          </p>
           <div className="mt-6 block mx-auto md:mx-0 w-fit border-2 border-primary text-primary rounded py-1 px-6 font-medium text-sm uppercase">
             Plan Your Trip
           </div>
@@ -71,7 +66,6 @@ const fetchData = async (
         "featured_image",
         "listing_image",
         "short_description",
-        "itineraries",
       ],
     },
     { arrayFormat: "bracket" }
@@ -115,11 +109,6 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       featured_image: z.string(),
       listing_image: z.string().nullable().optional(),
-      itineraries: z
-        .array(
-          z.object({ id: z.number(), status: z.number(), slug: z.string() })
-        )
-        .nullable(),
     })
     .nullable(),
 });

@@ -8,7 +8,7 @@ import { ActivityListing } from "@/components/Activity/Listing/Main";
 type Args = {
   searchParams: Promise<{
     query?: string;
-    destination?: string;
+    country?: string;
     categories?: string;
     audiences?: string;
     duration?: string;
@@ -23,12 +23,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ searchParams }: Args) {
-  const { query, destination, categories, audiences, duration } =
+  const { query, country, categories, audiences, duration } =
     await searchParams;
 
   const data = await fetchData(
     "1",
-    destination,
+    country,
     query,
     categories,
     audiences,
@@ -44,7 +44,7 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination?: string,
+  country?: string,
   search?: string,
   categories?: string,
   audiences?: string,
@@ -53,7 +53,7 @@ const fetchData = async (
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
       search: search,
       categories: categories?.split(","),
       audiences: audiences?.split(","),

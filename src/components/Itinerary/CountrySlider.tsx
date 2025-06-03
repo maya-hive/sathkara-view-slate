@@ -1,24 +1,24 @@
 import queryString from "query-string";
 import { z } from "zod";
 
-import { ItineraryDestinationSliderClient as SliderClient } from "@/components/Itinerary/DestinationSlider.client";
-import { ItineraryDestinationSlide as Slide } from "@/components/Itinerary/DestinationSlide";
+import { ItineraryCountrySliderClient as SliderClient } from "@/components/Itinerary/CountrySlider.client";
+import { ItineraryCountrySlide as Slide } from "@/components/Itinerary/CountrySlide";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Props {
-  destinations?: string[] | null;
+  countries?: string[] | null;
   content?: TrustedHTML | null;
   title: string | null;
 }
 
-export const ItineraryDestinationSlider = async ({
-  destinations,
+export const ItineraryCountrySlider = async ({
+  countries,
   content,
   title,
 }: Props) => {
-  if (!destinations) return null;
+  if (!countries) return null;
 
-  const allData = await fetchData(destinations);
+  const allData = await fetchData(countries);
 
   const data = allData.map((item) => item.data);
 
@@ -50,10 +50,10 @@ export const ItineraryDestinationSlider = async ({
             <span className="flex gap-3">
               <TabsList>
                 {data?.map(
-                  (destination, idx) =>
-                    destination && (
-                      <TabsTrigger key={idx} value={destination.slug}>
-                        {destination.name}
+                  (country, idx) =>
+                    country && (
+                      <TabsTrigger key={idx} value={country.slug}>
+                        {country.name}
                       </TabsTrigger>
                     )
                 )}
@@ -61,11 +61,11 @@ export const ItineraryDestinationSlider = async ({
             </span>
           </div>
           {data?.map(
-            (destination, idx) =>
-              destination && (
-                <TabsContent key={idx} value={destination.slug}>
+            (country, idx) =>
+              country && (
+                <TabsContent key={idx} value={country.slug}>
                   <SliderClient>
-                    <Slide destination={destination.slug} />
+                    <Slide country={country.slug} />
                   </SliderClient>
                 </TabsContent>
               )
@@ -87,7 +87,7 @@ const fetchData = async (
   const responses = await Promise.all(
     slugs.map(async (slug) => {
       const response = await fetch(
-        `${process.env.API_URL}/modules/destination/${slug}?${query}`,
+        `${process.env.API_URL}/modules/country/${slug}?${query}`,
         {
           next: { tags: ["global"] },
         }
@@ -126,7 +126,7 @@ const Itinerary = z.object({
   listing_image: z.string().nullable().optional(),
   sale_price: z.string().nullable(),
   duration: z.string().nullable(),
-  destination: z
+  country: z
     .object({
       name: z.string(),
     })

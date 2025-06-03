@@ -10,7 +10,6 @@ import { toBase64 } from "@/utils/base64";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
-import { CityList } from "@/components/City/CityList";
 import { NoData } from "@/app/no-data";
 
 export default async function Page({
@@ -42,9 +41,6 @@ export default async function Page({
                     <RichText content={data.description} />
                   </div>
                 )}
-                <div className="mt-8">
-                  <CityList cities={data.cities} destination={slug} />
-                </div>
                 {data?.gallery && data?.gallery?.length > 0 && (
                   <div className="mt-12">
                     <h3 className="text-lg font-semibold mb-4">Gallery</h3>
@@ -135,7 +131,6 @@ const fetchData = async (
         "gallery",
         "description",
         "short_description",
-        "cities",
         "meta_title",
         "meta_description",
       ],
@@ -185,7 +180,6 @@ const Schema = z.object({
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()
     .optional(),
-  cities: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
 });
 
 const ApiResponseSchema = z.object({

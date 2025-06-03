@@ -17,7 +17,7 @@ export default async function sitemap() {
     "/itineraries",
     "/activity-categories",
     "/itinerary-categories",
-    "/destinations",
+    "/countries",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -29,7 +29,7 @@ export default async function sitemap() {
     { name: "itinerary", route: "itineraries" },
     { name: "activity", route: "activities" },
     { name: "accommodation", route: "accommodations" },
-    { name: "destination", route: "destinations" },
+    { name: "country", route: "countries" },
     { name: "city", route: "cities" },
   ] as const;
 
@@ -37,8 +37,8 @@ export default async function sitemap() {
     const items = await fetchModuleRoutes(module.name);
     return items.map((item) => ({
       url: `${baseUrl}/${
-        item.destination
-          ? `${item.destination.slug}/${module.route}/${item.slug}`
+        item.country
+          ? `${item.country.slug}/${module.route}/${item.slug}`
           : `${module.route}/${item.slug}`
       }`,
       lastModified: new Date(),
@@ -58,7 +58,7 @@ async function fetchModuleRoutes(
 ): Promise<z.infer<typeof Schema>[]> {
   const query = queryString.stringify(
     {
-      fields: ["id", "status", "slug", "destination"],
+      fields: ["id", "status", "slug", "country"],
     },
     { arrayFormat: "bracket" }
   );
@@ -103,7 +103,7 @@ const Schema = z.object({
   id: z.number(),
   status: z.number(),
   slug: z.string(),
-  destination: z
+  country: z
     .object({
       name: z.string(),
       slug: z.string(),

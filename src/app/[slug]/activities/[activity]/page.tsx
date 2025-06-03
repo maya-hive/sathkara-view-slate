@@ -206,7 +206,7 @@ const fetchData = async (
         "description",
         "short_description",
         "categories",
-        "destination",
+        "country",
         "city",
         "meta_title",
         "meta_description",
@@ -260,7 +260,7 @@ const Schema = z.object({
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()
     .optional(),
-  destination: z.object({
+  country: z.object({
     name: z.string(),
     slug: z.string(),
   }),

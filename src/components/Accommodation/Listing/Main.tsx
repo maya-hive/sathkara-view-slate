@@ -15,14 +15,10 @@ interface Props {
   current_page: number | null;
   last_page: number | null;
   links: PaginationLink[] | null;
-  destination?: string;
+  country?: string;
 }
 
-export const AccommodationListing = async ({
-  data,
-  destination,
-  links,
-}: Props) => {
+export const AccommodationListing = async ({ data, country, links }: Props) => {
   const { data: pageData } = await fetchData();
 
   if (!pageData) {
@@ -37,7 +33,7 @@ export const AccommodationListing = async ({
         title: pageData?.page_title,
       }}
       content={pageData?.page_content}
-      destination={destination}
+      country={country}
       aside={<Aside />}
       search={<Search />}
       cards={data?.map((item) => (

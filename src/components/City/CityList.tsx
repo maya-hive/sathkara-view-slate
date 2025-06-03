@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CityCompactCard } from "./CompactCard";
 
 interface Props {
-  destination: string;
+  country: string;
   cities?: City[] | null;
 }
 
@@ -12,7 +12,7 @@ type City = {
   name: string;
 };
 
-export const CityList = ({ cities, destination }: Props) => {
+export const CityList = ({ cities, country }: Props) => {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">Available Cities</h3>
@@ -24,7 +24,7 @@ export const CityList = ({ cities, destination }: Props) => {
       {cities && cities.length > 8 && (
         <div className="mt-4 text-center">
           <Link
-            href={`/${destination}/cities`}
+            href={`/${country}/cities`}
             className="text-primary hover:underline"
           >
             <Button variant="ghost">View All Cities</Button>

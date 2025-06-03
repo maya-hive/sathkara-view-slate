@@ -27,7 +27,7 @@ export default async function Page({ params }: Args) {
     return <NoData />;
   }
 
-  return <ActivityListing destination={slug} {...data} />;
+  return <ActivityListing country={slug} {...data} />;
 }
 
 export async function generateStaticParams() {
@@ -42,12 +42,12 @@ export async function generateStaticParams() {
 
 const fetchData = async (
   id: string,
-  destination?: string
+  country?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
     },
     { arrayFormat: "bracket" }
   );

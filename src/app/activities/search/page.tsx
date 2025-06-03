@@ -8,7 +8,7 @@ import { ActivityListing } from "@/components/Activity/Listing/Main";
 type Args = {
   searchParams: Promise<{
     query?: string;
-    destination?: string;
+    country?: string;
     categories?: string;
   }>;
 };
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({ searchParams }: Args) {
-  const { query, destination, categories } = await searchParams;
+  const { query, country, categories } = await searchParams;
 
-  const data = await fetchData("1", destination, query, categories);
+  const data = await fetchData("1", country, query, categories);
 
   return <ActivityListing {...data} />;
 }
@@ -34,14 +34,14 @@ export const dynamic = "force-dynamic";
 
 const fetchData = async (
   id: string,
-  destination?: string,
+  country?: string,
   search?: string,
   categories?: string
 ): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      destination: destination,
+      country: country,
       search: search,
       categories: categories?.split(","),
     },

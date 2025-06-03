@@ -129,7 +129,7 @@ const fetchData = async (
         "gallery",
         "description",
         "short_description",
-        "destination",
+        "country",
         "meta_title",
         "meta_description",
       ],
@@ -179,7 +179,7 @@ const Schema = z.object({
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()
     .optional(),
-  destination: z.object({ name: z.string(), slug: z.string() }).nullable(),
+  country: z.object({ name: z.string(), slug: z.string() }).nullable(),
 });
 
 const ApiResponseSchema = z.object({
