@@ -20,7 +20,6 @@ const fetchData = async (
   const query = queryString.stringify(
     {
       fields: ["id", "status", "slug"],
-      limit: "16",
     },
     { arrayFormat: "bracket" }
   );
