@@ -7,6 +7,9 @@ import { ListView } from "@/components/ListView";
 import { type BaseResource } from "@/types/ApiResponse.types";
 import { NoData } from "@/app/no-data";
 
+import { DestinationSearchQuery as Search } from "@/components/Destination/Search/Query/Field";
+import { DestinationListingAside as Aside } from "./Aside";
+
 interface Props {
   data: BaseResource[] | null;
   current_page: number | null;
@@ -29,6 +32,8 @@ export const DestinationListing = async ({ data, links }: Props) => {
         title: pageData?.page_title,
       }}
       content={pageData?.page_content}
+      aside={<Aside />}
+      search={<Search />}
       cards={data?.map((item) => (
         <DestinationCard key={item.id} slug={item.slug} />
       ))}
