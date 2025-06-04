@@ -15,7 +15,7 @@ export default async function Page({ params }: Args) {
   const { id = "1" } = await params;
 
   if (id === "1") {
-    return redirect(`/countries`);
+    return redirect(`/destinations`);
   }
 
   const data = await fetchData(id);
