@@ -37,7 +37,7 @@ export const PayHereForm = ({
 
   const checkoutUrl = process.env.CHECKOUT_API_URL;
   const callbackUrl = `${process.env.API_URL}/payments/payhere/notification`;
-  const checkoutPageUrl = `${process.env.BASE_URL}/orders/${encodedId}`;
+  const checkoutPageUrl = `${process.env.BASE_URL}/orders/checkout/${encodedId}`;
 
   if (!checkoutUrl) {
     return;
