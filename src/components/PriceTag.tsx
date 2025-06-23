@@ -17,12 +17,17 @@ export const PriceTag = ({ amount, cents = "hide", ...props }: Props) => {
   );
 };
 
-export const currencySymbol = "$";
+export const currencySymbol = new Intl.NumberFormat("en-us", {
+  style: "currency",
+  currency: process.env.CHECKOUT_API_CURRENCY,
+})
+  .formatToParts(1)
+  .find((x) => x.type === "currency")?.value;
 
 const numberFormat = (amount: number, cents: "show" | "hide") =>
   new Intl.NumberFormat("en-US", {
     style: "decimal",
-    currency: "USD",
+    currency: process.env.CHECKOUT_API_CURRENCY,
     minimumFractionDigits: cents === "show" ? 2 : 0,
     maximumFractionDigits: cents === "show" ? 2 : 0,
   }).format(amount);
