@@ -22,7 +22,7 @@ export const AccordionItems = ({ items }: Props) => {
   };
 
   return (
-    <section className="container mx-auto px-4 sm:px-6 my-10">
+    <section className="container mx-auto px-4 my-10">
       {items?.map((item, idx) => {
         return (
           item?.title &&

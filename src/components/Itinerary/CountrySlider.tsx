@@ -34,7 +34,7 @@ export const ItineraryCountrySlider = async ({
   }
 
   return (
-    <section className="container mx-auto px-4 md:px-0">
+    <section className="container mx-auto px-4">
       <div className="py-12">
         <div className="text-center text-2xl font-semibold">
           {content && <span dangerouslySetInnerHTML={{ __html: content }} />}

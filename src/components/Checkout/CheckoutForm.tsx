@@ -23,7 +23,7 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
   const { data } = await fetchData(id.toString());
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 mt-8">
+    <div className="container mx-auto px-4 mt-8">
       <InvoiceCard
         key={data.id}
         invoice={{

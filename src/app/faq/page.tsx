@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
-      <section className="container mx-auto px-4 sm:px-6 mt-8">
+      <section className="container mx-auto px-4 mt-8">
         <RichText content={data?.page_content} />
       </section>
       <AccordionItems items={data?.items} />

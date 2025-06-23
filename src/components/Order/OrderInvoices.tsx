@@ -21,7 +21,7 @@ export const OrderInvoices = async ({ id }: Props) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 overflow-x-auto mt-8">
+    <div className="container mx-auto px-4 overflow-x-auto mt-8">
       <h2 className="text-xl font-semibold">Invoices</h2>
       <div className="grid gap-6 xl:grid-cols-2 mt-6">
         {data.invoices.map((invoice) => (

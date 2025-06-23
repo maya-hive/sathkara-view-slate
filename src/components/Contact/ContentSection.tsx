@@ -20,7 +20,7 @@ export const ContactContentSection = async ({
   }
 
   return (
-    <section className="container mx-auto px-4 sm:px-6">
+    <section className="container mx-auto px-4">
       <div className="mt-12 flex flex-col lg:flex-row gap-8">
         <div className="flex-1 rounded-xl bg-muted p-8">
           <div className="flex justify-between flex-col xl:flex-row gap-4 pt-2 pb-5 mb-5">

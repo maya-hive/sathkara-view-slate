@@ -19,7 +19,7 @@ export const CallToAction = ({ content, link, image }: Props) => {
 
   return (
     <section className="my-8">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <div className="relative sm:rounded-xl overflow-hidden grid md:grid-cols-2 justify-end py-20 px-8">
           <div />
           <div className="text-white z-10">
