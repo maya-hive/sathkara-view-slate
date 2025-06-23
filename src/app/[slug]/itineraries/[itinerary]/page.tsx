@@ -37,7 +37,7 @@ export default async function Page({
         thumbnail={data.featured_image_mobile}
       />
       <TopBar data={data} />
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="container mx-auto px-4">
         <Tabs defaultValue={tabs[0].name}>
           <div className="flex flex-col md:flex-row gap-12 md:pt-12">
             <div className="md:min-w-[calc(100%-400px)] xl:max-w-[calc(100%-400px)]">
@@ -345,7 +345,7 @@ const Aside = ({ data }: z.infer<typeof ApiResponseSchema>) => (
 
 const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div className="bg-secondary">
-    <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between gap-8">
+    <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between gap-8">
       <div className="flex items-center gap-8">
         <div className="font-semibold">
           <Breadcrumb />

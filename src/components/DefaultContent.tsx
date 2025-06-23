@@ -30,7 +30,7 @@ export const DefaultContent = ({ sections }: Props) => (
       const isImageRight = section?.image_position === "right";
 
       return (
-        <section key={idx} className="container mx-auto px-4 sm:px-6 my-20">
+        <section key={idx} className="container mx-auto px-4 my-20">
           <div className="grid grid-cols-12 gap-6">
             {section?.image && (
               <div

@@ -28,7 +28,7 @@ export const OrderDetails = async ({ id }: Props) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 mt-8">
+    <div className="container mx-auto px-4 mt-8">
       <div className="border rounded-md">
         <div className="grid gap-4 md:grid-cols-2">
           <OrderCard order={data} />

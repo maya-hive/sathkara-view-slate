@@ -16,7 +16,7 @@ export default async function Page() {
   return (
     <article>
       <Banner image={data?.banner_image} title={data?.page_title} />
-      <section className="container mx-auto px-4 sm:px-6 mt-8">
+      <section className="container mx-auto px-4 mt-8">
         <RichText content={data?.page_content} />
       </section>
       <DefaultContent
@@ -30,7 +30,7 @@ export default async function Page() {
           },
         ]}
       />
-      <section className="container mx-auto px-4 sm:px-6 my-20">
+      <section className="container mx-auto px-4 my-20">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-6 rounded-xl bg-muted p-8 flex items-center text-center">
             <RichText content={data?.vision_content} />
