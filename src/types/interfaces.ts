@@ -40,3 +40,72 @@ export interface ActivityCategoryData {
     meta_description?: string | undefined;
     featured_image?: string | undefined;
 }
+
+export interface AudiencesData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    short_description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+}
+
+export interface CityData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    short_description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+}
+
+export interface CountryData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    short_description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+}
+
+export interface DestinationData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    short_description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+}
+
+export interface ItineraryCategoryData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+}
+
+export interface ItineraryData {
+    id?: number;
+    status?: number;
+    name?: string | undefined;
+    slug?: string | undefined;
+    short_description?: string | undefined;
+    meta_title?: string | undefined;
+    meta_description?: string | undefined;
+    featured_image?: string | undefined;
+    featured_cities?: string[];
+    price?: string | undefined;
+    overview?: string | undefined;
+}
