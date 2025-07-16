@@ -324,7 +324,7 @@ export async function fetchDestinations(): Promise<any> {
 export async function fetchItineraryCategories(): Promise<any> {
 
     let page = 1;
-    let allData: DestinationData[] = [];
+    let allData: ItineraryCategoryData[] = [];
     let hasNextPage = true;
     const query = queryString.stringify(
         {
