@@ -43,7 +43,7 @@ export const CheckoutForm = async ({ encodedId }: Props) => {
           phone: data.order.customer.phone,
           address: data.order.customer.address,
         }}
-        encodedId={id.toString()}
+        encodedId={encodedId}
       />
     </div>
   );
