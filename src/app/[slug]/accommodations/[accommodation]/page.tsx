@@ -11,6 +11,7 @@ import { toBase64 } from "@/utils/base64";
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
+import { ActivityCard } from "@/components/Activity/Card";
 import { NoData } from "@/app/no-data";
 
 export default async function Page({
@@ -72,6 +73,9 @@ export default async function Page({
                 )}
               </div>
               <div className="mt-8">
+                <Activities data={data} />
+              </div>
+              <div className="mt-8">
                 <ItineraryInquiryForm />
               </div>
             </div>
@@ -113,6 +117,23 @@ const TopBar = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   </div>
 );
 
+const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data?.activities) {
+    return <></>;
+  }
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Activities</h3>
+      <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
+        {data.activities?.map(({ slug }, idx) => (
+          <ActivityCard key={idx} slug={slug} layout="compact" />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export async function generateStaticParams() {
   const query = queryString.stringify(
     { fields: ["slug"], limit: "1000" },
@@ -151,6 +172,7 @@ const fetchData = async (
         "city",
         "country",
         "category",
+        "activities",
         "meta_title",
         "meta_description",
       ],
@@ -207,6 +229,15 @@ const Schema = z.object({
     name: z.string(),
     slug: z.string(),
   }),
+  activities: z
+    .array(
+      z.object({
+        name: z.string(),
+        slug: z.string(),
+      })
+    )
+    .nullable()
+    .optional(),
 });
 
 const ApiResponseSchema = z.object({

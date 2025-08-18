@@ -12,24 +12,79 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   slug: string;
+  layout?: LayoutType;
 }
 
-export const ActivityCard = async ({ slug }: Props) => {
+type LayoutType = "default" | "compact";
+
+export const ActivityCard = async ({ slug, layout }: Props) => {
   const { data } = await fetchData(slug);
 
   if (!data) {
     return null;
   }
 
-  return <CardLayout data={data} />;
+  return <CardLayout data={data} layout={layout} />;
 };
 
-const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+type CardLayoutProps = {
+  layout?: LayoutType;
+  data: z.infer<typeof ApiResponseSchema>["data"];
+};
+
+const CardLayout = ({ data, layout }: CardLayoutProps) => {
   if (!data) {
     return null;
   }
 
   const slug = `/${data.country.slug}/activities/${data.slug}`;
+
+  if (layout === "compact") {
+    return (
+      <Link
+        href={slug}
+        className="relative pt-[200px] rounded-lg overflow-hidden flex flex-col justify-between"
+      >
+        <div className="text-white relative z-10 p-4 flex flex-col justify-end h-full">
+          <div className="border-b">
+            <h3 className="mt-2 pb-2 font-bold text-2xl">{data.name}</h3>
+          </div>
+          {data.approximate_charge && (
+            <div className="mt-2 rounded bg-white text-black p-4 flex justify-between font-bold">
+              <div className="flex border-yellow-500 px-3">
+                <div className="pr-4">
+                  <p className="text-xs">Approximate Charge</p>
+                  <span className="flex-col items-start gap-0">
+                    <span className="text-2xl">
+                      {currencySymbol} {data.approximate_charge}
+                    </span>
+                    <p className="text-sm">{data.charge_description}</p>
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="mt-2 w-100 pt-2 text-white text-md text-center font-semibold uppercase">
+            <div className="rounded w-full bg-primary p-3 flex flex-col justify-center items-center">
+              Learn More About The Activity
+            </div>
+          </div>
+        </div>
+        <Image
+          className="w-full h-full object-cover absolute top-0 left-0"
+          src={data.listing_image ?? data.featured_image}
+          alt={data.name}
+          placeholder={`data:image/svg+xml;base64,${toBase64(
+            shimmer(700, 475)
+          )}`}
+          priority={false}
+          width={500}
+          height={400}
+        />
+        <div className="absolute bottom-0 left-0 h-[60%] w-full bg-gradient-to-b from-transparent to-secondary to-[35%]"></div>
+      </Link>
+    );
+  }
 
   return (
     <Link
