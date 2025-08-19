@@ -145,7 +145,7 @@ const Dinings = ({ data }: z.infer<typeof ApiResponseSchema>) => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Dining</h2>
+      <h3 className="text-lg font-semibold mb-4">Dining</h3>
       <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
         {data.accommodation_dinings?.map((data, idx) => (
           <AccommodationDiningCard key={idx} {...data} />
