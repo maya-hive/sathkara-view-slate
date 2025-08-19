@@ -236,6 +236,7 @@ const Itinerary = ({ data }: z.infer<typeof ApiResponseSchema>) => (
     )}
   </div>
 );
+
 const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
   const activities = data?.itinerary_milestones
     ?.flatMap((milestone) => milestone.activities)
@@ -245,19 +246,22 @@ const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         index === self.findIndex((activity) => activity.slug === slug)
     );
 
+  if (!activities) {
+    return <></>;
+  }
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">All Activities</h2>
-      {activities && activities.length > 0 && (
-        <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
-          {activities?.map(({ slug }, idx) => (
-            <ActivityCard key={idx} slug={slug} />
-          ))}
-        </div>
-      )}
+      <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
+        {activities?.map(({ slug }, idx) => (
+          <ActivityCard key={idx} slug={slug} />
+        ))}
+      </div>
     </div>
   );
 };
+
 const PackageIncludes = ({ data }: z.infer<typeof ApiResponseSchema>) => (
   <div>
     {data?.package_includes && (
