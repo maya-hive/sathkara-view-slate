@@ -31,6 +31,9 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {data?.site_name && (
+          <title>{data?.site_name}</title>
+        )}
       </head>
       <body
         className={`${geistSans.variable} antialiased font-primary text-gray-700`}
@@ -61,7 +64,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["site_favicon", "google_analytics_tag_id"],
+      fields: ["site_favicon", "google_analytics_tag_id", "site_name"],
     },
     { arrayFormat: "bracket" }
   );
@@ -98,6 +101,7 @@ const ApiResponseSchema = z.object({
   data: z
     .object({
       site_favicon: z.string().nullable().optional(),
+      site_name: z.string().nullable().optional(),
       google_analytics_tag_id: z
         .union([z.string(), z.number()])
         .nullable()
