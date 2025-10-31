@@ -1,6 +1,7 @@
 import queryString from "query-string";
 import { Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import { Metadata } from "next";
 import { z } from "zod";
 
@@ -26,11 +27,30 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { data } = await fetchData();
+  const languages = process.env.NEXT_PUBLIC_TRANSLATE?.split(",").filter(s => s.trim() !== "");
 
   return (
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {data?.site_name && (
+          <title>{data?.site_name}</title>
+        )}
+        {languages && languages.length > 0 && (
+          <>
+            <Script
+              id="gtranslate-settings"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.gtranslateSettings = {"default_language":"en","languages":${JSON.stringify(languages)},"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right","switcher_vertical_position":"bottom"}`,
+              }}
+            />
+            <Script
+              src="https://cdn.gtranslate.net/widgets/latest/float.js"
+              strategy="lazyOnload"
+            />
+          </>
+        )}
       </head>
       <body
         className={`${geistSans.variable} antialiased font-primary text-gray-700`}
@@ -38,6 +58,9 @@ export default async function RootLayout({
         <Header />
         {children}
         <Footer />
+        {languages && languages.length > 0 && (
+          <div className="gtranslate_wrapper"></div>
+        )}
       </body>
       {data?.google_analytics_tag_id && (
         <GoogleAnalytics gaId={data.google_analytics_tag_id.toString()} />
@@ -61,7 +84,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   const query = queryString.stringify(
     {
-      fields: ["site_favicon", "google_analytics_tag_id"],
+      fields: ["site_favicon", "google_analytics_tag_id", "site_name"],
     },
     { arrayFormat: "bracket" }
   );
@@ -98,6 +121,7 @@ const ApiResponseSchema = z.object({
   data: z
     .object({
       site_favicon: z.string().nullable().optional(),
+      site_name: z.string().nullable().optional(),
       google_analytics_tag_id: z
         .union([z.string(), z.number()])
         .nullable()
