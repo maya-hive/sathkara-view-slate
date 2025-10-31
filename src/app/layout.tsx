@@ -1,6 +1,7 @@
 import queryString from "query-string";
 import { Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import { Metadata } from "next";
 import { z } from "zod";
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { data } = await fetchData();
+  const languages = process.env.NEXT_PUBLIC_TRANSLATE?.split(",").filter(s => s.trim() !== "");
 
   return (
     <html lang="en">
@@ -34,6 +36,21 @@ export default async function RootLayout({
         {data?.site_name && (
           <title>{data?.site_name}</title>
         )}
+        {languages && languages.length > 0 && (
+          <>
+            <Script
+              id="gtranslate-settings"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `window.gtranslateSettings = {"default_language":"en","languages":${JSON.stringify(languages)},"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right","switcher_vertical_position":"bottom"}`,
+              }}
+            />
+            <Script
+              src="https://cdn.gtranslate.net/widgets/latest/float.js"
+              strategy="lazyOnload"
+            />
+          </>
+        )}
       </head>
       <body
         className={`${geistSans.variable} antialiased font-primary text-gray-700`}
@@ -41,6 +58,9 @@ export default async function RootLayout({
         <Header />
         {children}
         <Footer />
+        {languages && languages.length > 0 && (
+          <div className="gtranslate_wrapper"></div>
+        )}
       </body>
       {data?.google_analytics_tag_id && (
         <GoogleAnalytics gaId={data.google_analytics_tag_id.toString()} />
