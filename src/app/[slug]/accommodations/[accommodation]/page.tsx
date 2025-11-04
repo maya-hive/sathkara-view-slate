@@ -14,6 +14,7 @@ import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/Sideb
 import { ActivityCard } from "@/components/Activity/Card";
 import { AccommodationDiningCard } from "@/components/Accommodation/Dining/Card";
 import { NoData } from "@/app/no-data";
+import { AccommodationRoomCard } from "@/components/Accommodation/Room/Card";
 
 export default async function Page({
   params,
@@ -77,6 +78,9 @@ export default async function Page({
                 <Activities data={data} />
               </div>
               <div className="mt-8">
+                <Rooms data={data} />
+              </div>
+              <div className="mt-8">
                 <Dinings data={data} />
               </div>
               <div className="mt-8">
@@ -132,6 +136,23 @@ const Activities = ({ data }: z.infer<typeof ApiResponseSchema>) => {
       <div className="mt-4 grid grid-cols-1 xl:grid-cols-3 gap-4">
         {data.activities?.map(({ slug }, idx) => (
           <ActivityCard key={idx} slug={slug} layout="compact" />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Rooms = ({ data }: z.infer<typeof ApiResponseSchema>) => {
+  if (!data?.accommodation_rooms) {
+    return <></>;
+  }
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Rooms</h3>
+      <div className="mt-4 grid grid-cols-1 2xl:grid-cols-2 gap-4">
+        {data.accommodation_rooms?.map((data, idx) => (
+          <AccommodationRoomCard key={idx} {...data} />
         ))}
       </div>
     </div>
@@ -195,6 +216,7 @@ const fetchData = async (
         "country",
         "category",
         "activities",
+        "accommodation_rooms",
         "accommodation_dinings",
         "meta_title",
         "meta_description",
@@ -265,6 +287,19 @@ const Schema = z.object({
     .array(
       z.object({
         title: z.string(),
+        description: z.string().nullable().optional(),
+        image: z.string().nullable().optional(),
+      })
+    )
+    .nullable()
+    .optional(),
+  accommodation_rooms: z
+    .array(
+      z.object({
+        name: z.string(),
+        bedding: z.string().nullable().optional(),
+        view: z.string().nullable().optional(),
+        size: z.string().nullable().optional(),
         description: z.string().nullable().optional(),
         image: z.string().nullable().optional(),
       })
