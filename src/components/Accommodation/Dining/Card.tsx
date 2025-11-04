@@ -46,14 +46,16 @@ export const AccommodationDiningCard = ({
                       Read More
                     </div>
                   </DialogTrigger>
-                  <DialogContent className="max-w-xl max-h-[80vh] overflow-y-auto">
-                    <DialogHeader>
+                  <DialogContent className="max-w-xl max-h-[80vh] flex flex-col p-0 overflow-hidden">
+                    <DialogHeader className="flex-shrink-0 bg-background border-b px-6 py-4 pr-12">
                       <DialogTitle className="text-2xl font-bold">
                         {title}
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="mt-4">
-                      <RichText content={description} />
+                    <div className="flex-1 overflow-y-auto px-6 py-4 min-h-0">
+                      <div className="prose prose-sm max-w-none">
+                        <RichText content={description} />
+                      </div>
                     </div>
                   </DialogContent>
                 </Dialog>
