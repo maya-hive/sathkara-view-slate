@@ -27,22 +27,23 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { data } = await fetchData();
-  const languages = process.env.NEXT_PUBLIC_TRANSLATE?.split(",").filter(s => s.trim() !== "");
+  const languages = process.env.NEXT_PUBLIC_TRANSLATE?.split(",")
+    .map((s) => s.trim())
+    .filter((s) => s !== "");
+  const defaultLanguage = languages?.[0] ?? "en";
 
   return (
-    <html lang="en">
+    <html lang={defaultLanguage}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {data?.site_name && (
-          <title>{data?.site_name}</title>
-        )}
+        {data?.site_name && <title>{data?.site_name}</title>}
         {languages && languages.length > 0 && (
           <>
             <Script
               id="gtranslate-settings"
               strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
-                __html: `window.gtranslateSettings = {"default_language":"en","languages":${JSON.stringify(languages)},"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right","switcher_vertical_position":"bottom"}`,
+                __html: `window.gtranslateSettings = {"default_language":"${defaultLanguage}","languages":${JSON.stringify(languages)},"wrapper_selector":".gtranslate_wrapper","switcher_horizontal_position":"right","switcher_vertical_position":"bottom"}`,
               }}
             />
             <Script
@@ -86,7 +87,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
     {
       fields: ["site_favicon", "google_analytics_tag_id", "site_name"],
     },
-    { arrayFormat: "bracket" }
+    { arrayFormat: "bracket" },
   );
 
   const response = await fetch(
@@ -95,7 +96,7 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
       next: {
         tags: ["global"],
       },
-    }
+    },
   );
 
   if (!response.ok) {
