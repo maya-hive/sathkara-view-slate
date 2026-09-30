@@ -68,7 +68,7 @@ const Itinerary = z.object({
   slug: z.string(),
   short_description: z.string(),
   price: z.string(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
   sale_price: z.string().nullable(),
   duration: z.string().nullable(),

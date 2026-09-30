@@ -4,6 +4,8 @@ import { z } from "zod";
 import Link from "next/link";
 import queryString from "query-string";
 import Image from "next/image";
+import { shimmer } from "@/components/Shimmer";
+import { toBase64 } from "@/utils/base64";
 import { ItineraryCard } from "./Card";
 
 interface Props {
@@ -29,7 +31,10 @@ export const ItineraryCategorySlide = async ({
         <div className="w-full bg-gradient-to-b from-transparent to-black text-center md:text-left">
           <Image
             className="absolute -z-10 w-full h-full left-0 top-0 object-cover"
-            src={data.featured_image}
+            src={
+              data.featured_image ??
+              `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+            }
             alt={data.name}
             width={1200}
             height={1400}
@@ -110,7 +115,7 @@ const ApiResponseSchema = z.object({
     .object({
       id: z.number(),
       name: z.string(),
-      featured_image: z.string(),
+      featured_image: z.string().nullable(),
     })
     .nullable(),
 });

@@ -173,7 +173,7 @@ const Schema = z.object({
   short_description: z.string().nullable(),
   meta_title: z.string().nullable(),
   meta_description: z.string().nullable(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
   gallery: z
     .union([z.array(z.string()).nullable(), z.string().nullable()])

@@ -80,7 +80,11 @@ const CardLayout = ({
         </div>
         <Image
           className="w-full h-full object-cover absolute top-0 left-0 -z-10 "
-          src={props.image ?? data.featured_image}
+          src={
+            props.image ??
+            data.featured_image ??
+            `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+          }
           alt={data.name}
           placeholder={`data:image/svg+xml;base64,${toBase64(
             shimmer(700, 475)
@@ -150,7 +154,7 @@ const ApiResponseSchema = z.object({
       name: z.string(),
       slug: z.string(),
       short_description: z.string(),
-      featured_image: z.string(),
+      featured_image: z.string().nullable(),
       itineraries: z
         .array(
           z.object({ id: z.number(), status: z.number(), slug: z.string() })
