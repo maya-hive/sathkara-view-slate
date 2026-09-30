@@ -61,3 +61,88 @@ input:-webkit-autofill:active {
   top: 0px !important;
   font-size: 16px !important;
 }
+
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gallery-grid .item {
+    width: calc(20% - calc(20px * 4 / 5));
+    position: relative;
+}
+
+.gallery-grid .item .inner {
+    position: relative;
+    padding-top: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gallery-grid .item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-grid .item a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-grid .item a svg {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 3rem;
+    height: 3rem;
+}
+
+.gallery-grid .item a svg path {
+    fill: #FFF;
+}
+
+.gallery-grid .item a::before {
+    content: '';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    font-size: 3rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-grid .item a:hover::before,
+.gallery-grid .item a:hover svg {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid .item {
+        width: calc(50% - calc(20px * 2 / 3));
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .gallery-grid .item {
+        width: calc(33.33% - calc(20px * 3 / 4));
+    }
+}

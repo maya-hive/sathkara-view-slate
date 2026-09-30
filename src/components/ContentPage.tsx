@@ -66,11 +66,14 @@ const fetchData = async (
 
 const Schema = z
   .object({
+    type: z.enum(["default_content", "gallery"]).nullable().optional(),
+    title: z.string().nullable().optional(),
     content: z.string().nullable().optional(),
     image: z.string().nullable().optional(),
     image_position: z.string().nullable().optional(),
     link_title: z.string().nullable().optional(),
     link_url: z.string().nullable().optional(),
+    gallery: z.array(z.string()).nullable().optional(),
   })
   .nullable()
   .optional();
