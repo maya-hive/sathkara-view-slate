@@ -133,7 +133,7 @@ const NavLink = ({ value, children }: NavLinkProps) => (
               value && (
                 <Link
                   key={idx}
-                  href={value.slug ?? ""}
+                  href={value.value ?? value.link ?? "#"}
                   className="block pt-1 pb-2 px-2 [&:not(:last-child)]:border-b text-[13px]"
                 >
                   {value.title}
