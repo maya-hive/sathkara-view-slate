@@ -150,7 +150,7 @@ const ModuleSchema = z.object({
   name: z.string(),
   slug: z.string(),
   short_description: z.string(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
 });
 
 const PageSchema = z.object({

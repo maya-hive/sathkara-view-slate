@@ -90,7 +90,7 @@ const Schema = z.object({
   name: z.string(),
   slug: z.string(),
   description: z.string().nullable(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
 });
 
 const ApiResponseSchema = z.object({

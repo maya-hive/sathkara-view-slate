@@ -214,56 +214,10 @@ const Schema = z.object({
   short_description: z.string().nullable(),
   meta_title: z.string().nullable(),
   meta_description: z.string().nullable(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  itineraries: z
-    .array(
-      z.object({
-        id: z.number(),
-        status: z.number(),
-        name: z.string(),
-        slug: z.string(),
-        short_description: z.string(),
-        price: z.string(),
-        price_description: z.string().nullable(),
-        featured_image: z.string(),
-        listing_image: z.string().nullable().optional(),
-        sale_price: z.string().nullable(),
-        is_sale_active: z.number().nullable(),
-        duration: z.string().nullable(),
-        days_count_html: z.string().nullable(),
-        country: z.object({
-          name: z.string(),
-          slug: z.string(),
-        }),
-        tags: z
-          .array(z.object({ name: z.string(), slug: z.string() }))
-          .nullable(),
-        featured_cities: z.array(z.string()).nullable().optional(),
-      })
-    )
-    .nullable(),
-  activities: z
-    .array(
-      z.object({
-        id: z.number(),
-        status: z.number(),
-        name: z.string(),
-        slug: z.string(),
-        short_description: z.string(),
-        featured_image: z.string(),
-        listing_image: z.string().nullable().optional(),
-        duration: z.string().nullable(),
-        best_time: z.string().nullable(),
-        approximate_charge: z.string().nullable(),
-        charge_description: z.string().nullable().optional(),
-        country: z.object({
-          name: z.string(),
-          slug: z.string(),
-        }),
-      })
-    )
-    .nullable(),
+  itineraries: z.array(z.object({ slug: z.string() })).nullable(),
+  activities: z.array(z.object({ slug: z.string() })).nullable(),
   gallery: z
     .union([z.array(z.string()).nullable(), z.string().nullable()])
     .nullable()

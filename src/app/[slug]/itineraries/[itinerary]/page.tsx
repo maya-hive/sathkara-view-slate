@@ -492,7 +492,7 @@ const Schema = z.object({
   tour_highlights: z
     .array(z.object({ content: z.string().nullable() }))
     .nullable(),
-  featured_image: z.string(),
+  featured_image: z.string().nullable(),
   featured_image_mobile: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
   gallery: z

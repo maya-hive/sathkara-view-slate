@@ -16,7 +16,7 @@ type Accommodation = {
   name: string;
   slug: string;
   short_description: string;
-  featured_image: string;
+  featured_image: string | null;
   listing_image?: string | null;
 };
 
@@ -45,7 +45,11 @@ const CardLayout = ({ data }: { data: Accommodation }) => (
       </div>
       <Image
         className="w-full h-full object-cover absolute top-0 left-0 -z-10"
-        src={data.listing_image ?? data.featured_image}
+        src={
+        data.listing_image ??
+        data.featured_image ??
+        `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+      }
         alt={data.name}
         placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
         priority={false}
@@ -65,7 +69,11 @@ const CardLayoutHorizontal = ({ data }: { data: Accommodation }) => (
       </div>
       <Image
         className="w-full h-full object-cover absolute top-0 left-0 -z-10"
-        src={data.listing_image ?? data.featured_image}
+        src={
+        data.listing_image ??
+        data.featured_image ??
+        `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+      }
         alt={data.name}
         placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
         priority={false}
@@ -131,7 +139,7 @@ const ApiResponseSchema = z.object({
       name: z.string(),
       slug: z.string(),
       short_description: z.string(),
-      featured_image: z.string(),
+      featured_image: z.string().nullable(),
       listing_image: z.string().nullable().optional(),
     })
     .nullable(),

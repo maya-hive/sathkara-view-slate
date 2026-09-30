@@ -35,7 +35,11 @@ const CardLayout = ({ data }: z.infer<typeof ApiResponseSchema>) => {
         <Link href={slug}>
           <Image
             className="w-full h-full object-cover absolute top-0 left-0"
-            src={data.listing_image ?? data.featured_image}
+            src={
+              data.listing_image ??
+              data.featured_image ??
+              `data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`
+            }
             alt={data.name}
             placeholder={`data:image/svg+xml;base64,${toBase64(
               shimmer(700, 475)
@@ -233,7 +237,7 @@ const ApiResponseSchema = z.object({
       short_description: z.string(),
       price: z.string(),
       price_description: z.string().nullable(),
-      featured_image: z.string(),
+      featured_image: z.string().nullable(),
       listing_image: z.string().nullable().optional(),
       sale_price: z.string().nullable(),
       is_sale_active: z.number().nullable(),
