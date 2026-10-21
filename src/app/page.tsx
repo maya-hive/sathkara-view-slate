@@ -9,6 +9,7 @@ import { ItinerarySection } from "@/components/Itinerary/Section";
 import { ItineraryCountrySlider } from "@/components/Itinerary/CountrySlider";
 import { CallToAction } from "@/components/CallToAction";
 import { HomeContentSection } from "@/components/Home/ContentSection";
+import { HomeTestimonials } from "@/components/Home/Testimonials";
 import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
 import { NoData } from "@/app/no-data";
 import { HomeContentSlider } from "@/components/Home/ContentSlider";
@@ -57,6 +58,10 @@ export default async function Home() {
         image={data.content_section_image_1}
         link={data.content_section_link_1}
       />
+      <HomeTestimonials
+        title={data.testimonials_title}
+        items={data.testimonials_items}
+      />
     </article>
   );
 }
@@ -101,6 +106,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
         "audience_title",
         "content_slider_title",
         "content_slider",
+        "testimonials_title",
+        "testimonials_items",
       ],
     },
     { arrayFormat: "bracket" }
@@ -185,6 +192,13 @@ const ApiResponseSchema = z.object({
         })
       ),
       content_slider_title: z.string().nullable(),
+      testimonials_title: z.string().nullable().optional(),
+      testimonials_items: nullableList(
+        z.object({
+          name: z.string().nullable(),
+          review: z.string().nullable(),
+        })
+      ).optional(),
       content_slider: requiredList(
         z.object({
           icon: z.string().nullable().optional(),
