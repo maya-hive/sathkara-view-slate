@@ -17,6 +17,7 @@ import { ActivityCompactCard } from "@/components/Activity/CompactCard";
 import { ActivityCard } from "@/components/Activity/Card";
 import { RichText } from "@/components/RichText";
 import { NoData } from "@/app/no-data";
+import { nullableGallery, nullableList, nullableStringList } from "@/lib/relations";
 
 export default async function Page({
   params,
@@ -487,60 +488,43 @@ const Schema = z.object({
   meta_title: z.string().nullable(),
   meta_description: z.string().nullable(),
   price_description: z.string().nullable(),
-  featured_cities: z.array(z.string()).nullable(),
-  featured_accommodations: z.array(z.string()).nullable(),
-  tour_highlights: z
-    .array(z.object({ content: z.string().nullable() }))
-    .nullable(),
+  featured_cities: nullableStringList,
+  featured_accommodations: nullableStringList,
+  tour_highlights: nullableList(z.object({ content: z.string().nullable() })),
   featured_image: z.string().nullable(),
   featured_image_mobile: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
-  tags: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
+  gallery: nullableGallery,
+  tags: nullableList(z.object({ name: z.string(), slug: z.string() })),
   country: z.object({
     name: z.string(),
     slug: z.string(),
   }),
-  itinerary_milestones: z
-    .array(
-      z.object({
-        name: z.string(),
-        content: z.string().nullable().optional(),
-        image: z.string().nullable().optional(),
-        cities: z
-          .array(
-            z.object({
-              name: z.string(),
-              slug: z.string(),
-            })
-          )
-          .nullable()
-          .optional(),
-        accommodations: z
-          .array(
-            z.object({
-              name: z.string(),
-              slug: z.string(),
-            })
-          )
-          .nullable()
-          .optional(),
-        activities: z
-          .array(
-            z.object({
-              name: z.string(),
-              slug: z.string(),
-            })
-          )
-          .nullable()
-          .optional(),
-      })
-    )
-    .nullable()
-    .optional(),
+  itinerary_milestones: nullableList(
+    z.object({
+      name: z.string(),
+      content: z.string().nullable().optional(),
+      image: z.string().nullable().optional(),
+      cities: nullableList(
+        z.object({
+          name: z.string(),
+          slug: z.string(),
+        })
+      ).optional(),
+      accommodations: nullableList(
+        z.object({
+          name: z.string(),
+          slug: z.string(),
+        })
+      ).optional(),
+      activities: nullableList(
+        z.object({
+          name: z.string(),
+          slug: z.string(),
+        })
+      ).optional(),
+    })
+  ).optional(),
 });
 
 const ApiResponseSchema = z.object({

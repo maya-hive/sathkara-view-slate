@@ -11,6 +11,7 @@ import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { RichText } from "@/components/RichText";
 import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/SidebarCTA";
 import { NoData } from "@/app/no-data";
+import { nullableGallery } from "@/lib/relations";
 
 export default async function Page({
   params,
@@ -175,10 +176,7 @@ const Schema = z.object({
   meta_description: z.string().nullable(),
   featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
+  gallery: nullableGallery,
   country: z.object({ name: z.string(), slug: z.string() }).nullable(),
 });
 

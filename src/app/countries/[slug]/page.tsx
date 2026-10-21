@@ -12,6 +12,7 @@ import { ItineraryInquirySidebarCTA } from "@/components/Itinerary/Inquiry/Sideb
 import { ItineraryInquiryForm } from "@/components/Itinerary/Inquiry/Form";
 import { CityList } from "@/components/City/CityList";
 import { NoData } from "@/app/no-data";
+import { nullableGallery, nullableList } from "@/lib/relations";
 
 export default async function Page({
   params,
@@ -181,11 +182,8 @@ const Schema = z.object({
   meta_description: z.string().nullable(),
   featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
-  cities: z.array(z.object({ name: z.string(), slug: z.string() })).nullable(),
+  gallery: nullableGallery,
+  cities: nullableList(z.object({ name: z.string(), slug: z.string() })),
 });
 
 const ApiResponseSchema = z.object({

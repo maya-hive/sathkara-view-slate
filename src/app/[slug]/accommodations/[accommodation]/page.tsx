@@ -15,6 +15,7 @@ import { ActivityCard } from "@/components/Activity/Card";
 import { AccommodationDiningCard } from "@/components/Accommodation/Dining/Card";
 import { NoData } from "@/app/no-data";
 import { AccommodationRoomCard } from "@/components/Accommodation/Room/Card";
+import { nullableGallery, nullableList } from "@/lib/relations";
 
 export default async function Page({
   params,
@@ -263,10 +264,7 @@ const Schema = z.object({
   meta_description: z.string().nullable(),
   featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
+  gallery: nullableGallery,
   map: z.string().nullable(),
   city: z.object({ name: z.string(), slug: z.string() }).nullable(),
   category: z.object({ name: z.string(), slug: z.string() }),
@@ -274,38 +272,29 @@ const Schema = z.object({
     name: z.string(),
     slug: z.string(),
   }),
-  activities: z
-    .array(
-      z.object({
-        name: z.string(),
-        slug: z.string(),
-      })
-    )
-    .nullable()
-    .optional(),
-  accommodation_dinings: z
-    .array(
-      z.object({
-        title: z.string(),
-        description: z.string().nullable().optional(),
-        image: z.string().nullable().optional(),
-      })
-    )
-    .nullable()
-    .optional(),
-  accommodation_rooms: z
-    .array(
-      z.object({
-        name: z.string(),
-        bedding: z.string().nullable().optional(),
-        view: z.string().nullable().optional(),
-        size: z.string().nullable().optional(),
-        description: z.string().nullable().optional(),
-        image: z.string().nullable().optional(),
-      })
-    )
-    .nullable()
-    .optional(),
+  activities: nullableList(
+    z.object({
+      name: z.string(),
+      slug: z.string(),
+    })
+  ).optional(),
+  accommodation_dinings: nullableList(
+    z.object({
+      title: z.string(),
+      description: z.string().nullable().optional(),
+      image: z.string().nullable().optional(),
+    })
+  ).optional(),
+  accommodation_rooms: nullableList(
+    z.object({
+      name: z.string(),
+      bedding: z.string().nullable().optional(),
+      view: z.string().nullable().optional(),
+      size: z.string().nullable().optional(),
+      description: z.string().nullable().optional(),
+      image: z.string().nullable().optional(),
+    })
+  ).optional(),
 });
 
 const ApiResponseSchema = z.object({

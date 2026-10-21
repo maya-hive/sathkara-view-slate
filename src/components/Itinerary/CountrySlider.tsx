@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ItineraryCountrySliderClient as SliderClient } from "@/components/Itinerary/CountrySlider.client";
 import { ItineraryCountrySlide as Slide } from "@/components/Itinerary/CountrySlide";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { nullableList } from "@/lib/relations";
 
 interface Props {
   countries?: string[] | null;
@@ -139,7 +140,7 @@ const ApiResponseSchema = z.object({
       id: z.number(),
       slug: z.string(),
       name: z.string(),
-      featured_itineraries: z.array(Itinerary).nullable(),
+      featured_itineraries: nullableList(Itinerary),
     })
     .nullable(),
 });

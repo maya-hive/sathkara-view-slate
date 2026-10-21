@@ -7,6 +7,7 @@ import { shimmer } from "@/components/Shimmer";
 import { CityName } from "@/components/City/Name";
 import { PriceTag } from "@/components/PriceTag";
 import { toBase64 } from "@/utils/base64";
+import { nullableList, nullableStringList } from "@/lib/relations";
 
 interface Props {
   slug: string;
@@ -247,10 +248,8 @@ const ApiResponseSchema = z.object({
         name: z.string(),
         slug: z.string(),
       }),
-      tags: z
-        .array(z.object({ name: z.string(), slug: z.string() }))
-        .nullable(),
-      featured_cities: z.array(z.string()).nullable().optional(),
+      tags: nullableList(z.object({ name: z.string(), slug: z.string() })),
+      featured_cities: nullableStringList.optional(),
     })
     .nullable(),
 });

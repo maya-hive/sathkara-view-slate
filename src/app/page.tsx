@@ -12,6 +12,7 @@ import { HomeContentSection } from "@/components/Home/ContentSection";
 import { AudienceTestimonialSlider } from "@/components/Audience/SliderTestimonials";
 import { NoData } from "@/app/no-data";
 import { HomeContentSlider } from "@/components/Home/ContentSlider";
+import { nullableList, nullableStringList, requiredList } from "@/lib/relations";
 
 export default async function Home() {
   const { data } = await fetchData();
@@ -133,6 +134,8 @@ const fetchData = async (): Promise<z.infer<typeof ApiResponseSchema>> => {
   }
 };
 
+const optionalNullableSlugList = nullableStringList.optional();
+
 const ApiResponseSchema = z.object({
   data: z
     .object({
@@ -147,18 +150,18 @@ const ApiResponseSchema = z.object({
           z
             .object({
               category: z.string(),
-              itineraries: z.array(z.string()).nullable(),
+              itineraries: nullableStringList,
               content: z.string().nullable(),
             })
             .nullable()
         )
         .nullable(),
       country_title: z.string().nullable(),
-      country_items: z.array(z.string()).nullable().optional(),
-      featured_itineraries: z.array(z.string()).nullable().optional(),
+      country_items: optionalNullableSlugList,
+      featured_itineraries: optionalNullableSlugList,
       featured_itineraries_title: z.string().nullable().optional(),
       itineraries_by_country_title: z.string().nullable(),
-      itineraries_by_country_items: z.array(z.string()).nullable().optional(),
+      itineraries_by_country_items: optionalNullableSlugList,
       banner_image_1: z.string().nullable(),
       banner_link_1: z.object({
         title: z.string().nullable(),
@@ -172,19 +175,17 @@ const ApiResponseSchema = z.object({
         url: z.string().nullable(),
       }),
       audience_title: z.string().nullable(),
-      audience_items: z
-        .array(
-          z.object({
-            image: z.string().nullable(),
-            audience: z.string().nullable(),
-            title: z.string().nullable(),
-            description: z.string().nullable(),
-            testimonial: z.string().nullable(),
-          })
-        )
-        .nullable(),
+      audience_items: nullableList(
+        z.object({
+          image: z.string().nullable(),
+          audience: z.string().nullable(),
+          title: z.string().nullable(),
+          description: z.string().nullable(),
+          testimonial: z.string().nullable(),
+        })
+      ),
       content_slider_title: z.string().nullable(),
-      content_slider: z.array(
+      content_slider: requiredList(
         z.object({
           icon: z.string().nullable().optional(),
           image: z.string().nullable().optional(),
