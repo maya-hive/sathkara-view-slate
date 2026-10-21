@@ -17,7 +17,7 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
   return (
     <section className="container mx-auto px-4 my-8">
       <div className="relative lg:mx-6">
-        {/* <Swiper
+        <Swiper
           modules={[Navigation, A11y]}
           loop={true}
           spaceBetween={50}
@@ -32,7 +32,7 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
               {child}
             </SwiperSlide>
           ))}
-        </Swiper> */}
+        </Swiper>
         <div className="mt-4 md:mt-4 relative lg:absolute lg:top-0 lg:bottom-0 w-full flex gap-5 justify-center">
           <button
             onClick={() => swiperRef.current?.slidePrev()}
