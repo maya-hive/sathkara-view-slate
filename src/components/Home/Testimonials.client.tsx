@@ -39,7 +39,6 @@ export const HomeTestimonialsSlider = ({ children }: Props) => {
           swiperRef.current = swiper;
         }}
         autoplay={{
-          enabled: true,
           delay: 1000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
