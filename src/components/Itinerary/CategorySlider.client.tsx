@@ -25,6 +25,7 @@ export const ItineraryCategorySliderClient = ({ children }: Props) => {
           onBeforeInit={(swiper) => {
             swiperRef.current = swiper;
           }}
+          autoHeight={true}
         >
           {Children.map(children, (child, index) => (
             <SwiperSlide key={index} className="h-auto">

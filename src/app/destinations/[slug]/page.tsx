@@ -15,6 +15,7 @@ import { ActivityCard } from "@/components/Activity/Card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ItineraryCard } from "@/components/Itinerary/Card";
 import { NoData } from "@/app/no-data";
+import { nullableGallery, nullableList } from "@/lib/relations";
 
 export default async function Page({
   params,
@@ -216,12 +217,9 @@ const Schema = z.object({
   meta_description: z.string().nullable(),
   featured_image: z.string().nullable(),
   listing_image: z.string().nullable().optional(),
-  itineraries: z.array(z.object({ slug: z.string() })).nullable(),
-  activities: z.array(z.object({ slug: z.string() })).nullable(),
-  gallery: z
-    .union([z.array(z.string()).nullable(), z.string().nullable()])
-    .nullable()
-    .optional(),
+  itineraries: nullableList(z.object({ slug: z.string() })),
+  activities: nullableList(z.object({ slug: z.string() })),
+  gallery: nullableGallery,
 });
 
 const ApiResponseSchema = z.object({

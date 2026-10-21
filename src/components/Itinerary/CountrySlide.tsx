@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { z } from "zod";
 
 import { ItineraryCard } from "./Card";
+import { nullableList } from "@/lib/relations";
 
 interface Props {
   country: string;
@@ -84,7 +85,7 @@ const ApiResponseSchema = z.object({
     .object({
       id: z.number(),
       name: z.string(),
-      featured_itineraries: z.array(Itinerary).nullable(),
+      featured_itineraries: nullableList(Itinerary),
     })
     .nullable(),
 });

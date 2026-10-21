@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { Banner } from "@/components/Banner";
 import { DefaultContent } from "./DefaultContent";
+import { nullableStringList } from "@/lib/relations";
 
 interface Args {
   id: number;
@@ -73,7 +74,7 @@ const Schema = z
     image_position: z.string().nullable().optional(),
     link_title: z.string().nullable().optional(),
     link_url: z.string().nullable().optional(),
-    gallery: z.array(z.string()).nullable().optional(),
+    gallery: nullableStringList.optional(),
   })
   .nullable()
   .optional();
